@@ -54,11 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /*
-         * Colocamos el foco en el primer campo
-         * después de mostrar el modal.
-         */
-
         window.setTimeout(() => {
 
             const firstInput =
@@ -139,11 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /*
-     * El HTML anterior ya tenía este botón,
-     * pero no siempre tenía asociado el cierre.
-     */
-
     if (cancelBtn) {
 
         cancelBtn.addEventListener(
@@ -153,10 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /*
-     * Cerrar haciendo clic en el fondo.
-     */
 
     if (modal) {
 
@@ -173,10 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /*
-     * ESC cierra modal.
-     */
 
     document.addEventListener(
         "keydown",
@@ -248,10 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
 
 
-                /*
-                 * Validación HTML nativa.
-                 */
-
                 if (!form.checkValidity()) {
 
                     form.reportValidity();
@@ -282,11 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
-                /*
-                 * Conservamos los nombres esperados
-                 * por el backend existente.
-                 */
 
                 const data =
                     new URLSearchParams({
@@ -336,14 +309,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 try {
 
-                    /*
-                     * Apps Script puede responder con
-                     * redirecciones/CORS particulares.
-                     *
-                     * Conservamos el envío POST mediante
-                     * URLSearchParams.
-                     */
-
                     const response =
                         await fetch(
                             COTIZACION_ENDPOINT,
@@ -362,12 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     }
 
-
-                    /*
-                     * Si Apps Script respondió
-                     * correctamente, consideramos
-                     * recibida la solicitud.
-                     */
 
                     form.reset();
 
@@ -414,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       NOTIFICACIÓN / TOAST
+       TOAST
     ===================================================== */
 
     function showToast(
@@ -509,6 +468,12 @@ document.addEventListener("DOMContentLoaded", () => {
         whatsappBot
     ) {
 
+        whatsappToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+
         whatsappToggle.addEventListener(
             "click",
             () => {
@@ -532,10 +497,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
-        /*
-         * Cierra el cuadro si se pulsa fuera.
-         */
 
         document.addEventListener(
             "click",
@@ -582,18 +543,24 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    /*
-     * Se muestra una vez por sesión.
-     *
-     * sessionStorage permite que una nueva
-     * visita futura vuelva a mostrar una
-     * promoción actualizada.
-     */
+    let promoSeen = null;
 
-    const promoSeen =
-        sessionStorage.getItem(
-            "sarita_promo_seen"
+
+    try {
+
+        promoSeen =
+            sessionStorage.getItem(
+                "sarita_promo_seen"
+            );
+
+    } catch (error) {
+
+        console.warn(
+            "No se pudo leer sessionStorage:",
+            error
         );
+
+    }
 
 
     if (promoPopup) {
@@ -640,10 +607,21 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        sessionStorage.setItem(
-            "sarita_promo_seen",
-            "true"
-        );
+        try {
+
+            sessionStorage.setItem(
+                "sarita_promo_seen",
+                "true"
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "No se pudo guardar el estado del popup:",
+                error
+            );
+
+        }
 
     }
 
@@ -749,12 +727,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!slides.length) return;
 
 
-            /*
-             * El desplazamiento se calcula
-             * usando la posición real de cada
-             * slide. Esto evita errores por gap.
-             */
-
             const targetSlide =
                 slides[currentIndex];
 
@@ -815,12 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /*
-         * Soporte táctil sencillo.
-         */
-
         let touchStartX = 0;
-
         let touchEndX = 0;
 
 
@@ -890,11 +857,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /*
-         * Al cambiar desktop/móvil,
-         * recalculamos límites.
-         */
-
         let resizeTimer;
 
 
@@ -934,7 +896,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       COOKIES / ALMACENAMIENTO TÉCNICO
+       COOKIES
+       CORREGIDO PARA MÓVIL
     ===================================================== */
 
     const cookieBar =
@@ -948,28 +911,127 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    const cookieAccepted =
-        localStorage.getItem(
-            "sarita_cookie_notice"
+    /*
+       Oculta el aviso de forma explícita.
+
+       No dependemos únicamente de quitar
+       la clase "active".
+    */
+
+    function hideCookieBar() {
+
+        if (!cookieBar) return;
+
+
+        cookieBar.classList.remove(
+            "active"
+        );
+
+        cookieBar.classList.add(
+            "hidden"
         );
 
 
-    if (
-        cookieBar &&
-        cookieAccepted !== "accepted"
-    ) {
+        cookieBar.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    function showCookieBar() {
+
+        if (!cookieBar) return;
+
+
+        cookieBar.classList.remove(
+            "hidden"
+        );
+
+        cookieBar.classList.add(
+            "active"
+        );
+
+
+        cookieBar.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    let cookieAccepted = null;
+
+
+    try {
+
+        cookieAccepted =
+            localStorage.getItem(
+                "sarita_cookie_notice"
+            );
+
+    } catch (error) {
+
+        console.warn(
+            "No se pudo leer localStorage:",
+            error
+        );
+
+    }
+
+
+    /*
+       Si ya se aceptó anteriormente,
+       se mantiene oculto desde el inicio.
+    */
+
+    if (cookieAccepted === "accepted") {
+
+        hideCookieBar();
+
+    } else {
 
         /*
-         * Retrasamos ligeramente el aviso para
-         * no competir visualmente con el popup.
-         */
+           Se muestra con un pequeño retraso
+           para no competir con el popup.
+        */
 
         window.setTimeout(
             () => {
 
-                cookieBar.classList.add(
-                    "active"
-                );
+                /*
+                   Comprobamos otra vez por si
+                   el usuario ya aceptó durante
+                   esos 700 ms.
+                */
+
+                let currentConsent = null;
+
+
+                try {
+
+                    currentConsent =
+                        localStorage.getItem(
+                            "sarita_cookie_notice"
+                        );
+
+                } catch (error) {
+
+                    currentConsent = null;
+
+                }
+
+
+                if (
+                    currentConsent !==
+                    "accepted"
+                ) {
+
+                    showCookieBar();
+
+                }
 
             },
             700
@@ -978,24 +1040,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    if (
-        cookieBar &&
-        acceptCookies
-    ) {
+    if (acceptCookies) {
 
         acceptCookies.addEventListener(
             "click",
-            () => {
+            (event) => {
 
-                localStorage.setItem(
-                    "sarita_cookie_notice",
-                    "accepted"
-                );
+                event.preventDefault();
+                event.stopPropagation();
 
 
-                cookieBar.classList.remove(
-                    "active"
-                );
+                /*
+                   Primero lo quitamos de pantalla.
+
+                   Así el cierre no depende de que
+                   localStorage funcione.
+                */
+
+                hideCookieBar();
+
+
+                /*
+                   Después guardamos la preferencia.
+                */
+
+                try {
+
+                    localStorage.setItem(
+                        "sarita_cookie_notice",
+                        "accepted"
+                    );
+
+                } catch (error) {
+
+                    console.warn(
+                        "No se pudo guardar la preferencia de cookies:",
+                        error
+                    );
+
+                }
 
             }
         );
@@ -1004,7 +1087,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       SMOOTH SCROLL INTERNO
+       SMOOTH SCROLL
     ===================================================== */
 
     document
