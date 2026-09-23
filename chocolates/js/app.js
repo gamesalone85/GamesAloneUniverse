@@ -1,247 +1,1059 @@
-<!DOCTYPE html>
-<html lang="es">
+/* =========================================================
+   CHOCOLATE ARTÍSTICO SARITA
+   APP.JS 2026
+========================================================= */
 
-<head>
+"use strict";
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-Términos y Condiciones | Chocolates Artísticos Sarita
-</title>
+document.addEventListener("DOMContentLoaded", () => {
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+    /* =====================================================
+       CONFIGURACIÓN
+    ===================================================== */
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-rel="stylesheet">
+    const COTIZACION_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbx6M7ROD49A5-LDFiMxXqf9R8s_GzIfPaztTjcc4IKJb00tmtMJ1TMr9DU6U4P5gSM6/exec";
 
-<link rel="stylesheet"
-href="css/style.css">
 
-<link rel="stylesheet"
-href="css/legal.css">
+    /* =====================================================
+       MODAL COTIZACIÓN
+    ===================================================== */
 
-</head>
+    const modal =
+        document.getElementById("cotizacionModal");
 
-<body>
+    const openBtn =
+        document.getElementById("openModal");
 
-<header class="legal-header">
+    const openNavBtn =
+        document.getElementById("openModalNav");
 
-    <a href="index.html" class="back-btn">
-        ← Volver al Inicio
-    </a>
+    const openCtaBtn =
+        document.getElementById("openModalCta");
 
-</header>
+    const closeBtn =
+        document.getElementById("closeModal");
 
-<section class="legal-hero">
+    const cancelBtn =
+        document.getElementById("cancelModalBtn");
 
-    <div class="legal-overlay">
 
-        <span class="legal-tag">
-            Información Legal
-        </span>
+    function openModal() {
 
-        <h1>
-            Términos y Condiciones
-        </h1>
+        if (!modal) return;
 
-        <p>
-            Chocolates Artísticos Sarita elabora productos
-            artesanales y personalizados para eventos,
-            celebraciones y experiencias premium en Ciudad de México.
-        </p>
+        modal.classList.add("active");
 
-        <div class="update-date">
-            Última actualización: 06 de junio de 2026
-        </div>
+        document.body.classList.add("modal-open");
 
-    </div>
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
 
-</section>
 
-<section class="legal-summary">
+        /*
+         * Colocamos el foco en el primer campo
+         * después de mostrar el modal.
+         */
 
-    <div class="summary-card">
+        window.setTimeout(() => {
 
-        <span>📍</span>
-        <h3>Entregas CDMX</h3>
-        <p>
-            Entregas programadas en puntos acordados.
-        </p>
+            const firstInput =
+                modal.querySelector(
+                    "input:not([type='checkbox'])"
+                );
 
-    </div>
+            if (firstInput) {
+                firstInput.focus();
+            }
 
-    <div class="summary-card">
+        }, 100);
 
-        <span>🍫</span>
-        <h3>Producto Artesanal</h3>
-        <p>
-            Cada pieza es elaborada individualmente.
-        </p>
+    }
 
-    </div>
 
-    <div class="summary-card">
+    function closeModal() {
 
-        <span>💳</span>
-        <h3>Anticipo</h3>
-        <p>
-            Se podrá solicitar hasta un 50%.
-        </p>
+        if (!modal) return;
 
-    </div>
+        modal.classList.remove("active");
 
-    <div class="summary-card">
+        document.body.classList.remove(
+            "modal-open"
+        );
 
-        <span>📅</span>
-        <h3>Pedido Anticipado</h3>
-        <p>
-            Mínimo 7 días naturales.
-        </p>
-
-    </div>
-
-</section>
-
-<main class="legal-container">
-
-    <div class="legal-card">
-        <h2>1. Naturaleza del Servicio</h2>
-        <p>
-            Todos los productos son elaborados de forma artesanal
-            y personalizada conforme a los requerimientos de cada cliente.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>2. Cotizaciones y Precios</h2>
-        <p>
-            Los precios podrán variar dependiendo de cantidad,
-            complejidad, materiales, personalización y tiempo requerido.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>3. Anticipación de Pedidos</h2>
-        <p>
-            Se recomienda realizar pedidos con al menos siete días
-            naturales de anticipación.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>4. Pagos</h2>
-        <p>
-            Para iniciar producción podrá solicitarse un anticipo
-            de hasta el 50% del valor total del pedido.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>5. Cambios y Cancelaciones</h2>
-        <p>
-            Debido a la naturaleza personalizada de los productos,
-            las modificaciones estarán sujetas al avance del pedido.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>6. Productos Artesanales</h2>
-        <p>
-            Los acabados, decoraciones y tonalidades pueden presentar
-            ligeras variaciones derivadas del proceso artesanal.
-        </p>
-    </div>
-
-    <div class="legal-card featured">
-
-        <h2>
-            7. Entregas y Recolección
-        </h2>
-
-        <p>
-            Las entregas se realizan dentro de la Ciudad de México
-            mediante coordinación previa con el cliente.
-        </p>
-
-        <ul>
-
-            <li>Estaciones de Metro.</li>
-
-            <li>Estaciones de Metrobús.</li>
-
-            <li>Plazas comerciales.</li>
-
-            <li>Zonas céntricas.</li>
-
-            <li>Puntos previamente acordados.</li>
-
-        </ul>
-
-        <p>
-            La fecha, horario y ubicación serán confirmados
-            previamente entre ambas partes.
-        </p>
-
-    </div>
-
-    <div class="legal-card">
-        <h2>8. Disponibilidad</h2>
-        <p>
-            Todos los pedidos están sujetos a disponibilidad
-            de agenda y capacidad de producción.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>9. Responsabilidad del Cliente</h2>
-        <p>
-            El cliente deberá proporcionar información correcta
-            respecto a cantidades, diseños, fechas y datos de contacto.
-        </p>
-    </div>
-
-    <div class="legal-card">
-        <h2>10. Aceptación</h2>
-        <p>
-            Al realizar una solicitud o pedido, el cliente acepta
-            estos términos y condiciones.
-        </p>
-    </div>
-
-</main>
-
-<section class="legal-cta">
-
-    <h2>
-        ¿Tienes dudas sobre tu pedido?
-    </h2>
-
-    <p>
-        Podemos ayudarte a planear tu pedido personalizado.
-    </p>
-
-    <a href="https://wa.me/5215529924478"
-       target="_blank">
-
-        Solicitar Información
-
-    </a>
-
-</section>
-
-<footer class="legal-footer">
-
-    <p>
-        © 2026 Chocolates Artísticos Sarita
-    </p>
-
-</footer>
-
-</body>
-</html>
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    if (openBtn) {
+
+        openBtn.addEventListener(
+            "click",
+            openModal
+        );
+
+    }
+
+
+    if (openNavBtn) {
+
+        openNavBtn.addEventListener(
+            "click",
+            (event) => {
+
+                event.preventDefault();
+
+                openModal();
+
+            }
+        );
+
+    }
+
+
+    if (openCtaBtn) {
+
+        openCtaBtn.addEventListener(
+            "click",
+            openModal
+        );
+
+    }
+
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener(
+            "click",
+            closeModal
+        );
+
+    }
+
+
+    /*
+     * El HTML anterior ya tenía este botón,
+     * pero no siempre tenía asociado el cierre.
+     */
+
+    if (cancelBtn) {
+
+        cancelBtn.addEventListener(
+            "click",
+            closeModal
+        );
+
+    }
+
+
+    /*
+     * Cerrar haciendo clic en el fondo.
+     */
+
+    if (modal) {
+
+        modal.addEventListener(
+            "click",
+            (event) => {
+
+                if (event.target === modal) {
+                    closeModal();
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+     * ESC cierra modal.
+     */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                modal &&
+                modal.classList.contains("active")
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       FECHA MÍNIMA DEL EVENTO
+    ===================================================== */
+
+    const fechaEvento =
+        document.getElementById("fechaEvento");
+
+
+    if (fechaEvento) {
+
+        const today =
+            new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(
+                today.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                today.getDate()
+            ).padStart(2, "0");
+
+
+        fechaEvento.min =
+            `${year}-${month}-${day}`;
+
+    }
+
+
+    /* =====================================================
+       FORMULARIO DE COTIZACIÓN
+    ===================================================== */
+
+    const form =
+        document.getElementById(
+            "cotizacionForm"
+        );
+
+
+    if (form) {
+
+        form.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                /*
+                 * Validación HTML nativa.
+                 */
+
+                if (!form.checkValidity()) {
+
+                    form.reportValidity();
+
+                    return;
+
+                }
+
+
+                const submitBtn =
+                    form.querySelector(
+                        ".submit-btn"
+                    );
+
+
+                const originalText =
+                    submitBtn
+                        ? submitBtn.textContent
+                        : "";
+
+
+                if (submitBtn) {
+
+                    submitBtn.disabled = true;
+
+                    submitBtn.textContent =
+                        "Enviando...";
+
+                }
+
+
+                /*
+                 * Conservamos los nombres esperados
+                 * por el backend existente.
+                 */
+
+                const data =
+                    new URLSearchParams({
+
+                        nombre:
+                            document
+                                .getElementById("nombre")
+                                ?.value
+                                .trim() || "",
+
+                        telefono:
+                            document
+                                .getElementById("telefono")
+                                ?.value
+                                .trim() || "",
+
+                        correo:
+                            document
+                                .getElementById("correo")
+                                ?.value
+                                .trim() || "",
+
+                        evento:
+                            document
+                                .getElementById("evento")
+                                ?.value
+                                .trim() || "",
+
+                        cantidad:
+                            document
+                                .getElementById("cantidad")
+                                ?.value || "",
+
+                        fecha:
+                            document
+                                .getElementById("fechaEvento")
+                                ?.value || "",
+
+                        descripcion:
+                            document
+                                .getElementById("descripcion")
+                                ?.value
+                                .trim() || ""
+
+                    });
+
+
+                try {
+
+                    /*
+                     * Apps Script puede responder con
+                     * redirecciones/CORS particulares.
+                     *
+                     * Conservamos el envío POST mediante
+                     * URLSearchParams.
+                     */
+
+                    const response =
+                        await fetch(
+                            COTIZACION_ENDPOINT,
+                            {
+                                method: "POST",
+                                body: data
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            `HTTP ${response.status}`
+                        );
+
+                    }
+
+
+                    /*
+                     * Si Apps Script respondió
+                     * correctamente, consideramos
+                     * recibida la solicitud.
+                     */
+
+                    form.reset();
+
+                    closeModal();
+
+
+                    showToast(
+                        "Solicitud enviada",
+                        "Recibimos tus datos. Nos pondremos en contacto contigo."
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Error al enviar cotización:",
+                        error
+                    );
+
+
+                    showToast(
+                        "No pudimos enviar la solicitud",
+                        "Inténtalo nuevamente o contáctanos directamente por WhatsApp.",
+                        true
+                    );
+
+                } finally {
+
+                    if (submitBtn) {
+
+                        submitBtn.disabled = false;
+
+                        submitBtn.textContent =
+                            originalText;
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       NOTIFICACIÓN / TOAST
+    ===================================================== */
+
+    function showToast(
+        title,
+        message,
+        isError = false
+    ) {
+
+        const existingToast =
+            document.querySelector(
+                ".sarita-toast"
+            );
+
+
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+
+        const toast =
+            document.createElement("div");
+
+
+        toast.className =
+            "sarita-toast" +
+            (isError ? " error" : "");
+
+
+        const toastTitle =
+            document.createElement("strong");
+
+        toastTitle.textContent =
+            title;
+
+
+        const toastMessage =
+            document.createElement("span");
+
+        toastMessage.textContent =
+            message;
+
+
+        toast.append(
+            toastTitle,
+            toastMessage
+        );
+
+
+        document.body.appendChild(toast);
+
+
+        requestAnimationFrame(() => {
+
+            toast.classList.add("active");
+
+        });
+
+
+        window.setTimeout(() => {
+
+            toast.classList.remove("active");
+
+
+            window.setTimeout(() => {
+
+                toast.remove();
+
+            }, 300);
+
+        }, 5000);
+
+    }
+
+
+    /* =====================================================
+       WHATSAPP
+    ===================================================== */
+
+    const whatsappToggle =
+        document.getElementById(
+            "toggleWhatsapp"
+        );
+
+    const whatsappBot =
+        document.getElementById(
+            "whatsappBot"
+        );
+
+
+    if (
+        whatsappToggle &&
+        whatsappBot
+    ) {
+
+        whatsappToggle.addEventListener(
+            "click",
+            () => {
+
+                whatsappBot.classList.toggle(
+                    "active"
+                );
+
+
+                const isOpen =
+                    whatsappBot.classList.contains(
+                        "active"
+                    );
+
+
+                whatsappToggle.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+
+            }
+        );
+
+
+        /*
+         * Cierra el cuadro si se pulsa fuera.
+         */
+
+        document.addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    !whatsappBot.contains(
+                        event.target
+                    ) &&
+                    !whatsappToggle.contains(
+                        event.target
+                    )
+                ) {
+
+                    whatsappBot.classList.remove(
+                        "active"
+                    );
+
+                    whatsappToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       POPUP PROMOCIONAL
+    ===================================================== */
+
+    const promoPopup =
+        document.getElementById(
+            "promoPopup"
+        );
+
+    const closePromo =
+        document.getElementById(
+            "closePromo"
+        );
+
+
+    /*
+     * Se muestra una vez por sesión.
+     *
+     * sessionStorage permite que una nueva
+     * visita futura vuelva a mostrar una
+     * promoción actualizada.
+     */
+
+    const promoSeen =
+        sessionStorage.getItem(
+            "sarita_promo_seen"
+        );
+
+
+    if (promoPopup) {
+
+        if (promoSeen === "true") {
+
+            promoPopup.classList.add(
+                "hidden"
+            );
+
+            promoPopup.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+        } else {
+
+            promoPopup.classList.remove(
+                "hidden"
+            );
+
+            promoPopup.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+        }
+
+    }
+
+
+    function hidePromo() {
+
+        if (!promoPopup) return;
+
+
+        promoPopup.classList.add(
+            "hidden"
+        );
+
+        promoPopup.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        sessionStorage.setItem(
+            "sarita_promo_seen",
+            "true"
+        );
+
+    }
+
+
+    if (closePromo) {
+
+        closePromo.addEventListener(
+            "click",
+            hidePromo
+        );
+
+    }
+
+
+    if (promoPopup) {
+
+        promoPopup.addEventListener(
+            "click",
+            (event) => {
+
+                if (event.target === promoPopup) {
+                    hidePromo();
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CARRUSEL
+    ===================================================== */
+
+    const carousel =
+        document.querySelector(
+            ".carousel-container"
+        );
+
+    const track =
+        document.querySelector(
+            ".carousel-track"
+        );
+
+    const prevBtn =
+        document.querySelector(
+            ".carousel-btn.prev"
+        );
+
+    const nextBtn =
+        document.querySelector(
+            ".carousel-btn.next"
+        );
+
+
+    if (
+        carousel &&
+        track &&
+        prevBtn &&
+        nextBtn
+    ) {
+
+        const slides =
+            Array.from(
+                track.children
+            );
+
+
+        let currentIndex = 0;
+
+
+        function getVisibleSlides() {
+
+            if (
+                window.matchMedia(
+                    "(max-width: 760px)"
+                ).matches
+            ) {
+
+                return 1;
+
+            }
+
+
+            return 3;
+
+        }
+
+
+        function getMaxIndex() {
+
+            return Math.max(
+                0,
+                slides.length -
+                getVisibleSlides()
+            );
+
+        }
+
+
+        function updateCarousel() {
+
+            if (!slides.length) return;
+
+
+            /*
+             * El desplazamiento se calcula
+             * usando la posición real de cada
+             * slide. Esto evita errores por gap.
+             */
+
+            const targetSlide =
+                slides[currentIndex];
+
+
+            if (!targetSlide) return;
+
+
+            const offset =
+                targetSlide.offsetLeft;
+
+
+            track.style.transform =
+                `translateX(-${offset}px)`;
+
+
+            prevBtn.disabled =
+                currentIndex === 0;
+
+
+            nextBtn.disabled =
+                currentIndex >=
+                getMaxIndex();
+
+        }
+
+
+        prevBtn.addEventListener(
+            "click",
+            () => {
+
+                currentIndex =
+                    Math.max(
+                        0,
+                        currentIndex - 1
+                    );
+
+
+                updateCarousel();
+
+            }
+        );
+
+
+        nextBtn.addEventListener(
+            "click",
+            () => {
+
+                currentIndex =
+                    Math.min(
+                        getMaxIndex(),
+                        currentIndex + 1
+                    );
+
+
+                updateCarousel();
+
+            }
+        );
+
+
+        /*
+         * Soporte táctil sencillo.
+         */
+
+        let touchStartX = 0;
+
+        let touchEndX = 0;
+
+
+        track.addEventListener(
+            "touchstart",
+            (event) => {
+
+                touchStartX =
+                    event.changedTouches[0]
+                        .screenX;
+
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        track.addEventListener(
+            "touchend",
+            (event) => {
+
+                touchEndX =
+                    event.changedTouches[0]
+                        .screenX;
+
+
+                const distance =
+                    touchStartX -
+                    touchEndX;
+
+
+                if (
+                    Math.abs(distance) < 45
+                ) {
+
+                    return;
+
+                }
+
+
+                if (distance > 0) {
+
+                    currentIndex =
+                        Math.min(
+                            getMaxIndex(),
+                            currentIndex + 1
+                        );
+
+                } else {
+
+                    currentIndex =
+                        Math.max(
+                            0,
+                            currentIndex - 1
+                        );
+
+                }
+
+
+                updateCarousel();
+
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        /*
+         * Al cambiar desktop/móvil,
+         * recalculamos límites.
+         */
+
+        let resizeTimer;
+
+
+        window.addEventListener(
+            "resize",
+            () => {
+
+                clearTimeout(
+                    resizeTimer
+                );
+
+
+                resizeTimer =
+                    window.setTimeout(
+                        () => {
+
+                            currentIndex =
+                                Math.min(
+                                    currentIndex,
+                                    getMaxIndex()
+                                );
+
+
+                            updateCarousel();
+
+                        },
+                        100
+                    );
+
+            }
+        );
+
+
+        updateCarousel();
+
+    }
+
+
+    /* =====================================================
+       COOKIES / ALMACENAMIENTO TÉCNICO
+    ===================================================== */
+
+    const cookieBar =
+        document.getElementById(
+            "cookieBar"
+        );
+
+    const acceptCookies =
+        document.getElementById(
+            "acceptCookies"
+        );
+
+
+    const cookieAccepted =
+        localStorage.getItem(
+            "sarita_cookie_notice"
+        );
+
+
+    if (
+        cookieBar &&
+        cookieAccepted !== "accepted"
+    ) {
+
+        /*
+         * Retrasamos ligeramente el aviso para
+         * no competir visualmente con el popup.
+         */
+
+        window.setTimeout(
+            () => {
+
+                cookieBar.classList.add(
+                    "active"
+                );
+
+            },
+            700
+        );
+
+    }
+
+
+    if (
+        cookieBar &&
+        acceptCookies
+    ) {
+
+        acceptCookies.addEventListener(
+            "click",
+            () => {
+
+                localStorage.setItem(
+                    "sarita_cookie_notice",
+                    "accepted"
+                );
+
+
+                cookieBar.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SMOOTH SCROLL INTERNO
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            'a[href^="#"]'
+        )
+        .forEach((link) => {
+
+            link.addEventListener(
+                "click",
+                (event) => {
+
+                    const href =
+                        link.getAttribute(
+                            "href"
+                        );
+
+
+                    if (
+                        !href ||
+                        href === "#"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            href
+                        );
+
+
+                    if (!target) return;
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
+
+        });
+
+
+});
