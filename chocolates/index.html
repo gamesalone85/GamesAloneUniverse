@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Chocolates Personalizados en CDMX | Chocolates Artísticos Sarita
+</title>
+
+<meta name="description"
+content="Chocolates Artísticos Sarita crea chocolates personalizados para eventos, hoteles, corporativos, bodas y celebraciones especiales en Ciudad de México.">
+
+<meta name="keywords"
+content="chocolates personalizados CDMX, chocolates, chocolates artesanales, chocolates corporativos, regalos">
+
+<meta name="author"
+content="GamesAlone18 Universe">
+
+<meta name="robots"
+content="index, follow">
+
+<link rel="canonical"
+href="https://www.gamesalone.com/chocolates/">
+
+<!-- OPEN GRAPH -->
+
+<meta property="og:title"
+content="Chocolates Artísticos Sarita">
+
+<meta property="og:description"
+content="Experiencias premium y chocolates personalizados para eventos especiales en CDMX.">
+
+<meta property="og:image"
+content="https://www.gamesalone.com/chocolates/img/logo.png">
+
+<meta property="og:url"
+content="https://www.gamesalone.com/chocolates/">
+
+<meta property="og:type"
+content="website">
+
+<!-- TWITTER -->
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<meta name="twitter:title"
+content="Chocolates Artísticos Sarita">
+
+<meta name="twitter:description"
+content="Chocolates personalizados premium para eventos y celebraciones especiales.">
+
+<meta name="twitter:image"
+content="https://www.gamesalone.com/chocolates/img/logo.png">
+
+<!-- FAVICON -->
+
+<link rel="icon"
+href="img/logo.png"
+type="image/png">
+
+<link rel="apple-touch-icon"
+href="img/logo.png">
+
+<!-- GOOGLE FONTS -->
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+rel="stylesheet">
+
+<!-- FONT AWESOME -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- CSS -->
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<!-- SCHEMA -->
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"LocalBusiness",
+"name":"Chocolates Artísticos Sarita",
+"image":"https://www.gamesalone.com/chocolates/img/logo.png",
+"url":"https://www.gamesalone.com/chocolates/",
+"telephone":"+52 55 2992 4478",
+"address":{
+"@type":"PostalAddress",
+"addressCountry":"MX"
+},
+"sameAs":[
+"https://www.instagram.com/chocolateartisticosarita"
+]
+}
+</script>
+
+</head>
+
+<body>
+
+<!-- PROMOCIONES POPUP -->
+
+<div class="promo-popup" id="promoPopup">
+
+    <div class="promo-content">
+
+        <button class="promo-close" id="closePromo">
+            ×
+        </button>
+
+        <a href="https://wa.me/5215529924478?text=Hola,%20me%20interesa%20la%20promoción."
+           target="_blank">
+
+            <img src="img/choco webb.jpg"
+                 alt="Promoción Chocolates Sarita">
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- WHATSAPP -->
+
+<div class="whatsapp-chatbot"
+id="whatsappBot">
+
+<div class="chat-header">
+
+<div class="chat-avatar">
+🍫
+</div>
+
+<div>
+
+<h3>
+Chocolates Artísticos Sarita
+</h3>
+
+<span>
+Normalmente responde rápido
+</span>
+
+</div>
+
+</div>
+
+<div class="chat-body">
+
+<p>
+Hola 👋
+</p>
+
+<p>
+Bienvenido a Chocolates Artísticos Sarita.
+</p>
+
+<p>
+¿Deseas hacer un pedido o cotizar chocolates personalizados
+para tu evento?
+</p>
+
+</div>
+
+<a href="https://wa.me/5215529924478?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20chocolates%20personalizados."
+target="_blank"
+class="chat-button">
+
+Abrir WhatsApp
+
+</a>
+
+</div>
+
+<button class="whatsapp-toggle"
+id="toggleWhatsapp">
+
+<i class="fab fa-whatsapp"></i>
+Hacer pedido o cotizar
+
+</button>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<div class="logo-container">
+
+<img src="img/logo.png"
+alt="Logo Chocolates Artísticos Sarita"
+class="logo">
+
+</div>
+
+<nav class="nav">
+
+<a href="#top">
+Inicio
+</a>
+
+<a href="#catalogo">
+Catálogo
+</a>
+
+<a href="#galeria">
+Galería
+</a>
+
+<a href="#contacto"
+id="openModalNav">
+Pedidos / Cotizaciones</a>
+
+</nav>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero"
+id="top">
+
+<div class="overlay">
+
+<span class="tag">
+Chocolatería Boutique · CDMX
+</span>
+
+<h1>
+Chocolates Artísticos Sarita
+</h1>
+
+<p>
+Creadores de chocolates personalizados para eventos corporativos, hoteles, bodas,
+bautizos y experiencias exclusivas en Ciudad de México.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#catalogo"
+class="btn-primary">
+
+Ver Catálogo
+
+</a>
+
+<button class="btn-secondary"
+id="openModal">
+
+Cotizar Evento
+
+</button>
+
+</div>
+
+<div class="collab">
+
+En colaboración con
+<strong>
+GamesAlone18 Universe
+</strong>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Colección de Temporada -->    
+
+<section class="temporada">
+
+    <div class="temporada-header">
+
+        <span>Novedades Exclusivas</span>
+
+        <h2>Colección de Temporada</h2>
+
+        <p>
+            Ediciones limitadas diseñadas para celebrar
+            momentos especiales durante el año.
+        </p>
+
+    </div>
+
+    <div class="temporada-grid">
+
+        <div class="temporada-card">
+
+            <div class="badge">
+                Más Vendido
+            </div>
+
+            <img src="img/choco webb.jpg">
+
+            <h3>
+                Día del Muertos
+            </h3>
+
+            <p>
+                Nueva línea de temporada de Muertos
+                Aparta los tuyos y no te quedes sin ellos...
+            </p>
+
+            <a href="https://wa.me/5215529924478">
+                Pedir ahora
+            </a>
+
+        </div>
+
+        <div class="temporada-card">
+
+            <div class="badge">
+                Nuevo Lanzamiento
+            </div>
+
+            <img src="img/lenguas.jpg">
+
+            <h3>
+                Lenguas Sarita
+            </h3>
+
+            <p>
+                Nuevo Lanzamiento para los amantes de las lenguas
+            </p>
+
+            <a href="https://wa.me/5215529924478">
+                Solicitar cotización
+            </a>
+
+        </div>
+
+        <div class="temporada-card">
+
+            <div class="badge">
+                Edición Limitada
+            </div>
+
+            <img src="img/caja14.jpg">
+
+            <h3>
+                Caja Premium
+            </h3>
+
+            <p>
+                Presentación especial para los amantes del chocolate...
+            </p>
+
+            <a href="https://wa.me/5215529924478">
+                Comprar
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PRODUCTOS -->
+
+<section class="productos"
+id="catalogo">
+
+<h2>
+Experiencias Personalizadas
+</h2>
+
+<div class="productos-grid">
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="img/tematicos.jpg"
+alt="Eventos temáticos"
+loading="lazy">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+Eventos Temáticos
+</h3>
+
+<p>
+Diseños personalizados inspirados
+en fiestas y celebraciones especiales.
+</p>
+
+<a href="https://www.instagram.com/chocolateartisticosarita"
+target="_blank">
+
+<button>
+Solicitar Diseño
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="img/corporativos.jpg"
+alt="Corporativos"
+loading="lazy">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+Corporativos
+</h3>
+
+<p>
+Chocolates personalizados
+con branding y logotipos empresariales.
+</p>
+
+<a href="https://www.instagram.com/chocolateartisticosarita"
+target="_blank">
+
+<button>
+Cotizar Proyecto
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="img/bautizos.jpg"
+alt="Bautizos"
+loading="lazy">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+Bautizos y Recuerdos
+</h3>
+
+<p>
+Recuerdos premium y detalles
+artísticos para eventos religiosos.
+</p>
+
+<a href="https://www.instagram.com/chocolateartisticosarita"
+target="_blank">
+
+<button>
+Ver Opciones
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="img/diapadre.jpg"
+alt="Regalos Premium"
+loading="lazy">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+Regalos Premium
+</h3>
+
+<p>
+Experiencias dulces elegantes
+para ocasiones especiales.
+</p>
+
+<a href="https://www.instagram.com/chocolateartisticosarita"
+target="_blank">
+
+<button>
+Comprar Ahora
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MODAL -->
+
+<div class="modal"
+id="cotizacionModal">
+
+<div class="modal-content">
+
+<button class="modal-close"
+id="closeModal">
+
+×
+
+</button>
+
+<h2>
+Solicitar Cotización
+</h2>
+
+<p class="modal-subtitle">
+Cuéntanos sobre tu evento
+y prepararemos una propuesta personalizada.
+</p>
+
+<form id="cotizacionForm">
+
+<div class="form-group">
+
+<label>
+Nombre completo
+</label>
+
+<input type="text"
+id="nombre"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Teléfono
+</label>
+
+<input type="tel"
+id="telefono"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Correo electrónico
+</label>
+
+<input type="email"
+id="correo"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Tipo de evento
+</label>
+
+<input type="text"
+id="evento"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Cantidad aproximada
+</label>
+
+<input type="number"
+id="cantidad"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Fecha del evento
+</label>
+
+<input type="date"
+id="fechaEvento"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Descripción
+</label>
+
+<textarea rows="5"
+id="descripcion"></textarea>
+
+</div>
+
+<div class="form-group checkbox-group">
+
+<label class="checkbox-label">
+
+<input type="checkbox"
+id="consentimiento"
+required>
+
+<span>
+Acepto términos y condiciones
+y aviso de privacidad.
+</span>
+
+</label>
+
+</div>
+
+<div class="modal-buttons">
+
+<button type="button"
+class="cancel-btn"
+id="cancelModalBtn">
+
+Cancelar
+
+</button>
+
+<button type="submit"
+class="submit-btn">
+
+Enviar Solicitud
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- GALERIA -->
+
+<section class="galeria" id="galeria">
+
+    <h2>Creaciones Exclusivas</h2>
+
+    <p class="galeria-text">
+        Cada diseño es elaborado especialmente
+        para crear experiencias memorables.
+    </p>
+
+    <div class="carousel-container">
+
+        <div class="carousel-track">
+
+             <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/choco webb.jpg">
+            </a>
+
+            <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/corazon.jpg">
+            </a>
+
+            <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/tematico.jpg">
+            </a>
+
+            <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/caja20.jpg">
+            </a>
+
+            <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/bautizo.jpg">
+            </a>
+
+            <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/lenguas.jpg">
+            </a>
+
+             <a href="https://wa.me/5215529924478" target="_blank">
+                <img src="img/barritas.jpg">
+            </a>
+
+        </div>
+
+        <button class="carousel-btn prev">
+            ❮
+        </button>
+
+        <button class="carousel-btn next">
+            ❯
+        </button>
+
+    </div>
+
+</section>
+
+<!-- PROCESO -->
+
+<section class="proceso">
+
+<h2>
+¿Cómo Funciona?
+</h2>
+
+<div class="proceso-grid">
+
+<div class="paso">
+
+<span>
+01
+</span>
+
+<h3>
+Comparte tu Idea
+</h3>
+
+<p>
+Cuéntanos tu temática,
+evento o concepto.
+</p>
+
+</div>
+
+<div class="paso">
+
+<span>
+02
+</span>
+
+<h3>
+Diseño Personalizado
+</h3>
+
+<p>
+Creamos una propuesta adaptada a tu evento.
+</p>
+
+</div>
+
+<div class="paso">
+
+<span>
+03
+</span>
+
+<h3>
+Elaboración Artesanal
+</h3>
+
+<p>
+Cada pieza se realiza
+cuidadosamente.
+</p>
+
+</div>
+
+<div class="paso">
+
+<span>
+04
+</span>
+
+<h3>
+Entrega Especial
+</h3>
+
+<p>
+Recibe una experiencia premium.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta-final">
+
+<h2>
+¿Tienes una idea especial?
+</h2>
+
+<p>
+Transformemos tu evento
+en una experiencia dulce única.
+</p>
+
+<a href="https://www.instagram.com/chocolateartisticosarita"
+target="_blank">
+
+<button>
+Solicitar Información
+</button>
+
+</a>
+
+</section>
+
+<!-- MARCA -->
+
+<section class="marca-premium">
+
+<div class="marca-box">
+
+<h2>
+Chocolatería para Eventos Exclusivos
+</h2>
+
+<p class="hero-description">
+En Chocolates Artísticos Sarita creamos experiencias artesanales para marcas, hoteles, eventos corporativos, celebraciones privadas y regalos premium en Ciudad de México, combinando diseño personalizado, presentación elegante y producción de alta calidad.
+</p>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<p>
+© 2026 Chocolates Artísticos Sarita
+</p>
+
+<p class="footer-seo">
+Creadores de chocolates personalizados premium para
+eventos, hoteles y celebraciones en Ciudad de México.
+</p>
+
+<a href="terminos.html">
+Términos y Condiciones
+</a>
+
+<a href="privacidad.html">
+Aviso de Privacidad
+</a>
+
+</footer>
+
+<script src="js/app.js"></script>
+
+<!-- CONSENTIMIENTO DE COOKIES -->
+
+<div id="cookieBar" class="cookie-bar">
+
+    <div class="cookie-info">
+
+        <div class="cookie-icon">
+            🍪
+        </div>
+
+        <div class="cookie-text">
+
+            <h4>
+                Uso de Cookies
+            </h4>
+
+            <p>
+                Este sitio utiliza cookies técnicas necesarias para mejorar la experiencia de navegación.
+                Al continuar utilizando el sitio aceptas nuestro
+                <a href="privacidad.html">
+                    Aviso de Privacidad
+                </a>
+                y el uso de cookies esenciales para el funcionamiento de la página.
+            </p>
+
+        </div>
+
+    </div>
+
+    <button id="acceptCookies" class="cookie-accept">
+        Entendido
+    </button>
+
+</div>
+
+</body>
+</html>
