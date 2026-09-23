@@ -1261,182 +1261,121 @@
 
 
 
-  /* =====================================================
-     POPUP · CHOCOLATE ARTÍSTICO SARITA
-  ===================================================== */
+ /* =====================================================
+   POPUP · CHOCOLATE ARTÍSTICO SARITA
+   SE MUESTRA EN CADA VISITA
+===================================================== */
 
-  const saritaPopup =
-    document.getElementById(
-      "saritaCollabPopup"
+const saritaPopup =
+  document.getElementById(
+    "saritaCollabPopup"
+  );
+
+const saritaPopupClose =
+  document.getElementById(
+    "saritaPopupClose"
+  );
+
+let saritaPopupTimer = null;
+
+
+/* ABRIR */
+
+function openSaritaPopup() {
+
+  if (!saritaPopup) {
+    return;
+  }
+
+  saritaPopup.classList.add(
+    "is-visible"
+  );
+
+  saritaPopup.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+}
+
+
+/* CERRAR */
+
+function closeSaritaPopup() {
+
+  if (!saritaPopup) {
+    return;
+  }
+
+  if (saritaPopupTimer) {
+
+    clearTimeout(
+      saritaPopupTimer
     );
 
-  const saritaPopupClose =
-    document.getElementById(
-      "saritaPopupClose"
-    );
-
-
-  let saritaPopupTimer =
-    null;
-
-  let saritaPopupSeen =
-    false;
-
-
-  /*
-     Solo se muestra una vez durante
-     la sesión actual del navegador.
-  */
-
-  try {
-
-    saritaPopupSeen =
-      sessionStorage.getItem(
-        "ga18_sarita_popup"
-      ) === "seen";
-
-  } catch (error) {
-
-    saritaPopupSeen =
-      false;
+    saritaPopupTimer = null;
 
   }
 
+  saritaPopup.classList.remove(
+    "is-visible"
+  );
 
-  function openSaritaPopup() {
+  saritaPopup.setAttribute(
+    "aria-hidden",
+    "true"
+  );
 
-    if (!saritaPopup) {
-      return;
-    }
+}
 
-    saritaPopup.classList.add(
-      "is-visible"
+
+/*
+   MOSTRAR EN CADA VISITA
+
+   No utilizamos localStorage ni sessionStorage.
+   Cada vez que se carga el Home, el popup
+   vuelve a estar disponible.
+*/
+
+if (saritaPopup) {
+
+  saritaPopupTimer =
+    window.setTimeout(
+      () => {
+
+        openSaritaPopup();
+
+        saritaPopupTimer = null;
+
+      },
+      1800
     );
 
-    saritaPopup.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-  }
+}
 
 
-  function closeSaritaPopup() {
+/* CERRAR CON X */
 
-    if (!saritaPopup) {
-      return;
-    }
+if (saritaPopupClose) {
 
+  saritaPopupClose.addEventListener(
+    "click",
+    closeSaritaPopup
+  );
 
-    if (saritaPopupTimer) {
-
-      clearTimeout(
-        saritaPopupTimer
-      );
-
-      saritaPopupTimer =
-        null;
-
-    }
+}
 
 
-    saritaPopup.classList.remove(
-      "is-visible"
-    );
+/* CERRAR TOCANDO FUERA */
 
-    saritaPopup.setAttribute(
-      "aria-hidden",
-      "true"
-    );
+if (saritaPopup) {
 
-
-    try {
-
-      sessionStorage.setItem(
-        "ga18_sarita_popup",
-        "seen"
-      );
-
-    } catch (error) {}
-
-  }
-
-
-  if (
-    saritaPopup &&
-    !saritaPopupSeen
-  ) {
-
-    /*
-       Esperamos 1.8 segundos para
-       no tapar inmediatamente la portada.
-    */
-
-    saritaPopupTimer =
-      window.setTimeout(
-        () => {
-
-          openSaritaPopup();
-
-          saritaPopupTimer =
-            null;
-
-        },
-        1800
-      );
-
-  }
-
-
-  if (saritaPopupClose) {
-
-    saritaPopupClose.addEventListener(
-      "click",
-      closeSaritaPopup
-    );
-
-  }
-
-
-  /*
-     Cerrar tocando fuera de la tarjeta.
-  */
-
-  if (saritaPopup) {
-
-    saritaPopup.addEventListener(
-      "click",
-      event => {
-
-        if (
-          event.target ===
-          saritaPopup
-        ) {
-
-          closeSaritaPopup();
-
-        }
-
-      }
-    );
-
-  }
-
-
-  /*
-     Cerrar con ESC.
-  */
-
-  document.addEventListener(
-    "keydown",
+  saritaPopup.addEventListener(
+    "click",
     event => {
 
       if (
-        event.key === "Escape" &&
-        saritaPopup &&
-        saritaPopup.classList.contains(
-          "is-visible"
-        )
+        event.target === saritaPopup
       ) {
 
         closeSaritaPopup();
@@ -1446,6 +1385,29 @@
     }
   );
 
+}
+
+
+/* CERRAR CON ESC */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape" &&
+      saritaPopup &&
+      saritaPopup.classList.contains(
+        "is-visible"
+      )
+    ) {
+
+      closeSaritaPopup();
+
+    }
+
+  }
+);
 
 
   /* =====================================================
