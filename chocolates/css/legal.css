@@ -1,0 +1,1437 @@
+/* =========================================================
+   CHOCOLATE ARTÍSTICO SARITA
+   CENTRO LEGAL
+   legal.css
+========================================================= */
+
+
+/* =========================================================
+   BASE LEGAL
+========================================================= */
+
+body {
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(201, 164, 92, .06),
+            transparent 30%
+        ),
+        var(--cacao-950);
+
+    color: var(--marfil);
+}
+
+
+/* =========================================================
+   HEADER LEGAL
+========================================================= */
+
+.legal-header {
+    position: relative;
+    z-index: 100;
+
+    min-height: 76px;
+
+    padding:
+        0 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    background:
+        rgba(12, 7, 5, .96);
+
+    border-bottom:
+        1px solid var(--border);
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+}
+
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 42px;
+
+    color:
+        var(--crema);
+
+    font-size: .68rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.back-btn:hover {
+    color:
+        var(--dorado-claro);
+
+    transform:
+        translateX(-3px);
+}
+
+
+.legal-brand {
+    color:
+        var(--dorado);
+
+    font-size: .55rem;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   HERO LEGAL
+========================================================= */
+
+.legal-hero {
+    position: relative;
+
+    min-height: 460px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cacao-900),
+            var(--cacao-950)
+        );
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+/*
+   Decoración sutil sin utilizar una imagen adicional.
+*/
+
+.legal-hero::before {
+    content: "S";
+
+    position: absolute;
+
+    right: 5%;
+    top: 50%;
+
+    transform:
+        translateY(-53%);
+
+    color:
+        rgba(201, 164, 92, .035);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(18rem, 38vw, 34rem);
+
+    font-style: italic;
+
+    line-height: 1;
+
+    pointer-events: none;
+}
+
+
+.legal-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    right: -100px;
+    top: -150px;
+
+    border:
+        1px solid rgba(201, 164, 92, .07);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.legal-overlay {
+    position: relative;
+
+    z-index: 2;
+
+    width:
+        min(1160px, 88%);
+
+    margin: auto;
+
+    padding:
+        80px 0;
+}
+
+
+.legal-tag {
+    display: inline-flex;
+
+    padding:
+        8px 13px;
+
+    border:
+        1px solid var(--border-gold);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(201, 164, 92, .045);
+
+    color:
+        var(--dorado);
+
+    font-size: .57rem;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+
+
+.legal-hero h1 {
+    max-width: 850px;
+
+    margin-top: 22px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(3rem, 7vw, 5.8rem);
+
+    font-weight: 600;
+
+    line-height: .98;
+
+    letter-spacing:
+        -.04em;
+
+    color:
+        var(--marfil);
+}
+
+
+.legal-hero > .legal-overlay > p {
+    max-width: 650px;
+
+    margin-top: 22px;
+
+    color:
+        var(--texto);
+
+    font-size: .86rem;
+
+    line-height: 1.85;
+}
+
+
+.legal-meta {
+    margin-top: 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+.legal-meta span {
+    padding:
+        7px 11px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        7px;
+
+    color:
+        var(--muted);
+
+    font-size: .52rem;
+    font-weight: 600;
+
+    letter-spacing: 1.4px;
+}
+
+
+/* =========================================================
+   RESUMEN
+========================================================= */
+
+.legal-summary {
+    width:
+        min(1160px, 88%);
+
+    margin:
+        -40px auto 0;
+
+    position: relative;
+
+    z-index: 5;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+
+.summary-card {
+    min-height: 185px;
+
+    padding:
+        25px 22px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    background:
+        rgba(27, 16, 12, .97);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, .18);
+}
+
+
+.summary-number {
+    display: block;
+
+    color:
+        var(--dorado);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1.4rem;
+}
+
+
+.summary-card h3 {
+    margin-top: 20px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+
+.summary-card p {
+    margin-top: 8px;
+
+    color:
+        var(--muted);
+
+    font-size: .67rem;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   INTRODUCCIÓN
+========================================================= */
+
+.legal-intro {
+    padding:
+        100px 6% 80px;
+}
+
+
+.legal-intro-inner {
+    width:
+        min(820px, 100%);
+
+    margin: auto;
+
+    text-align: center;
+}
+
+
+.legal-section-label {
+    display: inline-block;
+
+    color:
+        var(--dorado);
+
+    font-size: .56rem;
+    font-weight: 600;
+
+    letter-spacing: 2.3px;
+}
+
+
+.legal-intro h2 {
+    margin-top: 12px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(2.1rem, 5vw, 3.5rem);
+
+    font-weight: 600;
+
+    line-height: 1.1;
+}
+
+
+.legal-intro p {
+    max-width: 750px;
+
+    margin:
+        17px auto 0;
+
+    color:
+        var(--texto);
+
+    font-size: .82rem;
+
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   CONTENIDO LEGAL
+========================================================= */
+
+.legal-content {
+    padding:
+        20px 6% 120px;
+}
+
+
+.legal-layout {
+    width:
+        min(1160px, 100%);
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        255px minmax(0, 1fr);
+
+    gap: 50px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   ÍNDICE
+========================================================= */
+
+.legal-index {
+    position: sticky;
+
+    top: 25px;
+
+    padding:
+        24px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    background:
+        rgba(255, 255, 255, .018);
+}
+
+
+.legal-index > span {
+    display: block;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color:
+        var(--dorado);
+
+    font-size: .54rem;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+
+
+.legal-index nav {
+    margin-top: 14px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.legal-index a {
+    padding:
+        8px 0;
+
+    color:
+        var(--muted);
+
+    font-size: .61rem;
+
+    line-height: 1.45;
+
+    text-decoration: none;
+
+    transition:
+        color .2s ease,
+        padding-left .2s ease;
+}
+
+
+.legal-index a:hover {
+    padding-left: 4px;
+
+    color:
+        var(--dorado-claro);
+}
+
+
+/* =========================================================
+   ARTÍCULOS
+========================================================= */
+
+.legal-articles {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+.legal-card {
+    position: relative;
+
+    scroll-margin-top:
+        30px;
+
+    padding:
+        35px 38px;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        rgba(255, 255, 255, .018);
+
+    transition:
+        border-color .2s ease,
+        background .2s ease;
+}
+
+
+.legal-card:hover {
+    border-color:
+        rgba(201, 164, 92, .17);
+
+    background:
+        rgba(255, 255, 255, .025);
+}
+
+
+.article-number {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--dorado);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1.25rem;
+}
+
+
+.legal-card h2 {
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(1.45rem, 3vw, 2rem);
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    color:
+        var(--marfil);
+}
+
+
+.legal-card p {
+    margin-top: 14px;
+
+    color:
+        var(--texto);
+
+    font-size: .78rem;
+
+    line-height: 1.9;
+}
+
+
+.legal-card ul {
+    margin:
+        18px 0 4px;
+
+    padding-left: 0;
+
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+.legal-card li {
+    position: relative;
+
+    padding-left: 21px;
+
+    color:
+        var(--texto);
+
+    font-size: .76rem;
+
+    line-height: 1.7;
+}
+
+
+.legal-card li::before {
+    content: "";
+
+    position: absolute;
+
+    left: 1px;
+    top: .72em;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background:
+        var(--dorado);
+}
+
+
+/* =========================================================
+   TARJETA DESTACADA
+========================================================= */
+
+.legal-card.featured {
+    border-color:
+        var(--border-gold);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201, 164, 92, .07),
+            rgba(255, 255, 255, .018)
+        );
+}
+
+
+.legal-card.featured::after {
+    content: "S";
+
+    position: absolute;
+
+    right: -20px;
+    bottom: -80px;
+
+    color:
+        rgba(201, 164, 92, .035);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 15rem;
+
+    font-style: italic;
+
+    line-height: 1;
+
+    pointer-events: none;
+}
+
+
+.featured-label {
+    position: absolute;
+
+    top: 25px;
+    right: 28px;
+
+    padding:
+        6px 10px;
+
+    border:
+        1px solid var(--border-gold);
+
+    border-radius:
+        999px;
+
+    color:
+        var(--dorado);
+
+    font-size: .48rem;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   NOTAS
+========================================================= */
+
+.legal-note {
+    margin-top: 22px;
+
+    padding:
+        17px 19px;
+
+    border-left:
+        2px solid var(--dorado);
+
+    border-radius:
+        0 var(--radius-sm)
+        var(--radius-sm) 0;
+
+    background:
+        rgba(201, 164, 92, .045);
+}
+
+
+.legal-note strong {
+    display: block;
+
+    color:
+        var(--dorado-claro);
+
+    font-size: .65rem;
+    font-weight: 600;
+
+    letter-spacing: .5px;
+}
+
+
+.legal-note p {
+    margin-top: 5px;
+
+    color:
+        var(--muted);
+
+    font-size: .7rem;
+}
+
+
+/* =========================================================
+   LINKS LEGALES
+========================================================= */
+
+.legal-inline-link {
+    display: inline-flex;
+
+    margin-top: 20px;
+
+    color:
+        var(--dorado-claro);
+
+    font-size: .7rem;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.legal-inline-link:hover {
+    color:
+        var(--marfil);
+}
+
+
+/* =========================================================
+   BOTÓN CONTACTO
+========================================================= */
+
+.legal-contact-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46px;
+
+    margin-top: 23px;
+
+    padding:
+        0 20px;
+
+    border:
+        1px solid var(--dorado);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--dorado);
+
+    color:
+        var(--cacao-950);
+
+    font-size: .68rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+.legal-contact-button:hover {
+    background:
+        var(--dorado-claro);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   CTA FINAL
+========================================================= */
+
+.legal-cta {
+    position: relative;
+
+    overflow: hidden;
+
+    padding:
+        100px 6%;
+
+    text-align: center;
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(201, 164, 92, .09),
+            transparent 50%
+        ),
+        var(--cacao-900);
+}
+
+
+.legal-cta::before {
+    content: "S";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -53%);
+
+    color:
+        rgba(201, 164, 92, .028);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(18rem, 40vw, 30rem);
+
+    font-style: italic;
+
+    pointer-events: none;
+}
+
+
+.legal-cta > * {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.legal-cta h2 {
+    margin-top: 10px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(2.2rem, 5vw, 3.8rem);
+
+    font-weight: 600;
+}
+
+
+.legal-cta p {
+    max-width: 600px;
+
+    margin:
+        15px auto 0;
+
+    color:
+        var(--texto);
+
+    font-size: .8rem;
+
+    line-height: 1.8;
+}
+
+
+.legal-cta > a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 49px;
+
+    margin-top: 27px;
+
+    padding:
+        0 23px;
+
+    border:
+        1px solid var(--dorado);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--dorado);
+
+    color:
+        var(--cacao-950);
+
+    font-size: .7rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+.legal-cta > a:hover {
+    background:
+        var(--dorado-claro);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   FOOTER LEGAL
+========================================================= */
+
+.legal-footer {
+    padding:
+        50px 6% 30px;
+
+    background:
+        #080403;
+
+    display: grid;
+
+    grid-template-columns:
+        1.4fr 1fr auto;
+
+    align-items: end;
+
+    gap: 40px;
+}
+
+
+.legal-footer strong {
+    color:
+        var(--marfil);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1rem;
+}
+
+
+.legal-footer > div p {
+    margin-top: 6px;
+
+    color:
+        var(--muted);
+
+    font-size: .62rem;
+}
+
+
+.legal-footer nav {
+    display: flex;
+
+    gap: 18px;
+
+    flex-wrap: wrap;
+}
+
+
+.legal-footer nav a {
+    color:
+        var(--muted);
+
+    font-size: .62rem;
+
+    text-decoration: none;
+}
+
+
+.legal-footer nav a:hover {
+    color:
+        var(--dorado-claro);
+}
+
+
+.legal-copyright {
+    color:
+        #665950;
+
+    font-size: .57rem;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .legal-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .legal-layout {
+        grid-template-columns:
+            210px minmax(0, 1fr);
+
+        gap: 30px;
+    }
+
+
+    .legal-index {
+        padding:
+            20px;
+    }
+
+
+    .legal-footer {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .legal-copyright {
+        grid-column:
+            1 / -1;
+
+        text-align: left;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .legal-header {
+        min-height: 65px;
+
+        padding:
+            0 18px;
+    }
+
+
+    .back-btn {
+        font-size: .61rem;
+    }
+
+
+    .legal-brand {
+        font-size: .46rem;
+
+        letter-spacing: 1.2px;
+    }
+
+
+    .legal-hero {
+        min-height: 390px;
+    }
+
+
+    .legal-overlay {
+        width:
+            calc(100% - 40px);
+
+        padding:
+            65px 0 80px;
+    }
+
+
+    .legal-tag {
+        font-size: .51rem;
+    }
+
+
+    .legal-hero h1 {
+        margin-top: 18px;
+
+        font-size:
+            clamp(2.7rem, 13vw, 4rem);
+    }
+
+
+    .legal-hero > .legal-overlay > p {
+        font-size: .78rem;
+    }
+
+
+    .legal-hero::before {
+        right: -20%;
+
+        font-size: 22rem;
+    }
+
+
+    /*
+       Las tarjetas se superponen ligeramente
+       con el final del hero.
+    */
+
+    .legal-summary {
+        width:
+            calc(100% - 40px);
+
+        margin-top:
+            -35px;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 9px;
+    }
+
+
+    .summary-card {
+        min-height: 165px;
+
+        padding:
+            20px 17px;
+    }
+
+
+    .summary-card h3 {
+        margin-top: 14px;
+
+        font-size: .95rem;
+    }
+
+
+    .summary-card p {
+        font-size: .61rem;
+    }
+
+
+    .legal-intro {
+        padding:
+            75px 20px 60px;
+    }
+
+
+    .legal-intro p {
+        font-size: .76rem;
+    }
+
+
+    .legal-content {
+        padding:
+            10px 20px 80px;
+    }
+
+
+    /*
+       En móvil desaparece la columna lateral.
+       El documento queda limpio y lineal.
+    */
+
+    .legal-layout {
+        grid-template-columns:
+            1fr;
+
+        gap: 25px;
+    }
+
+
+    .legal-index {
+        position: relative;
+
+        top: auto;
+
+        padding:
+            20px;
+
+        overflow: hidden;
+    }
+
+
+    .legal-index nav {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        column-gap: 18px;
+    }
+
+
+    .legal-index a {
+        font-size: .57rem;
+    }
+
+
+    .legal-card {
+        padding:
+            28px 22px;
+
+        border-radius:
+            16px;
+    }
+
+
+    .legal-card p {
+        font-size: .74rem;
+
+        line-height: 1.85;
+    }
+
+
+    .legal-card li {
+        font-size: .72rem;
+    }
+
+
+    .featured-label {
+        position: relative;
+
+        top: auto;
+        right: auto;
+
+        display: inline-flex;
+
+        margin-bottom: 15px;
+    }
+
+
+    .legal-cta {
+        padding:
+            80px 20px;
+    }
+
+
+    .legal-footer {
+        padding:
+            45px 20px 25px;
+
+        grid-template-columns:
+            1fr;
+
+        gap: 25px;
+    }
+
+
+    .legal-copyright {
+        grid-column: auto;
+
+        text-align: left;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .legal-header {
+        gap: 10px;
+    }
+
+
+    .legal-brand {
+        max-width: 115px;
+
+        text-align: right;
+
+        line-height: 1.4;
+    }
+
+
+    .legal-hero h1 {
+        font-size: 2.75rem;
+    }
+
+
+    .legal-meta {
+        gap: 6px;
+    }
+
+
+    .legal-summary {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .summary-card {
+        min-height: 0;
+    }
+
+
+    .legal-index nav {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .legal-card {
+        padding:
+            25px 19px;
+    }
+
+
+    .legal-card h2 {
+        font-size: 1.4rem;
+    }
+
+
+    .legal-contact-button {
+        width: 100%;
+    }
+
+
+    .legal-cta > a {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESIBILIDAD / REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .back-btn,
+    .legal-contact-button,
+    .legal-cta > a,
+    .legal-index a {
+        transition: none;
+    }
+
+}
