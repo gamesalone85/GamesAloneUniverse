@@ -1201,3 +1201,785 @@ button {
   }
 
 }
+
+/* =========================================================
+   GAMESALONE18 PRENSA
+   PLANTILLA DE ARTÍCULO / COBERTURA
+========================================================= */
+
+
+/* =========================================================
+   HEADER DEL ARTÍCULO
+========================================================= */
+
+.article-header {
+  position: relative;
+
+  padding:
+    85px 20px
+    70px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 30%,
+      rgba(0,255,174,.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #08080b,
+      #040405
+    );
+}
+
+
+.article-header::after {
+  content: "GA18";
+
+  position: absolute;
+
+  right: -20px;
+  bottom: -70px;
+
+  color:
+    rgba(255,255,255,.018);
+
+  font-size:
+    clamp(10rem, 24vw, 22rem);
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: -18px;
+
+  pointer-events: none;
+}
+
+
+.article-header-inner {
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(100%, 1040px);
+
+  margin: auto;
+}
+
+
+.article-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-bottom: 55px;
+
+  color: #606068;
+
+  font-size: .67rem;
+
+  font-weight: 700;
+}
+
+
+.article-breadcrumb a {
+  transition:
+    color .2s ease;
+}
+
+
+.article-breadcrumb a:hover {
+  color: var(--green);
+}
+
+
+.article-category {
+  color: var(--green);
+
+  font-size: .67rem;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+}
+
+
+.article-header h1 {
+  max-width: 950px;
+
+  margin-top: 20px;
+
+  font-size:
+    clamp(3.7rem, 8vw, 7.3rem);
+
+  line-height: .87;
+
+  letter-spacing: -6px;
+}
+
+
+.article-header h1 span {
+  display: block;
+
+  color: var(--green);
+}
+
+
+.article-lead {
+  max-width: 720px;
+
+  margin-top: 35px;
+
+  color: #aaaab1;
+
+  font-size:
+    clamp(1rem, 2vw, 1.25rem);
+
+  line-height: 1.7;
+}
+
+
+.article-information {
+  margin-top: 55px;
+
+  padding-top: 28px;
+
+  border-top:
+    1px solid var(--border);
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 30px;
+}
+
+
+.article-information div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.article-information small {
+  color: #55555d;
+
+  font-size: .58rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+
+.article-information strong {
+  font-size: .8rem;
+}
+
+
+/* =========================================================
+   IMAGEN PRINCIPAL
+========================================================= */
+
+.article-hero-image {
+  width:
+    min(calc(100% - 40px), 1280px);
+
+  margin:
+    50px auto 0;
+}
+
+
+.article-hero-image img {
+  width: 100%;
+
+  max-height: 780px;
+
+  object-fit: cover;
+
+  border-radius: 28px;
+
+  background: #101014;
+}
+
+
+.article-hero-image figcaption,
+.article-inline-image figcaption {
+  margin-top: 12px;
+
+  color: #57575f;
+
+  font-size: .67rem;
+}
+
+
+/* =========================================================
+   LAYOUT EDITORIAL
+========================================================= */
+
+.article-layout {
+  width:
+    min(calc(100% - 40px), 1080px);
+
+  margin:
+    90px auto 120px;
+
+  display: grid;
+
+  grid-template-columns:
+    210px
+    minmax(0, 720px);
+
+  justify-content: space-between;
+
+  gap: 70px;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.article-sidebar {
+  align-self: start;
+
+  position: sticky;
+
+  top: 110px;
+}
+
+
+.article-sidebar-label {
+  display: block;
+
+  padding-bottom: 15px;
+
+  border-bottom:
+    2px solid var(--green);
+
+  color: var(--green);
+
+  font-size: .6rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+
+.article-sidebar-data > div {
+  padding:
+    17px 0;
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+
+.article-sidebar-data small {
+  display: block;
+
+  color: #55555d;
+
+  font-size: .55rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+
+.article-sidebar-data strong {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: .72rem;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   CUERPO
+========================================================= */
+
+.article-body {
+  min-width: 0;
+}
+
+
+.article-body > p {
+  margin-bottom: 25px;
+
+  color: #a0a0a7;
+
+  font-size: 1rem;
+
+  line-height: 1.9;
+}
+
+
+.article-body .article-intro {
+  color: #d1d1d5;
+
+  font-size: 1.18rem;
+
+  line-height: 1.85;
+}
+
+
+.article-body strong {
+  color: white;
+}
+
+
+.article-body em {
+  color: #d8d8dc;
+}
+
+
+.article-body h2 {
+  margin:
+    75px 0
+    28px;
+
+  color: white;
+
+  font-size:
+    clamp(2.3rem, 5vw, 4rem);
+
+  line-height: .98;
+
+  letter-spacing: -2.5px;
+}
+
+
+.article-body h2 span {
+  display: block;
+
+  color: var(--green);
+}
+
+
+/* =========================================================
+   PULL QUOTE
+========================================================= */
+
+.article-pullquote {
+  position: relative;
+
+  margin:
+    65px 0;
+
+  padding:
+    45px 45px
+    45px 55px;
+
+  border-left:
+    4px solid var(--green);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,255,174,.07),
+      rgba(0,255,174,.01)
+    );
+}
+
+
+.article-pullquote > span {
+  position: absolute;
+
+  top: 8px;
+  left: 15px;
+
+  color:
+    rgba(0,255,174,.22);
+
+  font-family: Georgia, serif;
+
+  font-size: 5rem;
+
+  line-height: 1;
+}
+
+
+.article-pullquote p {
+  color: white;
+
+  font-size:
+    clamp(1.5rem, 4vw, 2.4rem);
+
+  font-weight: 900;
+
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+}
+
+
+.article-body .editorial-note {
+  margin-top: -45px;
+
+  color: #55555d;
+
+  font-size: .66rem;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   IMAGEN INTERIOR
+========================================================= */
+
+.article-inline-image {
+  margin:
+    70px 0;
+}
+
+
+.article-inline-image img {
+  width: 100%;
+
+  aspect-ratio: 3 / 2;
+
+  object-fit: cover;
+
+  border-radius: 22px;
+
+  background: #101014;
+}
+
+
+/* =========================================================
+   DESTACADO CASA FUERTE
+========================================================= */
+
+.article-highlight {
+  margin:
+    80px 0;
+
+  padding:
+    clamp(35px, 6vw, 60px);
+
+  border:
+    1px solid
+    rgba(0,255,174,.16);
+
+  border-radius: 26px;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(0,255,174,.08),
+      transparent 40%
+    ),
+    #0a0a0d;
+}
+
+
+.article-highlight-label {
+  color: var(--green);
+
+  font-size: .6rem;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+}
+
+
+.article-highlight h2 {
+  margin:
+    18px 0
+    30px;
+
+  font-size:
+    clamp(2rem, 5vw, 3.4rem);
+}
+
+
+.article-highlight p {
+  color: #9999a0;
+
+  font-size: .9rem;
+
+  line-height: 1.8;
+}
+
+
+.article-highlight p + p {
+  margin-top: 18px;
+}
+
+
+/* =========================================================
+   VIDEO PLACEHOLDER
+========================================================= */
+
+.article-video-placeholder {
+  margin-top: 80px;
+
+  padding:
+    50px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 24px;
+
+  background:
+    #09090c;
+
+  text-align: center;
+}
+
+
+.article-video-placeholder > span {
+  color: var(--green);
+
+  font-size: .6rem;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+}
+
+
+.article-video-placeholder h3 {
+  margin-top: 14px;
+
+  font-size:
+    clamp(1.7rem, 4vw, 2.6rem);
+
+  letter-spacing: -1px;
+}
+
+
+.article-video-placeholder p {
+  margin-top: 10px;
+
+  color: #6c6c74;
+
+  font-size: .78rem;
+}
+
+
+/* =========================================================
+   TAGS
+========================================================= */
+
+.article-tags {
+  margin-top: 55px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+
+.article-tags span {
+  padding:
+    7px 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 999px;
+
+  color: #77777f;
+
+  font-size: .56rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+
+.article-back {
+  display: inline-block;
+
+  margin-top: 50px;
+
+  color: var(--green);
+
+  font-size: .67rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE ARTÍCULO
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .article-layout {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+  }
+
+
+  .article-sidebar {
+    position: static;
+  }
+
+
+  .article-sidebar-data {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 0 25px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .article-header {
+    padding:
+      65px 18px
+      55px;
+  }
+
+
+  .article-breadcrumb {
+    margin-bottom: 40px;
+  }
+
+
+  .article-header h1 {
+    font-size:
+      clamp(3rem, 15vw, 4.6rem);
+
+    letter-spacing: -4px;
+  }
+
+
+  .article-lead {
+    font-size: .95rem;
+  }
+
+
+  .article-information {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+
+  .article-information div {
+    padding-bottom: 14px;
+
+    border-bottom:
+      1px solid var(--border);
+  }
+
+
+  .article-hero-image {
+    width:
+      calc(100% - 28px);
+
+    margin-top: 25px;
+  }
+
+
+  .article-hero-image img {
+    aspect-ratio: 1 / 1;
+
+    border-radius: 20px;
+  }
+
+
+  .article-layout {
+    width:
+      calc(100% - 32px);
+
+    margin:
+      65px auto 90px;
+  }
+
+
+  .article-sidebar-data {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  .article-body > p {
+    font-size: .93rem;
+
+    line-height: 1.8;
+  }
+
+
+  .article-body .article-intro {
+    font-size: 1.03rem;
+  }
+
+
+  .article-body h2 {
+    margin-top: 60px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .article-pullquote {
+    margin:
+      50px 0;
+
+    padding:
+      40px 25px
+      40px 35px;
+  }
+
+
+  .article-inline-image {
+    margin:
+      55px 0;
+  }
+
+
+  .article-inline-image img {
+    aspect-ratio: 1 / 1;
+  }
+
+
+  .article-highlight {
+    margin:
+      60px 0;
+
+    padding:
+      30px 25px;
+
+    border-radius: 20px;
+  }
+
+
+  .article-video-placeholder {
+    margin-top: 60px;
+
+    padding:
+      40px 25px;
+  }
+
+}
