@@ -1,0 +1,1436 @@
+/* =========================================================
+   GAMESALONE18 UNIVERSE
+   TÉRMINOS Y CONDICIONES
+   CSS INDEPENDIENTE
+========================================================= */
+
+:root {
+
+  --green: #00ffae;
+  --bg: #050507;
+  --surface: #09090c;
+  --surface-2: #0d0d11;
+  --text: #f4f4f6;
+  --muted: #9999a2;
+  --dim: #62626b;
+
+  --border:
+    rgba(255,255,255,.09);
+
+  --green-border:
+    rgba(0,255,174,.18);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+
+body {
+
+  background: var(--bg);
+  color: var(--text);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  line-height: 1.6;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background:
+    rgba(5,5,7,.92);
+
+  border-bottom:
+    1px solid var(--border);
+
+  backdrop-filter:
+    blur(15px);
+
+}
+
+
+.header-inner {
+
+  width:
+    min(calc(100% - 40px), 1180px);
+
+  min-height: 72px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 30px;
+
+}
+
+
+.brand {
+
+  display: flex;
+  flex-direction: column;
+
+  line-height: .92;
+
+}
+
+
+.brand-main {
+
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 900;
+
+  letter-spacing: -1px;
+
+}
+
+
+.brand-universe {
+
+  margin-top: 4px;
+
+  color: var(--green);
+
+  font-size: .52rem;
+
+  font-weight: 900;
+
+  letter-spacing: 4px;
+
+}
+
+
+.header-nav {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 28px;
+
+}
+
+
+.header-nav a {
+
+  color: #8e8e96;
+
+  font-size: .68rem;
+
+  font-weight: 800;
+
+  transition:
+    color .2s ease;
+
+}
+
+
+.header-nav a:hover {
+  color: var(--green);
+}
+
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.legal-hero {
+
+  position: relative;
+
+  overflow: hidden;
+
+  padding:
+    100px 20px
+    85px;
+
+  background:
+
+    radial-gradient(
+      circle at 15% 30%,
+      rgba(0,255,174,.10),
+      transparent 30%
+    ),
+
+    linear-gradient(
+      135deg,
+      #09090c,
+      #040405
+    );
+
+}
+
+
+.legal-hero::after {
+
+  content: "LEGAL";
+
+  position: absolute;
+
+  right: -30px;
+  bottom: -75px;
+
+  color:
+    rgba(255,255,255,.018);
+
+  font-size:
+    clamp(9rem,22vw,20rem);
+
+  font-weight: 900;
+
+  letter-spacing: -15px;
+
+  line-height: 1;
+
+  pointer-events: none;
+
+}
+
+
+.legal-hero-inner {
+
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(100%,1040px);
+
+  margin: auto;
+
+}
+
+
+.eyebrow {
+
+  color: var(--green);
+
+  font-size: .63rem;
+
+  font-weight: 900;
+
+  letter-spacing: 4px;
+
+}
+
+
+.legal-hero h1 {
+
+  margin-top: 20px;
+
+  max-width: 950px;
+
+  font-size:
+    clamp(4rem,9vw,7.5rem);
+
+  line-height: .85;
+
+  letter-spacing: -7px;
+
+}
+
+
+.legal-hero h1 span {
+
+  display: block;
+
+  color: var(--green);
+
+}
+
+
+.legal-intro {
+
+  max-width: 700px;
+
+  margin-top: 38px;
+
+  color: #aaaab2;
+
+  font-size:
+    clamp(1rem,2vw,1.18rem);
+
+  line-height: 1.8;
+
+}
+
+
+.legal-meta {
+
+  margin-top: 50px;
+
+  padding-top: 25px;
+
+  border-top:
+    1px solid var(--border);
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+}
+
+
+.legal-meta span {
+
+  padding:
+    7px 11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 999px;
+
+  color: #777780;
+
+  font-size: .55rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+
+/* =========================================================
+   PRINCIPIO
+========================================================= */
+
+.legal-principle {
+
+  padding:
+    55px 20px;
+
+  border-top:
+    1px solid var(--green-border);
+
+  border-bottom:
+    1px solid var(--green-border);
+
+  background:
+    rgba(0,255,174,.025);
+
+}
+
+
+.legal-principle-inner {
+
+  width:
+    min(100%,900px);
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    120px 1fr;
+
+  gap: 45px;
+
+}
+
+
+.legal-principle-inner > span {
+
+  color: var(--green);
+
+  font-size: .58rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.legal-principle p {
+
+  color: #c6c6cb;
+
+  font-size:
+    clamp(1rem,2vw,1.18rem);
+
+  line-height: 1.8;
+
+}
+
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.legal-layout {
+
+  width:
+    min(calc(100% - 40px),1100px);
+
+  margin:
+    90px auto
+    120px;
+
+  display: grid;
+
+  grid-template-columns:
+    220px minmax(0,740px);
+
+  justify-content:
+    space-between;
+
+  gap: 80px;
+
+}
+
+
+
+/* =========================================================
+   ÍNDICE
+========================================================= */
+
+.index-sticky {
+
+  position: sticky;
+
+  top: 105px;
+
+  max-height:
+    calc(100vh - 125px);
+
+  overflow-y: auto;
+
+  padding-right: 8px;
+
+}
+
+
+.index-sticky::-webkit-scrollbar {
+  width: 3px;
+}
+
+
+.index-sticky::-webkit-scrollbar-thumb {
+  background: #24242a;
+}
+
+
+.index-title {
+
+  padding-bottom: 15px;
+
+  border-bottom:
+    2px solid var(--green);
+
+  color: var(--green);
+
+  font-size: .58rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.legal-index nav {
+  margin-top: 8px;
+}
+
+
+.legal-index a {
+
+  padding:
+    8px 0;
+
+  display: grid;
+
+  grid-template-columns:
+    25px 1fr;
+
+  gap: 7px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.045);
+
+  color: #696972;
+
+  font-size: .62rem;
+
+  transition:
+    color .2s ease;
+
+}
+
+
+.legal-index a span {
+
+  color: #3f3f46;
+
+  font-size: .53rem;
+
+  font-weight: 900;
+
+}
+
+
+.legal-index a:hover {
+  color: var(--green);
+}
+
+
+
+/* =========================================================
+   DOCUMENTO
+========================================================= */
+
+.legal-document {
+  min-width: 0;
+}
+
+
+.legal-section {
+
+  padding:
+    0 0
+    75px;
+
+  margin-bottom:
+    75px;
+
+  border-bottom:
+    1px solid var(--border);
+
+}
+
+
+.section-number {
+
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: var(--green);
+
+  font-size: .6rem;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+}
+
+
+.legal-section h2 {
+
+  margin-bottom: 30px;
+
+  color: white;
+
+  font-size:
+    clamp(2.1rem,5vw,3.5rem);
+
+  line-height: 1;
+
+  letter-spacing: -2.5px;
+
+}
+
+
+.legal-section h2 span {
+
+  display: block;
+
+  color: var(--green);
+
+}
+
+
+.legal-section h3 {
+
+  margin:
+    42px 0
+    15px;
+
+  color: #e3e3e6;
+
+  font-size: .82rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+
+.legal-section > p {
+
+  margin-bottom: 22px;
+
+  color: var(--muted);
+
+  font-size: .92rem;
+
+  line-height: 1.9;
+
+}
+
+
+.legal-section p strong {
+  color: white;
+}
+
+
+.inline-link {
+
+  color: var(--green);
+
+  font-weight: 800;
+
+}
+
+
+.inline-link:hover {
+  text-decoration: underline;
+}
+
+
+.legal-section ul {
+
+  margin:
+    25px 0
+    30px;
+
+  list-style: none;
+
+}
+
+
+.legal-section li {
+
+  position: relative;
+
+  margin-bottom: 13px;
+
+  padding-left: 24px;
+
+  color: #9999a1;
+
+  font-size: .88rem;
+
+  line-height: 1.7;
+
+}
+
+
+.legal-section li::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: .72em;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background:
+    var(--green);
+
+}
+
+
+
+/* =========================================================
+   NOTAS
+========================================================= */
+
+.legal-note {
+
+  margin:
+    35px 0;
+
+  padding:
+    25px;
+
+  border:
+    1px solid var(--green-border);
+
+  border-radius: 16px;
+
+  background:
+    rgba(0,255,174,.035);
+
+}
+
+
+.legal-note strong {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--green);
+
+  font-size: .7rem;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+
+.legal-note p {
+
+  color: #8d8d95;
+
+  font-size: .8rem;
+
+  line-height: 1.75;
+
+}
+
+
+
+/* =========================================================
+   URL
+========================================================= */
+
+.url-box {
+
+  margin:
+    28px 0;
+
+  padding:
+    18px 22px;
+
+  border-left:
+    3px solid var(--green);
+
+  background:
+    rgba(0,255,174,.04);
+
+  color: var(--green);
+
+  font-size: .82rem;
+
+  font-weight: 800;
+
+  overflow-wrap: anywhere;
+
+}
+
+
+
+/* =========================================================
+   +18
+========================================================= */
+
+.age-box {
+
+  margin:
+    35px 0;
+
+  padding:
+    28px;
+
+  border:
+    1px solid var(--green-border);
+
+  border-radius: 20px;
+
+  background: var(--surface);
+
+  display: grid;
+
+  grid-template-columns:
+    75px 1fr;
+
+  gap: 25px;
+
+  align-items: center;
+
+}
+
+
+.age-box > span {
+
+  width: 70px;
+  height: 70px;
+
+  border:
+    2px solid var(--green);
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: var(--green);
+
+  font-size: 1.35rem;
+
+  font-weight: 900;
+
+}
+
+
+.age-box strong {
+
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: white;
+
+}
+
+
+.age-box p {
+
+  color: #85858d;
+
+  font-size: .8rem;
+
+  line-height: 1.7;
+
+}
+
+
+
+/* =========================================================
+   DOCUMENTO RELACIONADO
+========================================================= */
+
+.document-card {
+
+  margin-top: 30px;
+
+  padding: 30px;
+
+  border:
+    1px solid var(--green-border);
+
+  border-radius: 18px;
+
+  background:
+
+    radial-gradient(
+      circle at 100% 0,
+      rgba(0,255,174,.08),
+      transparent 45%
+    ),
+
+    var(--surface);
+
+  display: flex;
+
+  flex-direction: column;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease;
+
+}
+
+
+.document-card:hover {
+
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(0,255,174,.4);
+
+}
+
+
+.document-card span {
+
+  color: #55555d;
+
+  font-size: .55rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.document-card strong {
+
+  margin-top: 8px;
+
+  color: white;
+
+  font-size: 1.25rem;
+
+}
+
+
+.document-card small {
+
+  margin-top: 13px;
+
+  color: var(--green);
+
+  font-weight: 800;
+
+}
+
+
+
+/* =========================================================
+   CONTACTO
+========================================================= */
+
+.legal-contact {
+
+  margin:
+    35px 0;
+
+  padding:
+    35px;
+
+  border:
+    1px solid var(--green-border);
+
+  border-radius: 22px;
+
+  background:
+
+    radial-gradient(
+      circle at 100% 0,
+      rgba(0,255,174,.08),
+      transparent 45%
+    ),
+
+    var(--surface);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+}
+
+
+.legal-contact > span {
+
+  color: var(--green);
+
+  font-size: .57rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.legal-contact strong {
+
+  margin:
+    5px 0 12px;
+
+  font-size: 1.25rem;
+
+}
+
+
+.legal-contact a {
+
+  width: fit-content;
+
+  color: var(--green);
+
+  font-weight: 800;
+
+}
+
+
+.legal-contact small {
+  color: #66666e;
+}
+
+
+.document-version {
+
+  color: #595961 !important;
+
+  font-size: .72rem !important;
+
+}
+
+
+
+/* =========================================================
+   NAVEGACIÓN LEGAL
+========================================================= */
+
+.legal-navigation {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 15px;
+
+}
+
+
+.legal-navigation > a {
+
+  min-height: 105px;
+
+  padding: 25px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 17px;
+
+  background: var(--surface);
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  transition:
+    border-color .2s ease,
+    transform .2s ease;
+
+}
+
+
+.legal-navigation > a:hover {
+
+  border-color:
+    var(--green-border);
+
+  transform:
+    translateY(-2px);
+
+}
+
+
+.legal-navigation small {
+
+  color: #55555d;
+
+  font-size: .53rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.legal-navigation strong {
+
+  margin-top: 6px;
+
+  color: var(--green);
+
+  font-size: .78rem;
+
+}
+
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer {
+
+  border-top:
+    1px solid var(--border);
+
+  background: #030304;
+
+}
+
+
+.footer-inner {
+
+  width:
+    min(calc(100% - 40px),1100px);
+
+  margin: auto;
+
+  padding:
+    65px 0;
+
+  display: grid;
+
+  grid-template-columns:
+    2fr 1fr 1fr;
+
+  gap: 60px;
+
+}
+
+
+.footer-identity strong {
+  font-size: 1rem;
+}
+
+
+.footer-identity p {
+
+  margin-top: 8px;
+
+  color: #5d5d65;
+
+  font-size: .7rem;
+
+}
+
+
+.footer-legal,
+.footer-links {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+}
+
+
+.footer-legal > span,
+.footer-links > span {
+
+  margin-bottom: 8px;
+
+  color: var(--green);
+
+  font-size: .55rem;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.footer-legal a,
+.footer-links a {
+
+  color: #77777f;
+
+  font-size: .68rem;
+
+}
+
+
+.footer-legal a:hover,
+.footer-links a:hover {
+  color: white;
+}
+
+
+.footer-bottom {
+
+  width:
+    min(calc(100% - 40px),1100px);
+
+  margin: auto;
+
+  padding:
+    22px 0;
+
+  border-top:
+    1px solid var(--border);
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  gap: 20px;
+
+  color: #4d4d54;
+
+  font-size: .6rem;
+
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .legal-layout {
+
+    grid-template-columns:
+      1fr;
+
+    gap: 60px;
+
+  }
+
+
+  .legal-index {
+    display: none;
+  }
+
+
+  .footer-inner {
+
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+
+  .footer-identity {
+    grid-column:
+      1 / -1;
+  }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .header-inner {
+
+    width:
+      calc(100% - 30px);
+
+    min-height: 65px;
+
+  }
+
+
+  .header-nav {
+    gap: 14px;
+  }
+
+
+  .header-nav a {
+    font-size: .58rem;
+  }
+
+
+  .header-nav a:nth-child(2) {
+    display: none;
+  }
+
+
+  .legal-hero {
+
+    padding:
+      70px 17px
+      60px;
+
+  }
+
+
+  .legal-hero h1 {
+
+    font-size:
+      clamp(3.25rem,16vw,5rem);
+
+    letter-spacing: -5px;
+
+  }
+
+
+  .legal-intro {
+    font-size: .92rem;
+  }
+
+
+  .legal-principle {
+
+    padding:
+      40px 17px;
+
+  }
+
+
+  .legal-principle-inner {
+
+    grid-template-columns:
+      1fr;
+
+    gap: 15px;
+
+  }
+
+
+  .legal-layout {
+
+    width:
+      calc(100% - 32px);
+
+    margin:
+      65px auto
+      90px;
+
+  }
+
+
+  .legal-section {
+
+    padding-bottom: 55px;
+
+    margin-bottom: 55px;
+
+  }
+
+
+  .legal-section h2 {
+
+    font-size:
+      clamp(2.3rem,12vw,3.4rem);
+
+  }
+
+
+  .legal-section > p {
+
+    font-size: .88rem;
+
+    line-height: 1.8;
+
+  }
+
+
+  .legal-note {
+    padding: 20px;
+  }
+
+
+  .age-box {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .legal-navigation {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .legal-contact {
+
+    padding:
+      27px 22px;
+
+  }
+
+
+  .footer-inner {
+
+    width:
+      calc(100% - 32px);
+
+    grid-template-columns:
+      1fr;
+
+    gap: 35px;
+
+    padding:
+      50px 0;
+
+  }
+
+
+  .footer-identity {
+    grid-column: auto;
+  }
+
+
+  .footer-bottom {
+
+    width:
+      calc(100% - 32px);
+
+    flex-direction: column;
+
+    gap: 5px;
+
+  }
+
+}
