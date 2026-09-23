@@ -2416,3 +2416,95 @@ button {
   }
 
 }
+
+/* =========================================================
+   ENLACES DE COLABORADORES
+========================================================= */
+
+.external-links {
+
+  margin-top: 24px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+}
+
+
+.external-link {
+
+  min-height: 40px;
+
+  padding: 0 14px;
+
+  border:
+    1px solid var(--green-border);
+
+  border-radius: 8px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background:
+    rgba(0,255,174,.035);
+
+  color: #d8d8dc;
+
+  font-size: .67rem;
+  font-weight: 900;
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .2s ease;
+
+}
+
+
+.external-link span {
+  color: var(--green);
+}
+
+
+@media (hover:hover) {
+
+  .external-link:hover {
+
+    transform:
+      translateY(-2px);
+
+    border-color:
+      rgba(0,255,174,.45);
+
+    background:
+      rgba(0,255,174,.08);
+
+    color: white;
+
+  }
+
+}
+
+
+@media (max-width:650px) {
+
+  .external-links {
+
+    flex-direction: column;
+
+  }
+
+
+  .external-link {
+
+    width: 100%;
+
+  }
+
+}
