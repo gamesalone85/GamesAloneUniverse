@@ -1,0 +1,1467 @@
+/* =========================================================
+   GAMESALONE18 UNIVERSE
+   PREGUNTAS FRECUENTES
+========================================================= */
+
+*,
+*::before,
+*::after {
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+
+:root {
+
+--green:#00ff88;
+--green-dark:#00cc6a;
+
+--bg:#050507;
+--white:#ffffff;
+
+--text:#d2d2d8;
+--muted:#8e8e98;
+
+--border:
+rgba(255,255,255,.085);
+
+--green-border:
+rgba(0,255,136,.22);
+
+}
+
+
+html {
+
+scroll-behavior:smooth;
+scroll-padding-top:100px;
+
+-webkit-text-size-adjust:100%;
+
+}
+
+
+body {
+
+min-height:100vh;
+
+font-family:
+'Inter',
+Arial,
+sans-serif;
+
+background:
+var(--bg);
+
+color:
+var(--white);
+
+overflow-x:hidden;
+
+-webkit-font-smoothing:
+antialiased;
+
+}
+
+
+a {
+
+color:inherit;
+
+}
+
+
+.container {
+
+width:
+min(
+  calc(100% - 40px),
+  1180px
+);
+
+margin:auto;
+
+}
+
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.page-background {
+
+position:fixed;
+
+inset:0;
+
+z-index:-3;
+
+background:
+
+radial-gradient(
+  circle at 50% -10%,
+  rgba(0,255,136,.09),
+  transparent 38%
+),
+
+linear-gradient(
+  180deg,
+  #09090c,
+  #050507 45%,
+  #020203
+);
+
+}
+
+
+.page-grid {
+
+position:fixed;
+
+inset:0;
+
+z-index:-2;
+
+opacity:.15;
+
+background-image:
+
+linear-gradient(
+  rgba(255,255,255,.035) 1px,
+  transparent 1px
+),
+
+linear-gradient(
+  90deg,
+  rgba(255,255,255,.035) 1px,
+  transparent 1px
+);
+
+background-size:
+42px 42px;
+
+mask-image:
+linear-gradient(
+  to bottom,
+  #000,
+  transparent 75%
+);
+
+}
+
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+
+position:fixed;
+
+top:0;
+left:0;
+right:0;
+
+z-index:1000;
+
+background:
+rgba(5,5,7,.93);
+
+border-bottom:
+1px solid
+var(--border);
+
+backdrop-filter:
+blur(16px);
+
+-webkit-backdrop-filter:
+blur(16px);
+
+}
+
+
+.header-inner {
+
+width:
+min(
+  calc(100% - 40px),
+  1180px
+);
+
+min-height:72px;
+
+margin:auto;
+
+display:flex;
+
+align-items:center;
+
+justify-content:
+space-between;
+
+gap:30px;
+
+}
+
+
+.brand {
+
+display:flex;
+
+flex-direction:column;
+
+text-decoration:none;
+
+line-height:.9;
+
+}
+
+
+.brand-main {
+
+font-size:1rem;
+
+font-weight:900;
+
+letter-spacing:-1px;
+
+color:#fff;
+
+}
+
+
+.brand-universe {
+
+margin-top:5px;
+
+font-size:.5rem;
+
+font-weight:900;
+
+letter-spacing:4px;
+
+color:var(--green);
+
+}
+
+
+.header-nav {
+
+display:flex;
+
+align-items:center;
+
+gap:28px;
+
+}
+
+
+.header-nav a {
+
+padding:
+27px 0 24px;
+
+color:#85858d;
+
+font-size:.68rem;
+
+font-weight:800;
+
+text-decoration:none;
+
+transition:
+color .2s ease;
+
+}
+
+
+.header-nav a:hover {
+
+color:#fff;
+
+}
+
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.faq-hero {
+
+padding:
+175px 20px 90px;
+
+text-align:center;
+
+}
+
+
+.hero-tag {
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:
+10px 18px;
+
+margin-bottom:30px;
+
+border:
+1px solid
+var(--border);
+
+border-radius:999px;
+
+background:
+rgba(255,255,255,.035);
+
+color:#bdbdc4;
+
+font-size:.7rem;
+
+font-weight:800;
+
+letter-spacing:2px;
+
+}
+
+
+.faq-hero h1 {
+
+max-width:900px;
+
+margin:auto;
+
+font-family:
+'Orbitron',
+sans-serif;
+
+font-size:
+clamp(
+  2.8rem,
+  7vw,
+  5.3rem
+);
+
+font-weight:700;
+
+line-height:1.03;
+
+letter-spacing:-.04em;
+
+}
+
+
+.faq-hero h1 span {
+
+display:block;
+
+color:var(--green);
+
+}
+
+
+.hero-description {
+
+max-width:720px;
+
+margin:
+28px auto 0;
+
+color:var(--muted);
+
+font-size:1rem;
+
+line-height:1.85;
+
+}
+
+
+.hero-actions {
+
+margin-top:35px;
+
+display:flex;
+
+justify-content:center;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+}
+
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.primary-button,
+.secondary-button,
+.whatsapp-button {
+
+min-height:48px;
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:
+0 22px;
+
+border-radius:10px;
+
+font-size:.73rem;
+
+font-weight:800;
+
+text-decoration:none;
+
+transition:
+transform .2s ease,
+border-color .2s ease,
+background .2s ease;
+
+}
+
+
+.primary-button {
+
+background:
+var(--green);
+
+color:#001c0e;
+
+border:
+1px solid
+var(--green);
+
+}
+
+
+.secondary-button {
+
+border:
+1px solid
+var(--border);
+
+background:
+rgba(255,255,255,.03);
+
+color:#ddd;
+
+}
+
+
+.whatsapp-button {
+
+background:
+#25D366;
+
+border:
+1px solid
+#25D366;
+
+color:#fff;
+
+}
+
+
+.primary-button:hover,
+.secondary-button:hover,
+.whatsapp-button:hover {
+
+transform:
+translateY(-2px);
+
+}
+
+
+
+/* =========================================================
+   QUICK LINKS
+========================================================= */
+
+.quick-section {
+
+padding:
+0 20px 70px;
+
+}
+
+
+.quick-grid {
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:10px;
+
+}
+
+
+.quick-grid a {
+
+min-height:90px;
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+padding:20px;
+
+border:
+1px solid
+var(--border);
+
+border-radius:16px;
+
+background:
+rgba(255,255,255,.025);
+
+color:#fff;
+
+text-decoration:none;
+
+transition:
+transform .2s ease,
+border-color .2s ease,
+background .2s ease;
+
+}
+
+
+.quick-grid a:hover {
+
+transform:
+translateY(-3px);
+
+border-color:
+var(--green-border);
+
+background:
+rgba(0,255,136,.025);
+
+}
+
+
+.quick-grid span {
+
+color:
+var(--green);
+
+font-family:
+'Orbitron',
+sans-serif;
+
+font-size:.6rem;
+
+font-weight:700;
+
+}
+
+
+.quick-grid strong {
+
+font-size:.75rem;
+
+}
+
+
+
+/* =========================================================
+   FAQ SECTION
+========================================================= */
+
+.faq-section {
+
+padding:
+80px 20px 110px;
+
+}
+
+
+.faq-container {
+
+max-width:1000px;
+
+}
+
+
+.section-heading {
+
+margin-bottom:65px;
+
+text-align:center;
+
+}
+
+
+.section-label {
+
+display:inline-block;
+
+margin-bottom:12px;
+
+color:var(--green);
+
+font-size:.65rem;
+
+font-weight:800;
+
+letter-spacing:2px;
+
+}
+
+
+.section-heading h2 {
+
+font-family:
+'Orbitron',
+sans-serif;
+
+font-size:
+clamp(
+  1.8rem,
+  4vw,
+  2.6rem
+);
+
+}
+
+
+.section-heading p {
+
+margin-top:13px;
+
+color:var(--muted);
+
+font-size:.85rem;
+
+}
+
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.faq-category {
+
+margin-bottom:85px;
+
+scroll-margin-top:100px;
+
+}
+
+
+.category-heading {
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+margin-bottom:25px;
+
+}
+
+
+.category-heading > span {
+
+width:48px;
+height:48px;
+
+flex-shrink:0;
+
+display:grid;
+
+place-items:center;
+
+border:
+1px solid
+var(--green-border);
+
+border-radius:50%;
+
+background:
+rgba(0,255,136,.05);
+
+color:
+var(--green);
+
+font-family:
+'Orbitron',
+sans-serif;
+
+font-size:.65rem;
+
+font-weight:700;
+
+}
+
+
+.category-heading small {
+
+display:block;
+
+margin-bottom:4px;
+
+color:var(--green);
+
+font-size:.55rem;
+
+font-weight:800;
+
+letter-spacing:1.5px;
+
+}
+
+
+.category-heading h3 {
+
+font-family:
+'Orbitron',
+sans-serif;
+
+font-size:
+clamp(
+  1.2rem,
+  3vw,
+  1.55rem
+);
+
+}
+
+
+
+/* =========================================================
+   FAQ DETAILS
+========================================================= */
+
+.faq-list {
+
+display:flex;
+
+flex-direction:column;
+
+gap:9px;
+
+}
+
+
+details {
+
+overflow:hidden;
+
+border:
+1px solid
+var(--border);
+
+border-radius:14px;
+
+background:
+rgba(255,255,255,.025);
+
+transition:
+border-color .2s ease,
+background .2s ease;
+
+}
+
+
+details:hover {
+
+border-color:
+rgba(255,255,255,.14);
+
+}
+
+
+details[open] {
+
+border-color:
+var(--green-border);
+
+background:
+rgba(0,255,136,.018);
+
+}
+
+
+summary {
+
+position:relative;
+
+min-height:68px;
+
+display:flex;
+
+align-items:center;
+
+padding:
+18px 60px 18px 22px;
+
+color:#ededf0;
+
+font-size:.86rem;
+
+font-weight:700;
+
+line-height:1.5;
+
+cursor:pointer;
+
+list-style:none;
+
+user-select:none;
+
+}
+
+
+summary::-webkit-details-marker {
+
+display:none;
+
+}
+
+
+summary::after {
+
+content:"+";
+
+position:absolute;
+
+right:22px;
+
+top:50%;
+
+transform:
+translateY(-50%);
+
+width:28px;
+height:28px;
+
+display:grid;
+
+place-items:center;
+
+border:
+1px solid
+var(--border);
+
+border-radius:50%;
+
+color:var(--green);
+
+font-size:1rem;
+
+font-weight:400;
+
+transition:
+transform .2s ease;
+
+}
+
+
+details[open] summary::after {
+
+content:"−";
+
+}
+
+
+.answer {
+
+padding:
+0 22px 22px;
+
+border-top:
+1px solid
+rgba(255,255,255,.05);
+
+}
+
+
+.answer p {
+
+padding-top:18px;
+
+color:#9d9da6;
+
+font-size:.82rem;
+
+line-height:1.8;
+
+}
+
+
+.answer strong {
+
+color:#e7e7eb;
+
+}
+
+
+.answer a {
+
+color:var(--green);
+
+font-weight:700;
+
+text-decoration:none;
+
+}
+
+
+.answer a:hover {
+
+text-decoration:underline;
+
+}
+
+
+
+/* =========================================================
+   HELP CARD
+========================================================= */
+
+.help-card {
+
+padding:
+55px 40px;
+
+border:
+1px solid
+var(--green-border);
+
+border-radius:24px;
+
+background:
+
+radial-gradient(
+  circle at 50% 0%,
+  rgba(0,255,136,.08),
+  transparent 55%
+),
+
+rgba(255,255,255,.025);
+
+text-align:center;
+
+}
+
+
+.help-card h2 {
+
+font-family:
+'Orbitron',
+sans-serif;
+
+font-size:
+clamp(
+  1.6rem,
+  4vw,
+  2.4rem
+);
+
+}
+
+
+.help-card p {
+
+max-width:550px;
+
+margin:
+15px auto 0;
+
+color:var(--muted);
+
+font-size:.85rem;
+
+line-height:1.7;
+
+}
+
+
+.help-actions {
+
+display:flex;
+
+justify-content:center;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:28px;
+
+}
+
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer {
+
+border-top:
+1px solid
+var(--border);
+
+background:
+#030304;
+
+}
+
+
+.footer-inner {
+
+width:
+min(
+  calc(100% - 40px),
+  1100px
+);
+
+margin:auto;
+
+padding:
+65px 0;
+
+display:grid;
+
+grid-template-columns:
+2fr 1fr 1fr;
+
+gap:60px;
+
+}
+
+
+.footer-brand strong {
+
+font-size:1rem;
+
+}
+
+
+.footer-brand p {
+
+margin-top:8px;
+
+color:#5d5d65;
+
+font-size:.68rem;
+
+}
+
+
+.footer-column {
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+}
+
+
+.footer-column > span {
+
+margin-bottom:8px;
+
+color:var(--green);
+
+font-size:.54rem;
+
+font-weight:900;
+
+letter-spacing:2px;
+
+}
+
+
+.footer-column a {
+
+color:#777780;
+
+font-size:.67rem;
+
+text-decoration:none;
+
+}
+
+
+.footer-column a:hover {
+
+color:#fff;
+
+}
+
+
+.footer-bottom {
+
+width:
+min(
+  calc(100% - 40px),
+  1100px
+);
+
+margin:auto;
+
+padding:
+22px 0;
+
+border-top:
+1px solid
+var(--border);
+
+display:flex;
+
+justify-content:
+space-between;
+
+gap:20px;
+
+color:#4d4d55;
+
+font-size:.58rem;
+
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:850px) {
+
+.quick-grid {
+
+grid-template-columns:
+1fr 1fr;
+
+}
+
+
+.footer-inner {
+
+grid-template-columns:
+1.5fr 1fr 1fr;
+
+gap:35px;
+
+}
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px) {
+
+.container {
+
+width:
+calc(100% - 30px);
+
+}
+
+
+.header-inner {
+
+width:
+calc(100% - 30px);
+
+min-height:65px;
+
+}
+
+
+.header-nav {
+
+gap:14px;
+
+}
+
+
+.header-nav a {
+
+padding:
+24px 0 21px;
+
+font-size:.58rem;
+
+}
+
+
+.header-nav a:nth-child(2),
+.header-nav a:nth-child(3) {
+
+display:none;
+
+}
+
+
+.faq-hero {
+
+padding:
+135px 0 70px;
+
+}
+
+
+.hero-tag {
+
+font-size:.58rem;
+
+letter-spacing:1.2px;
+
+}
+
+
+.faq-hero h1 {
+
+font-size:
+clamp(
+  2.2rem,
+  12vw,
+  3.5rem
+);
+
+}
+
+
+.hero-description {
+
+font-size:.9rem;
+
+}
+
+
+.quick-section {
+
+padding:
+0 0 55px;
+
+}
+
+
+.faq-section {
+
+padding:
+65px 0 85px;
+
+}
+
+
+.section-heading {
+
+margin-bottom:50px;
+
+}
+
+
+.faq-category {
+
+margin-bottom:65px;
+
+}
+
+
+summary {
+
+padding:
+17px 55px 17px 18px;
+
+font-size:.8rem;
+
+}
+
+
+summary::after {
+
+right:17px;
+
+}
+
+
+.answer {
+
+padding:
+0 18px 19px;
+
+}
+
+
+.answer p {
+
+font-size:.78rem;
+
+}
+
+
+.help-card {
+
+padding:
+45px 22px;
+
+}
+
+
+.footer-inner {
+
+width:
+calc(100% - 32px);
+
+grid-template-columns:1fr;
+
+gap:35px;
+
+padding:
+50px 0;
+
+}
+
+
+.footer-bottom {
+
+width:
+calc(100% - 32px);
+
+flex-direction:column;
+
+gap:5px;
+
+}
+
+}
+
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media(max-width:480px) {
+
+.faq-hero {
+
+padding-top:120px;
+
+}
+
+
+.faq-hero h1 {
+
+font-size:2.15rem;
+
+}
+
+
+.quick-grid {
+
+grid-template-columns:1fr;
+
+}
+
+
+.quick-grid a {
+
+min-height:72px;
+
+}
+
+
+.category-heading {
+
+align-items:flex-start;
+
+}
+
+
+.category-heading > span {
+
+width:42px;
+height:42px;
+
+}
+
+
+.category-heading h3 {
+
+font-size:1.1rem;
+
+}
+
+
+summary {
+
+min-height:64px;
+
+}
+
+
+.help-actions {
+
+flex-direction:column;
+
+}
+
+
+.help-actions a {
+
+width:100%;
+
+}
+
+}
+
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce) {
+
+html {
+
+scroll-behavior:auto;
+
+}
+
+
+*,
+*::before,
+*::after {
+
+transition-duration:.01ms !important;
+animation-duration:.01ms !important;
+
+}
+
+}
