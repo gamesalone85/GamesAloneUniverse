@@ -402,3 +402,327 @@ main{padding-top:var(--header)}
   html{scroll-behavior:auto}
   .slider-track,.slide img{transition:none}
 }
+
+/* =========================================================
+   POPUP · CHOCOLATE ARTÍSTICO SARITA
+========================================================= */
+
+.sarita-collab-popup {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(3, 3, 5, .78);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+}
+
+.sarita-collab-popup.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+.sarita-collab-card {
+    position: relative;
+
+    width: min(500px, 100%);
+
+    padding: 48px 42px 38px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(201, 164, 92, .30);
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 80% 15%,
+            rgba(201, 164, 92, .10),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #1b100c,
+            #0c0705
+        );
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, .60);
+
+    text-align: center;
+
+    transform: translateY(18px) scale(.98);
+
+    transition: transform .3s ease;
+}
+
+.sarita-collab-popup.is-visible
+.sarita-collab-card {
+    transform: translateY(0) scale(1);
+}
+
+
+/* S decorativa */
+
+.sarita-popup-mark {
+    width: 76px;
+    height: 76px;
+
+    margin: 0 auto 22px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid rgba(201, 164, 92, .30);
+    border-radius: 50%;
+
+    background:
+        rgba(201, 164, 92, .04);
+
+    color: #c9a45c;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 2.9rem;
+    font-style: italic;
+
+    line-height: 1;
+}
+
+
+/* Cerrar */
+
+.sarita-popup-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .035);
+
+    color: #d8cec5;
+
+    font-size: 1.4rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+}
+
+.sarita-popup-close:hover {
+    background: rgba(201, 164, 92, .12);
+    color: #e0c386;
+
+    transform: rotate(5deg);
+}
+
+
+/* Texto */
+
+.sarita-popup-kicker {
+    margin: 0 0 12px;
+
+    color: #c9a45c;
+
+    font-size: .62rem;
+    font-weight: 700;
+
+    letter-spacing: 2.2px;
+}
+
+.sarita-collab-card h2 {
+    margin: 0;
+
+    color: #f5eee4;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(2rem, 6vw, 3rem);
+
+    font-weight: 600;
+
+    line-height: 1.05;
+
+    letter-spacing: -.025em;
+}
+
+.sarita-collab-card h2 span {
+    color: #e0c386;
+}
+
+.sarita-collab-card > p:not(
+    .sarita-popup-kicker,
+    .sarita-popup-url
+) {
+    max-width: 390px;
+
+    margin: 20px auto 0;
+
+    color: #bcaea3;
+
+    font-size: .82rem;
+
+    line-height: 1.75;
+}
+
+.sarita-collab-card strong {
+    color: #eee2d5;
+    font-weight: 600;
+}
+
+
+/* CTA */
+
+.sarita-popup-button {
+    min-height: 50px;
+
+    margin-top: 28px;
+
+    padding: 0 22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 1px solid #c9a45c;
+    border-radius: 10px;
+
+    background: #c9a45c;
+    color: #0c0705;
+
+    font-size: .7rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.sarita-popup-button:hover {
+    background: #e0c386;
+
+    transform: translateY(-2px);
+}
+
+.sarita-popup-button span {
+    font-size: 1rem;
+}
+
+
+/* URL */
+
+.sarita-popup-url {
+    margin: 15px 0 0 !important;
+
+    color: #75675e !important;
+
+    font-size: .58rem !important;
+
+    letter-spacing: .5px;
+}
+
+
+/* =========================================================
+   POPUP SARITA · MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .sarita-collab-popup {
+        padding: 15px;
+    }
+
+    .sarita-collab-card {
+        padding:
+            42px 23px 30px;
+
+        border-radius: 20px;
+    }
+
+    .sarita-popup-mark {
+        width: 65px;
+        height: 65px;
+
+        margin-bottom: 19px;
+
+        font-size: 2.45rem;
+    }
+
+    .sarita-collab-card h2 {
+        font-size: 2.15rem;
+    }
+
+    .sarita-collab-card > p:not(
+        .sarita-popup-kicker,
+        .sarita-popup-url
+    ) {
+        font-size: .76rem;
+    }
+
+    .sarita-popup-button {
+        width: 100%;
+
+        padding:
+            0 15px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sarita-collab-popup,
+    .sarita-collab-card,
+    .sarita-popup-close,
+    .sarita-popup-button {
+        transition: none;
+    }
+
+}
