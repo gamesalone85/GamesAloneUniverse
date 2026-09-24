@@ -26,7 +26,9 @@
   <meta name="color-scheme" content="dark">
 
 
-  <!-- CSS PRINCIPAL -->
+  <!-- =====================================================
+       CSS PRINCIPAL
+  ====================================================== -->
 
   <link
     rel="stylesheet"
@@ -34,7 +36,10 @@
   >
 
 
-  <!-- PRECARGA ÚNICAMENTE LA PRIMERA IMAGEN -->
+  <!-- =====================================================
+       PRECARGA
+       SOLO LA PRIMERA IMAGEN DEL CARRUSEL
+  ====================================================== -->
 
   <link
     rel="preload"
@@ -44,7 +49,9 @@
   >
 
 
-  <!-- CONSENT MODE -->
+  <!-- =====================================================
+       CONSENT MODE
+  ====================================================== -->
 
   <script>
 
@@ -89,6 +96,7 @@
 >
 
   <div class="sarita-collab-card">
+
 
     <button
       class="sarita-popup-close"
@@ -155,6 +163,7 @@
     <p class="sarita-popup-url">
       gamesalone.com/chocolates/
     </p>
+
 
   </div>
 
@@ -246,10 +255,11 @@
 
 
 <!-- =====================================================
-     CONTENIDO
+     CONTENIDO PRINCIPAL
 ===================================================== -->
 
 <main>
+
 
 
 <!-- =====================================================
@@ -267,7 +277,9 @@
   <div class="hero-shell">
 
 
-    <!-- TEXTO -->
+    <!-- =================================================
+         TEXTO HERO
+    ================================================== -->
 
     <div class="hero-copy-block">
 
@@ -357,9 +369,10 @@
         >
 
 
+
           <!-- ============================================
                SLIDE 1
-               ÚNICA IMAGEN QUE CARGA INMEDIATAMENTE
+               CARGA INMEDIATA
           ============================================= -->
 
           <a
@@ -400,7 +413,7 @@
 
           <!-- ============================================
                SLIDE 2
-               CARGA DIFERIDA REAL
+               NO SE DESCARGA AL INICIO
           ============================================= -->
 
           <a
@@ -440,7 +453,6 @@
 
           <!-- ============================================
                SLIDE 3
-               CARGA DIFERIDA REAL
           ============================================= -->
 
           <a
@@ -482,7 +494,6 @@
 
           <!-- ============================================
                SLIDE 4
-               CARGA DIFERIDA REAL
           ============================================= -->
 
           <a
@@ -524,7 +535,6 @@
 
           <!-- ============================================
                SLIDE 5
-               CARGA DIFERIDA REAL
           ============================================= -->
 
           <a
@@ -560,9 +570,12 @@
 
           </a>
 
+
         </div>
 
 
+
+        <!-- CONTROLES -->
 
         <button
           class="slider-btn prev"
@@ -590,9 +603,11 @@
           aria-label="Paginación del carrusel"
         ></div>
 
+
       </div>
 
     </div>
+
 
   </div>
 
@@ -749,6 +764,7 @@
 
     </a>
 
+
   </div>
 
 </section>
@@ -805,16 +821,22 @@
     </div>
 
 
+
     <div
       class="about-mark"
       aria-hidden="true"
     >
 
-      <span>GA</span>
+      <span>
+        GA
+      </span>
 
-      <strong>18</strong>
+      <strong>
+        18
+      </strong>
 
     </div>
+
 
   </div>
 
@@ -843,11 +865,13 @@
         GamesAlone18 Universe
       </a>
 
+
       <p>
         Gaming · Terror · Cultura · Entrevistas · Eventos
       </p>
 
     </div>
+
 
 
     <nav
@@ -889,7 +913,9 @@
 
     </nav>
 
+
   </div>
+
 
 
   <div class="footer-bottom">
@@ -949,6 +975,7 @@
     </div>
 
 
+
     <div class="cookie-buttons">
 
       <button
@@ -969,6 +996,7 @@
       </button>
 
     </div>
+
 
   </div>
 
@@ -992,10 +1020,14 @@
   ===================================================== */
 
   const toggle =
-    document.getElementById("menuToggle");
+    document.getElementById(
+      "menuToggle"
+    );
 
   const nav =
-    document.getElementById("mainNav");
+    document.getElementById(
+      "mainNav"
+    );
 
 
   if (toggle && nav) {
@@ -1005,12 +1037,16 @@
       () => {
 
         const open =
-          nav.classList.toggle("is-open");
+          nav.classList.toggle(
+            "is-open"
+          );
+
 
         toggle.classList.toggle(
           "is-open",
           open
         );
+
 
         toggle.setAttribute(
           "aria-expanded",
@@ -1021,15 +1057,24 @@
     );
 
 
+
     nav.addEventListener(
       "click",
       event => {
 
-        if (event.target.closest("a")) {
+        if (
+          event.target.closest("a")
+        ) {
 
-          nav.classList.remove("is-open");
+          nav.classList.remove(
+            "is-open"
+          );
 
-          toggle.classList.remove("is-open");
+
+          toggle.classList.remove(
+            "is-open"
+          );
+
 
           toggle.setAttribute(
             "aria-expanded",
@@ -1047,23 +1092,33 @@
 
   /* =====================================================
      CARRUSEL
-     CARGA PROGRESIVA REAL DE IMÁGENES
+     CARGA ESTRICTA DE IMÁGENES
   ===================================================== */
 
   const slider =
-    document.getElementById("slider");
+    document.getElementById(
+      "slider"
+    );
 
   const track =
-    document.getElementById("sliderTrack");
+    document.getElementById(
+      "sliderTrack"
+    );
 
   const dotsWrap =
-    document.getElementById("sliderDots");
+    document.getElementById(
+      "sliderDots"
+    );
 
   const prev =
-    document.getElementById("prevSlide");
+    document.getElementById(
+      "prevSlide"
+    );
 
   const next =
-    document.getElementById("nextSlide");
+    document.getElementById(
+      "nextSlide"
+    );
 
 
   if (
@@ -1073,31 +1128,50 @@
   ) {
 
     const slides =
-      Array.from(track.children);
+      Array.from(
+        track.children
+      );
 
-    let index = 0;
 
-    let timer = null;
+    let index =
+      0;
 
-    let touchStartX = 0;
+
+    let timer =
+      null;
+
+
+    let touchStartX =
+      0;
 
 
 
     /* ==========================================
-       CARGAR IMAGEN DE UN SLIDE
+       CARGAR SOLO LA IMAGEN SOLICITADA
     =========================================== */
 
-    function loadSlideImage(slideIndex) {
+    function loadSlideImage(
+      slideIndex
+    ) {
 
       const normalizedIndex =
         (
           slideIndex +
           slides.length
-        ) % slides.length;
+        )
+        %
+        slides.length;
 
 
       const slide =
-        slides[normalizedIndex];
+        slides[
+          normalizedIndex
+        ];
+
+
+      if (!slide) {
+        return;
+      }
 
 
       const image =
@@ -1105,6 +1179,11 @@
           "img[data-src]"
         );
 
+
+      /*
+         Si la imagen ya fue cargada,
+         data-src ya no existe.
+      */
 
       if (!image) {
         return;
@@ -1120,6 +1199,11 @@
       }
 
 
+      /*
+         La solicitud HTTP comienza
+         exactamente aquí.
+      */
+
       image.src =
         source;
 
@@ -1133,27 +1217,7 @@
 
 
     /* ==========================================
-       PREPARAR SIGUIENTE IMAGEN
-    =========================================== */
-
-    function preloadNextSlide() {
-
-      const nextIndex =
-        (
-          index + 1
-        ) % slides.length;
-
-
-      loadSlideImage(
-        nextIndex
-      );
-
-    }
-
-
-
-    /* ==========================================
-       DOTS
+       CREAR DOTS
     =========================================== */
 
     slides.forEach(
@@ -1164,11 +1228,14 @@
             "button"
           );
 
+
         dot.type =
           "button";
 
+
         dot.className =
           "slider-dot";
+
 
         dot.setAttribute(
           "aria-label",
@@ -1213,12 +1280,14 @@
         (
           i +
           slides.length
-        ) % slides.length;
+        )
+        %
+        slides.length;
 
 
       /*
-         Primero garantizamos que la imagen
-         del slide solicitado exista.
+         Solamente ahora se solicita
+         la imagen correspondiente.
       */
 
       loadSlideImage(
@@ -1241,18 +1310,6 @@
         }
       );
 
-
-      /*
-         Cuando ya estamos viendo este slide,
-         comenzamos a preparar únicamente
-         el siguiente.
-      */
-
-      window.setTimeout(
-        preloadNextSlide,
-        700
-      );
-
     }
 
 
@@ -1269,7 +1326,7 @@
 
 
       timer =
-        setInterval(
+        window.setInterval(
           () => {
 
             goTo(
@@ -1285,35 +1342,50 @@
 
 
     /* ==========================================
-       BOTONES
+       FLECHA ANTERIOR
     =========================================== */
 
-    prev?.addEventListener(
-      "click",
-      () => {
+    if (prev) {
 
-        goTo(
-          index - 1
-        );
+      prev.addEventListener(
+        "click",
+        () => {
 
-        restart();
-
-      }
-    );
+          goTo(
+            index - 1
+          );
 
 
-    next?.addEventListener(
-      "click",
-      () => {
+          restart();
 
-        goTo(
-          index + 1
-        );
+        }
+      );
 
-        restart();
+    }
 
-      }
-    );
+
+
+    /* ==========================================
+       FLECHA SIGUIENTE
+    =========================================== */
+
+    if (next) {
+
+      next.addEventListener(
+        "click",
+        () => {
+
+          goTo(
+            index + 1
+          );
+
+
+          restart();
+
+        }
+      );
+
+    }
 
 
 
@@ -1341,11 +1413,14 @@
       "touchend",
       event => {
 
-        const diff =
+        const touchEndX =
           event
             .changedTouches[0]
-            .clientX
-          -
+            .clientX;
+
+
+        const diff =
+          touchEndX -
           touchStartX;
 
 
@@ -1353,14 +1428,23 @@
           Math.abs(diff) > 45
         ) {
 
-          goTo(
-            index +
-            (
-              diff < 0
-                ? 1
-                : -1
-            )
-          );
+          if (
+            diff < 0
+          ) {
+
+            goTo(
+              index + 1
+            );
+
+          }
+
+          else {
+
+            goTo(
+              index - 1
+            );
+
+          }
 
 
           restart();
@@ -1376,7 +1460,7 @@
 
 
     /* ==========================================
-       VISIBILIDAD DE LA PÁGINA
+       VISIBILIDAD
     =========================================== */
 
     document.addEventListener(
@@ -1405,22 +1489,17 @@
 
 
     /* ==========================================
-       INICIO
+       INICIALIZAR
 
-       Slide 1 ya viene cargado desde HTML.
+       NO precargamos slide 2.
+       NO precargamos slide 3.
+       NO hacemos solicitudes adicionales.
 
-       Después de 2.5 segundos empezamos
-       a preparar únicamente el slide 2.
+       La siguiente imagen se cargará cuando
+       realmente corresponda mostrarla.
     =========================================== */
 
     goTo(0);
-
-
-    window.setTimeout(
-      preloadNextSlide,
-      2500
-    );
-
 
     restart();
 
@@ -1438,6 +1517,7 @@
       "saritaCollabPopup"
     );
 
+
   const saritaPopupClose =
     document.getElementById(
       "saritaPopupClose"
@@ -1448,6 +1528,8 @@
     null;
 
 
+
+  /* ABRIR */
 
   function openSaritaPopup() {
 
@@ -1470,6 +1552,8 @@
 
 
 
+  /* CERRAR */
+
   function closeSaritaPopup() {
 
     if (!saritaPopup) {
@@ -1477,11 +1561,14 @@
     }
 
 
-    if (saritaPopupTimer) {
+    if (
+      saritaPopupTimer
+    ) {
 
       clearTimeout(
         saritaPopupTimer
       );
+
 
       saritaPopupTimer =
         null;
@@ -1504,7 +1591,8 @@
 
 
   /*
-     APARECE EN CADA CARGA DEL HOME
+     APARECE 1.8 SEGUNDOS DESPUÉS
+     EN CADA CARGA DEL HOME.
   */
 
   if (saritaPopup) {
@@ -1514,6 +1602,7 @@
         () => {
 
           openSaritaPopup();
+
 
           saritaPopupTimer =
             null;
@@ -1528,7 +1617,9 @@
 
   /* CERRAR CON X */
 
-  if (saritaPopupClose) {
+  if (
+    saritaPopupClose
+  ) {
 
     saritaPopupClose.addEventListener(
       "click",
@@ -1539,7 +1630,7 @@
 
 
 
-  /* CERRAR TOCANDO FUERA */
+  /* CERRAR TOCANDO EL FONDO */
 
   if (saritaPopup) {
 
@@ -1587,7 +1678,7 @@
 
 
   /* =====================================================
-     COOKIES + ANALYTICS
+     COOKIES + GOOGLE ANALYTICS
   ===================================================== */
 
   const banner =
@@ -1595,10 +1686,12 @@
       "cookie-consent"
     );
 
+
   const accept =
     document.getElementById(
       "accept-cookies"
     );
+
 
   const reject =
     document.getElementById(
@@ -1630,12 +1723,18 @@
 
 
 
+  /* ==========================================
+     CARGAR ANALYTICS
+  =========================================== */
+
   function loadAnalytics() {
 
     if (
       window.__GA18_ANALYTICS_LOADED
     ) {
+
       return;
+
     }
 
 
@@ -1714,6 +1813,10 @@
 
 
 
+  /* ==========================================
+     ESTADO DEL CONSENTIMIENTO
+  =========================================== */
+
   if (
     banner &&
     accept &&
@@ -1722,7 +1825,8 @@
 
 
     if (
-      consent === "accepted"
+      consent ===
+      "accepted"
     ) {
 
       banner.classList.add(
@@ -1730,11 +1834,16 @@
       );
 
 
+      /*
+         Analytics no forma parte de la
+         carga crítica de la página.
+      */
+
       window.addEventListener(
         "load",
         () => {
 
-          setTimeout(
+          window.setTimeout(
             loadAnalytics,
             1200
           );
@@ -1749,7 +1858,8 @@
 
 
     else if (
-      consent === "rejected"
+      consent ===
+      "rejected"
     ) {
 
       banner.classList.add(
@@ -1769,7 +1879,9 @@
 
 
 
-    /* ACEPTAR */
+    /* ========================================
+       ACEPTAR
+    ========================================= */
 
     accept.addEventListener(
       "click",
@@ -1799,7 +1911,9 @@
 
 
 
-    /* RECHAZAR */
+    /* ========================================
+       RECHAZAR
+    ========================================= */
 
     reject.addEventListener(
       "click",
