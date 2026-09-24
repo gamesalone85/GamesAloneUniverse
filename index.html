@@ -10,39 +10,23 @@
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
 
-  <title>
-    GamesAlone18 Universe | Gaming, Terror y Cultura
-  </title>
+  <title>GamesAlone18 Universe | Gaming, Terror y Cultura</title>
 
   <meta
     name="description"
     content="GamesAlone18 Universe: gaming, terror, cultura, entrevistas, eventos, podcast y contenido exclusivo."
   >
 
-  <meta
-    name="author"
-    content="GamesAlone18 Universe"
-  >
+  <meta name="author" content="GamesAlone18 Universe">
 
-  <meta
-    name="robots"
-    content="index,follow"
-  >
+  <meta name="robots" content="index,follow">
 
-  <meta
-    name="theme-color"
-    content="#050507"
-  >
+  <meta name="theme-color" content="#050507">
 
-  <meta
-    name="color-scheme"
-    content="dark"
-  >
+  <meta name="color-scheme" content="dark">
 
 
-  <!-- ==========================================
-       CSS PRINCIPAL
-  =========================================== -->
+  <!-- CSS PRINCIPAL -->
 
   <link
     rel="stylesheet"
@@ -50,9 +34,7 @@
   >
 
 
-  <!-- ==========================================
-       PRECARGA HERO
-  =========================================== -->
+  <!-- PRECARGA ÚNICAMENTE LA PRIMERA IMAGEN -->
 
   <link
     rel="preload"
@@ -62,9 +44,7 @@
   >
 
 
-  <!-- ==========================================
-       CONSENT MODE
-  =========================================== -->
+  <!-- CONSENT MODE -->
 
   <script>
 
@@ -345,21 +325,13 @@
         aria-label="Categorías"
       >
 
-        <span>
-          Gaming
-        </span>
+        <span>Gaming</span>
 
-        <span>
-          Terror
-        </span>
+        <span>Terror</span>
 
-        <span>
-          Cultura
-        </span>
+        <span>Cultura</span>
 
-        <span>
-          Entrevistas
-        </span>
+        <span>Entrevistas</span>
 
       </div>
 
@@ -385,7 +357,10 @@
         >
 
 
-          <!-- SLIDE 1 -->
+          <!-- ============================================
+               SLIDE 1
+               ÚNICA IMAGEN QUE CARGA INMEDIATAMENTE
+          ============================================= -->
 
           <a
             class="slide"
@@ -422,7 +397,11 @@
           </a>
 
 
-          <!-- SLIDE 2 -->
+
+          <!-- ============================================
+               SLIDE 2
+               CARGA DIFERIDA REAL
+          ============================================= -->
 
           <a
             class="slide"
@@ -430,11 +409,10 @@
           >
 
             <img
-              src="./img/home/chocolates.jpg"
+              data-src="./img/home/chocolates.jpg"
               alt="Chocolate Artístico Sarita"
               width="900"
               height="900"
-              loading="lazy"
               decoding="async"
             >
 
@@ -459,7 +437,11 @@
           </a>
 
 
-          <!-- SLIDE 3 -->
+
+          <!-- ============================================
+               SLIDE 3
+               CARGA DIFERIDA REAL
+          ============================================= -->
 
           <a
             class="slide"
@@ -469,11 +451,10 @@
           >
 
             <img
-              src="./img/home/youtube.jpg"
+              data-src="./img/home/youtube.jpg"
               alt="Canal de YouTube GamesAlone18"
               width="900"
               height="900"
-              loading="lazy"
               decoding="async"
             >
 
@@ -498,7 +479,11 @@
           </a>
 
 
-          <!-- SLIDE 4 -->
+
+          <!-- ============================================
+               SLIDE 4
+               CARGA DIFERIDA REAL
+          ============================================= -->
 
           <a
             class="slide"
@@ -508,11 +493,10 @@
           >
 
             <img
-              src="./img/home/cuentos.jpg"
+              data-src="./img/home/cuentos.jpg"
               alt="Cuentos de Terror con NotAlone18"
               width="900"
               height="900"
-              loading="lazy"
               decoding="async"
             >
 
@@ -537,7 +521,11 @@
           </a>
 
 
-          <!-- SLIDE 5 -->
+
+          <!-- ============================================
+               SLIDE 5
+               CARGA DIFERIDA REAL
+          ============================================= -->
 
           <a
             class="slide"
@@ -545,11 +533,10 @@
           >
 
             <img
-              src="./img/home/teatro.jpg"
+              data-src="./img/home/teatro.jpg"
               alt="Teatro, entrevistas y cultura"
               width="900"
               height="900"
-              loading="lazy"
               decoding="async"
             >
 
@@ -574,6 +561,7 @@
           </a>
 
         </div>
+
 
 
         <button
@@ -643,6 +631,7 @@
   </div>
 
 
+
   <div class="universe-grid">
 
 
@@ -650,7 +639,7 @@
 
     <a
       class="universe-card"
-      href="https://www.youtube.com/@GamesAlone18Gaming"
+      href="https://www.youtube.com/@GAMESALONE18"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -673,6 +662,7 @@
       </span>
 
     </a>
+
 
 
     <!-- TERROR -->
@@ -704,6 +694,7 @@
     </a>
 
 
+
     <!-- CULTURA -->
 
     <a
@@ -729,6 +720,7 @@
       </span>
 
     </a>
+
 
 
     <!-- PRENSA -->
@@ -818,13 +810,9 @@
       aria-hidden="true"
     >
 
-      <span>
-        GA
-      </span>
+      <span>GA</span>
 
-      <strong>
-        18
-      </strong>
+      <strong>18</strong>
 
     </div>
 
@@ -942,6 +930,7 @@
         Tu privacidad importa
       </strong>
 
+
       <p id="cookie-description">
 
         Utilizamos cookies analíticas para conocer
@@ -969,6 +958,7 @@
       >
         Rechazar
       </button>
+
 
       <button
         id="accept-cookies"
@@ -1037,13 +1027,9 @@
 
         if (event.target.closest("a")) {
 
-          nav.classList.remove(
-            "is-open"
-          );
+          nav.classList.remove("is-open");
 
-          toggle.classList.remove(
-            "is-open"
-          );
+          toggle.classList.remove("is-open");
 
           toggle.setAttribute(
             "aria-expanded",
@@ -1060,7 +1046,8 @@
 
 
   /* =====================================================
-     CARRUSEL NATIVO
+     CARRUSEL
+     CARGA PROGRESIVA REAL DE IMÁGENES
   ===================================================== */
 
   const slider =
@@ -1095,13 +1082,90 @@
     let touchStartX = 0;
 
 
+
+    /* ==========================================
+       CARGAR IMAGEN DE UN SLIDE
+    =========================================== */
+
+    function loadSlideImage(slideIndex) {
+
+      const normalizedIndex =
+        (
+          slideIndex +
+          slides.length
+        ) % slides.length;
+
+
+      const slide =
+        slides[normalizedIndex];
+
+
+      const image =
+        slide.querySelector(
+          "img[data-src]"
+        );
+
+
+      if (!image) {
+        return;
+      }
+
+
+      const source =
+        image.dataset.src;
+
+
+      if (!source) {
+        return;
+      }
+
+
+      image.src =
+        source;
+
+
+      image.removeAttribute(
+        "data-src"
+      );
+
+    }
+
+
+
+    /* ==========================================
+       PREPARAR SIGUIENTE IMAGEN
+    =========================================== */
+
+    function preloadNextSlide() {
+
+      const nextIndex =
+        (
+          index + 1
+        ) % slides.length;
+
+
+      loadSlideImage(
+        nextIndex
+      );
+
+    }
+
+
+
+    /* ==========================================
+       DOTS
+    =========================================== */
+
     slides.forEach(
       (_, i) => {
 
         const dot =
-          document.createElement("button");
+          document.createElement(
+            "button"
+          );
 
-        dot.type = "button";
+        dot.type =
+          "button";
 
         dot.className =
           "slider-dot";
@@ -1110,6 +1174,7 @@
           "aria-label",
           `Ir al elemento ${i + 1}`
         );
+
 
         dot.addEventListener(
           "click",
@@ -1122,7 +1187,10 @@
           }
         );
 
-        dotsWrap.appendChild(dot);
+
+        dotsWrap.appendChild(
+          dot
+        );
 
       }
     );
@@ -1134,14 +1202,33 @@
       );
 
 
+
+    /* ==========================================
+       CAMBIAR SLIDE
+    =========================================== */
+
     function goTo(i) {
 
       index =
-        (i + slides.length)
-        % slides.length;
+        (
+          i +
+          slides.length
+        ) % slides.length;
+
+
+      /*
+         Primero garantizamos que la imagen
+         del slide solicitado exista.
+      */
+
+      loadSlideImage(
+        index
+      );
+
 
       track.style.transform =
         `translate3d(-${index * 100}%,0,0)`;
+
 
       dots.forEach(
         (dot, n) => {
@@ -1154,27 +1241,60 @@
         }
       );
 
+
+      /*
+         Cuando ya estamos viendo este slide,
+         comenzamos a preparar únicamente
+         el siguiente.
+      */
+
+      window.setTimeout(
+        preloadNextSlide,
+        700
+      );
+
     }
 
 
+
+    /* ==========================================
+       AUTOPLAY
+    =========================================== */
+
     function restart() {
 
-      clearInterval(timer);
+      clearInterval(
+        timer
+      );
+
 
       timer =
         setInterval(
-          () => goTo(index + 1),
+          () => {
+
+            goTo(
+              index + 1
+            );
+
+          },
           5500
         );
 
     }
 
 
+
+    /* ==========================================
+       BOTONES
+    =========================================== */
+
     prev?.addEventListener(
       "click",
       () => {
 
-        goTo(index - 1);
+        goTo(
+          index - 1
+        );
 
         restart();
 
@@ -1186,7 +1306,9 @@
       "click",
       () => {
 
-        goTo(index + 1);
+        goTo(
+          index + 1
+        );
 
         restart();
 
@@ -1194,12 +1316,19 @@
     );
 
 
+
+    /* ==========================================
+       GESTOS TÁCTILES
+    =========================================== */
+
     slider.addEventListener(
       "touchstart",
       event => {
 
         touchStartX =
-          event.changedTouches[0].clientX;
+          event
+            .changedTouches[0]
+            .clientX;
 
       },
       {
@@ -1213,8 +1342,11 @@
       event => {
 
         const diff =
-          event.changedTouches[0].clientX
-          - touchStartX;
+          event
+            .changedTouches[0]
+            .clientX
+          -
+          touchStartX;
 
 
         if (
@@ -1230,6 +1362,7 @@
             )
           );
 
+
           restart();
 
         }
@@ -1241,19 +1374,53 @@
     );
 
 
+
+    /* ==========================================
+       VISIBILIDAD DE LA PÁGINA
+    =========================================== */
+
     document.addEventListener(
       "visibilitychange",
       () => {
 
-        document.hidden
-          ? clearInterval(timer)
-          : restart();
+        if (
+          document.hidden
+        ) {
+
+          clearInterval(
+            timer
+          );
+
+        }
+
+        else {
+
+          restart();
+
+        }
 
       }
     );
 
 
+
+    /* ==========================================
+       INICIO
+
+       Slide 1 ya viene cargado desde HTML.
+
+       Después de 2.5 segundos empezamos
+       a preparar únicamente el slide 2.
+    =========================================== */
+
     goTo(0);
+
+
+    window.setTimeout(
+      preloadNextSlide,
+      2500
+    );
+
 
     restart();
 
@@ -1261,121 +1428,153 @@
 
 
 
- /* =====================================================
-   POPUP · CHOCOLATE ARTÍSTICO SARITA
-   SE MUESTRA EN CADA VISITA
-===================================================== */
+  /* =====================================================
+     POPUP · CHOCOLATE ARTÍSTICO SARITA
+     APARECE EN CADA VISITA
+  ===================================================== */
 
-const saritaPopup =
-  document.getElementById(
-    "saritaCollabPopup"
-  );
-
-const saritaPopupClose =
-  document.getElementById(
-    "saritaPopupClose"
-  );
-
-let saritaPopupTimer = null;
-
-
-/* ABRIR */
-
-function openSaritaPopup() {
-
-  if (!saritaPopup) {
-    return;
-  }
-
-  saritaPopup.classList.add(
-    "is-visible"
-  );
-
-  saritaPopup.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-}
-
-
-/* CERRAR */
-
-function closeSaritaPopup() {
-
-  if (!saritaPopup) {
-    return;
-  }
-
-  if (saritaPopupTimer) {
-
-    clearTimeout(
-      saritaPopupTimer
+  const saritaPopup =
+    document.getElementById(
+      "saritaCollabPopup"
     );
 
-    saritaPopupTimer = null;
+  const saritaPopupClose =
+    document.getElementById(
+      "saritaPopupClose"
+    );
+
+
+  let saritaPopupTimer =
+    null;
+
+
+
+  function openSaritaPopup() {
+
+    if (!saritaPopup) {
+      return;
+    }
+
+
+    saritaPopup.classList.add(
+      "is-visible"
+    );
+
+
+    saritaPopup.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
   }
 
-  saritaPopup.classList.remove(
-    "is-visible"
-  );
-
-  saritaPopup.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-}
 
 
-/*
-   MOSTRAR EN CADA VISITA
+  function closeSaritaPopup() {
 
-   No utilizamos localStorage ni sessionStorage.
-   Cada vez que se carga el Home, el popup
-   vuelve a estar disponible.
-*/
+    if (!saritaPopup) {
+      return;
+    }
 
-if (saritaPopup) {
 
-  saritaPopupTimer =
-    window.setTimeout(
-      () => {
+    if (saritaPopupTimer) {
 
-        openSaritaPopup();
+      clearTimeout(
+        saritaPopupTimer
+      );
 
-        saritaPopupTimer = null;
+      saritaPopupTimer =
+        null;
 
-      },
-      1800
+    }
+
+
+    saritaPopup.classList.remove(
+      "is-visible"
     );
 
-}
+
+    saritaPopup.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+  }
 
 
-/* CERRAR CON X */
 
-if (saritaPopupClose) {
+  /*
+     APARECE EN CADA CARGA DEL HOME
+  */
 
-  saritaPopupClose.addEventListener(
-    "click",
-    closeSaritaPopup
-  );
+  if (saritaPopup) {
 
-}
+    saritaPopupTimer =
+      window.setTimeout(
+        () => {
+
+          openSaritaPopup();
+
+          saritaPopupTimer =
+            null;
+
+        },
+        1800
+      );
+
+  }
 
 
-/* CERRAR TOCANDO FUERA */
 
-if (saritaPopup) {
+  /* CERRAR CON X */
 
-  saritaPopup.addEventListener(
-    "click",
+  if (saritaPopupClose) {
+
+    saritaPopupClose.addEventListener(
+      "click",
+      closeSaritaPopup
+    );
+
+  }
+
+
+
+  /* CERRAR TOCANDO FUERA */
+
+  if (saritaPopup) {
+
+    saritaPopup.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          saritaPopup
+        ) {
+
+          closeSaritaPopup();
+
+        }
+
+      }
+    );
+
+  }
+
+
+
+  /* CERRAR CON ESC */
+
+  document.addEventListener(
+    "keydown",
     event => {
 
       if (
-        event.target === saritaPopup
+        event.key === "Escape" &&
+        saritaPopup &&
+        saritaPopup.classList.contains(
+          "is-visible"
+        )
       ) {
 
         closeSaritaPopup();
@@ -1385,29 +1584,6 @@ if (saritaPopup) {
     }
   );
 
-}
-
-
-/* CERRAR CON ESC */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Escape" &&
-      saritaPopup &&
-      saritaPopup.classList.contains(
-        "is-visible"
-      )
-    ) {
-
-      closeSaritaPopup();
-
-    }
-
-  }
-);
 
 
   /* =====================================================
@@ -1434,6 +1610,7 @@ document.addEventListener(
     null;
 
 
+
   try {
 
     consent =
@@ -1441,13 +1618,16 @@ document.addEventListener(
         "ga18_cookie_consent"
       );
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.warn(
       "GamesAlone18: localStorage no disponible."
     );
 
   }
+
 
 
   function loadAnalytics() {
@@ -1461,6 +1641,7 @@ document.addEventListener(
 
     window.__GA18_ANALYTICS_LOADED =
       true;
+
 
 
     window.gtag(
@@ -1484,10 +1665,12 @@ document.addEventListener(
     );
 
 
+
     window.gtag(
       "js",
       new Date()
     );
+
 
 
     window.gtag(
@@ -1506,6 +1689,7 @@ document.addEventListener(
 
       }
     );
+
 
 
     const script =
@@ -1598,7 +1782,9 @@ document.addEventListener(
             "accepted"
           );
 
-        } catch (error) {}
+        }
+
+        catch (error) {}
 
 
         banner.classList.add(
@@ -1626,7 +1812,9 @@ document.addEventListener(
             "rejected"
           );
 
-        } catch (error) {}
+        }
+
+        catch (error) {}
 
 
         banner.classList.add(
