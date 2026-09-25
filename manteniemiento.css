@@ -1,0 +1,878 @@
+/* =========================================================
+   GAMESALONE18 UNIVERSE
+   SITIO EN CONSTRUCCIÓN
+   CSS INDEPENDIENTE
+========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+
+    --black:
+        #020202;
+
+    --black-soft:
+        #070707;
+
+    --green:
+        #00ff9c;
+
+    --green-dark:
+        #00c878;
+
+    --white:
+        #ffffff;
+
+    --gray:
+        #a8a8a8;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   HTML
+========================================================= */
+
+html {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    background:
+        var(--black);
+
+    color:
+        var(--white);
+
+    font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+}
+
+
+/* =========================================================
+   FONDO
+========================================================= */
+
+.maintenance-background {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 0;
+
+    background-image:
+        url("/home/img/bg-masthead.jpg");
+
+    background-position:
+        center;
+
+    background-size:
+        cover;
+
+    background-repeat:
+        no-repeat;
+
+    filter:
+        blur(3px);
+
+    transform:
+        scale(1.04);
+
+    opacity:
+        .22;
+
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.maintenance-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(0,255,156,.08),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,.82),
+            rgba(0,0,0,.95)
+        );
+
+}
+
+
+/* =========================================================
+   EFECTO VERDE
+========================================================= */
+
+.maintenance-overlay::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+
+    height: 500px;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(0,255,156,.04);
+
+    filter:
+        blur(100px);
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.maintenance-page {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding:
+        40px 20px 80px;
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.maintenance-logo {
+
+    width:
+        120px;
+
+    height:
+        120px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom:
+        30px;
+
+    border:
+        1px solid
+        rgba(0,255,156,.25);
+
+    border-radius:
+        28px;
+
+    background:
+        rgba(0,0,0,.55);
+
+    box-shadow:
+
+        0 0 0 1px
+        rgba(0,255,156,.04),
+
+        0 0 35px
+        rgba(0,255,156,.10),
+
+        0 20px 50px
+        rgba(0,0,0,.45);
+
+    backdrop-filter:
+        blur(12px);
+
+    animation:
+        logoFloat 4s ease-in-out infinite;
+
+}
+
+
+/* =========================================================
+   IMAGEN LOGO
+========================================================= */
+
+.maintenance-logo img {
+
+    width:
+        78px;
+
+    height:
+        78px;
+
+    object-fit:
+        contain;
+
+    display:
+        block;
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN LOGO
+========================================================= */
+
+@keyframes logoFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-6px);
+
+    }
+
+}
+
+
+/* =========================================================
+   ETIQUETA
+========================================================= */
+
+.maintenance-label {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    padding:
+        9px 16px;
+
+    border:
+        1px solid
+        rgba(0,255,156,.22);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(0,255,156,.055);
+
+    color:
+        var(--green);
+
+    font-size:
+        .70rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+/* =========================================================
+   PUNTO DE ESTADO
+========================================================= */
+
+.status-dot {
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 12px
+        rgba(0,255,156,.8);
+
+    animation:
+        statusPulse 1.8s ease-in-out infinite;
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN ESTADO
+========================================================= */
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+
+        opacity:
+            1;
+
+        transform:
+            scale(1);
+
+    }
+
+    50% {
+
+        opacity:
+            .45;
+
+        transform:
+            scale(.75);
+
+    }
+
+}
+
+
+/* =========================================================
+   TITULO
+========================================================= */
+
+.maintenance-page h1 {
+
+    margin:
+        28px 0 20px;
+
+    max-width:
+        900px;
+
+    font-size:
+        clamp(
+            3.2rem,
+            8vw,
+            6.5rem
+        );
+
+    line-height:
+        .95;
+
+    letter-spacing:
+        -4px;
+
+    font-weight:
+        900;
+
+}
+
+
+/* =========================================================
+   TITULO VERDE
+========================================================= */
+
+.maintenance-page h1 span {
+
+    display:
+        block;
+
+    color:
+        var(--green);
+
+    text-shadow:
+        0 0 35px
+        rgba(0,255,156,.18);
+
+}
+
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
+
+.maintenance-description {
+
+    max-width:
+        650px;
+
+    margin:
+        0 auto;
+
+    color:
+        var(--gray);
+
+    font-size:
+        clamp(
+            .95rem,
+            2vw,
+            1.1rem
+        );
+
+    line-height:
+        1.8;
+
+}
+
+
+/* =========================================================
+   STRONG
+========================================================= */
+
+.maintenance-description strong {
+
+    color:
+        #e8e8e8;
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================================
+   MENSAJE
+========================================================= */
+
+.maintenance-message {
+
+    margin-top:
+        18px;
+
+    color:
+        #686868;
+
+    font-size:
+        .85rem;
+
+    line-height:
+        1.7;
+
+}
+
+
+/* =========================================================
+   LINEA
+========================================================= */
+
+.maintenance-line {
+
+    width:
+        120px;
+
+    height:
+        1px;
+
+    margin:
+        32px auto 25px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    position:
+        relative;
+
+    overflow:
+        visible;
+
+}
+
+
+/* =========================================================
+   LINEA VERDE
+========================================================= */
+
+.maintenance-line span {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        0;
+
+    width:
+        45px;
+
+    height:
+        2px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 15px
+        rgba(0,255,156,.55);
+
+}
+
+
+/* =========================================================
+   MARCA
+========================================================= */
+
+.maintenance-brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    color:
+        #555;
+
+    font-size:
+        .65rem;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+/* =========================================================
+   MARCA PRINCIPAL
+========================================================= */
+
+.maintenance-brand strong {
+
+    color:
+        #999;
+
+    font-weight:
+        800;
+
+}
+
+
+/* =========================================================
+   UNIVERSE
+========================================================= */
+
+.maintenance-brand span {
+
+    color:
+        #444;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.maintenance-footer {
+
+    position:
+        fixed;
+
+    z-index:
+        3;
+
+    bottom:
+        20px;
+
+    left:
+        0;
+
+    width:
+        100%;
+
+    text-align:
+        center;
+
+    color:
+        #454545;
+
+    font-size:
+        .70rem;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .maintenance-page {
+
+        padding:
+            30px 20px 80px;
+
+    }
+
+
+    .maintenance-logo {
+
+        width:
+            100px;
+
+        height:
+            100px;
+
+        border-radius:
+            24px;
+
+        margin-bottom:
+            25px;
+
+    }
+
+
+    .maintenance-logo img {
+
+        width:
+            65px;
+
+        height:
+            65px;
+
+    }
+
+
+    .maintenance-page h1 {
+
+        font-size:
+            clamp(
+                3rem,
+                13vw,
+                5rem
+            );
+
+        letter-spacing:
+            -2px;
+
+    }
+
+
+    .maintenance-description {
+
+        max-width:
+            550px;
+
+        font-size:
+            .95rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .maintenance-page {
+
+        padding:
+            25px 18px 75px;
+
+    }
+
+
+    .maintenance-logo {
+
+        width:
+            88px;
+
+        height:
+            88px;
+
+        margin-bottom:
+            22px;
+
+    }
+
+
+    .maintenance-logo img {
+
+        width:
+            58px;
+
+        height:
+            58px;
+
+    }
+
+
+    .maintenance-label {
+
+        padding:
+            8px 12px;
+
+        font-size:
+            .58rem;
+
+        letter-spacing:
+            1.3px;
+
+    }
+
+
+    .maintenance-page h1 {
+
+        margin:
+            23px 0 18px;
+
+        font-size:
+            3rem;
+
+        letter-spacing:
+            -2px;
+
+    }
+
+
+    .maintenance-description {
+
+        font-size:
+            .88rem;
+
+        line-height:
+            1.7;
+
+    }
+
+
+    .maintenance-message {
+
+        font-size:
+            .78rem;
+
+    }
+
+
+    .maintenance-brand {
+
+        font-size:
+            .57rem;
+
+        letter-spacing:
+            1.5px;
+
+    }
+
+
+    .maintenance-footer {
+
+        bottom:
+            15px;
+
+        font-size:
+            .62rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .maintenance-logo,
+    .status-dot {
+
+        animation:
+            none;
+
+    }
+
+}
