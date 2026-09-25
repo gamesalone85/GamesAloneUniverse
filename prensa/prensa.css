@@ -1983,3 +1983,461 @@ button {
   }
 
 }
+/* =========================================================
+   GA18 SHARED SHELL — MATCH HOME HEADER / FOOTER
+   PRENSA · 2026-09-25
+   Este bloque normaliza navegación, footer y legibilidad
+   sin eliminar la identidad editorial de Prensa.
+========================================================= */
+
+:root {
+  --header: 74px;
+  --max: 1180px;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Arial,
+    sans-serif;
+}
+
+/* =========================================================
+   HEADER UNIFICADO
+========================================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--header);
+  padding: 0;
+  background: rgba(5,5,7,.82);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.nav-wrap {
+  width: min(calc(100% - 36px), var(--max));
+  height: 100%;
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.nav-wrap .unified-brand {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  line-height: normal;
+  font-size: 1.18rem;
+  font-weight: 850;
+  letter-spacing: -.03em;
+  white-space: nowrap;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 20px rgba(0,255,174,.8);
+}
+
+.nav-wrap .main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  font-size: .92rem;
+  font-weight: 650;
+}
+
+.nav-wrap .main-nav > a:not(.nav-cta) {
+  padding: 0;
+  border: 0;
+
+  color: #d2d2d8;
+  font-size: .92rem;
+  font-weight: 650;
+
+  transition:
+    color .18s ease,
+    background .18s ease;
+}
+
+.nav-wrap .main-nav > a:not(.nav-cta):hover,
+.nav-wrap .main-nav > a[aria-current="page"] {
+  color: #fff;
+}
+
+.nav-cta {
+  min-height: 42px;
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: 1px solid rgba(0,255,174,.34);
+  border-radius: 999px;
+
+  background: rgba(0,255,174,.11);
+  color: var(--green);
+
+  font-size: .92rem;
+  font-weight: 700;
+}
+
+/* =========================================================
+   LEGIBILIDAD PRENSA
+========================================================= */
+
+.press-kicker,
+.section-kicker {
+  font-size: .72rem;
+}
+
+.press-identification p {
+  font-size: .92rem;
+  line-height: 1.7;
+}
+
+.press-description p {
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.press-description span,
+.edition {
+  font-size: .7rem;
+}
+
+.image-label,
+.story-meta,
+.story-card-meta,
+.story-status,
+.coming-link,
+.coverage-number {
+  font-size: .7rem;
+}
+
+.story-lead {
+  font-size: clamp(1rem, 1.25vw, 1.08rem);
+  line-height: 1.75;
+}
+
+.story-location {
+  font-size: .84rem;
+  line-height: 1.6;
+}
+
+.story-card-content > p,
+.coverage-grid p,
+.press-about-copy {
+  font-size: .96rem;
+  line-height: 1.75;
+}
+
+.coverage-grid h3 {
+  font-size: 1.35rem;
+}
+
+/* =========================================================
+   ARTÍCULOS DE PRENSA
+   Aumenta microtexto sin alterar el layout editorial.
+========================================================= */
+
+.article-breadcrumb,
+.article-category {
+  font-size: .72rem;
+}
+
+.article-information small,
+.article-sidebar-label,
+.article-sidebar-data small,
+.article-highlight-label,
+.article-video-placeholder > span,
+.article-tags span {
+  font-size: .66rem;
+}
+
+.article-information strong,
+.article-sidebar-data strong {
+  font-size: .84rem;
+}
+
+.article-hero-image figcaption,
+.article-inline-image figcaption,
+.article-body .editorial-note,
+.article-back {
+  font-size: .74rem;
+}
+
+.article-highlight p {
+  font-size: .98rem;
+}
+
+.article-video-placeholder p {
+  font-size: .88rem;
+}
+
+/* =========================================================
+   FOOTER UNIFICADO
+========================================================= */
+
+.site-footer {
+  padding: 0;
+  border-top: 1px solid var(--border);
+  background: #030304;
+}
+
+.footer-grid {
+  width: min(calc(100% - 36px), var(--max));
+  margin: auto;
+  padding: 48px 0 34px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(260px,1fr)
+    minmax(0,1.4fr);
+
+  align-items: start;
+  gap: 50px;
+}
+
+.footer-brand {
+  display: inline-block;
+
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 850;
+  letter-spacing: -.025em;
+}
+
+.footer-grid > div > p {
+  margin: 10px 0 0;
+
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  gap: 14px 24px;
+
+  color: #a7a7b0;
+  font-size: .88rem;
+}
+
+.footer-nav a {
+  color: #a7a7b0;
+  font-size: .88rem;
+  font-weight: 650;
+
+  transition: color .18s ease;
+}
+
+.footer-nav a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  width: min(calc(100% - 36px), var(--max));
+  margin: auto;
+  padding: 20px 0 24px;
+
+  border-top: 1px solid var(--border);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  color: #72727b;
+  font-size: .78rem;
+}
+
+/* =========================================================
+   COOKIE — LEGIBILIDAD
+========================================================= */
+
+.cookie-text strong {
+  font-size: .95rem;
+}
+
+.cookie-text p {
+  font-size: .82rem;
+}
+
+.cookie-buttons button {
+  font-size: .8rem;
+}
+
+/* =========================================================
+   RESPONSIVE DEL SHELL
+========================================================= */
+
+@media (max-width: 760px) {
+
+  :root {
+    --header: 68px;
+  }
+
+  .site-header {
+    height: var(--header);
+  }
+
+  .nav-wrap {
+    width: min(calc(100% - 28px), var(--max));
+  }
+
+  .nav-wrap .unified-brand {
+    font-size: 1.05rem;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: relative;
+    z-index: 2;
+
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  .nav-wrap .main-nav {
+    position: absolute;
+
+    left: 14px;
+    right: 14px;
+    top: calc(100% + 8px);
+
+    display: none;
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    background: rgba(10,10,14,.98);
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .nav-wrap .main-nav.is-open {
+    display: flex;
+  }
+
+  .nav-wrap .main-nav > a:not(.nav-cta),
+  .nav-wrap .nav-cta {
+    min-height: 46px;
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 12px;
+
+    font-size: .94rem;
+  }
+
+  .nav-wrap .main-nav > a:not(.nav-cta):hover {
+    background: rgba(255,255,255,.04);
+  }
+
+  .nav-wrap .nav-cta {
+    margin-top: 4px;
+    justify-content: center;
+  }
+
+  .menu-toggle.is-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-toggle.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.is-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+
+    gap: 28px;
+    padding: 40px 0 28px;
+  }
+
+  .footer-nav {
+    justify-content: flex-start;
+    gap: 12px 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 6px;
+
+    text-align: left;
+  }
+
+  .press-identification p {
+    font-size: .88rem;
+  }
+
+  .story-card-content > p,
+  .coverage-grid p,
+  .press-about-copy {
+    font-size: .94rem;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .footer-grid,
+  .footer-bottom {
+    width: min(calc(100% - 28px), var(--max));
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .footer-nav a {
+    font-size: .86rem;
+  }
+
+  .footer-bottom {
+    font-size: .74rem;
+  }
+
+  .press-kicker,
+  .section-kicker {
+    font-size: .69rem;
+    letter-spacing: 2.4px;
+  }
+}
