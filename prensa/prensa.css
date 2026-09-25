@@ -2441,3 +2441,326 @@ body {
     letter-spacing: 2.4px;
   }
 }
+/* =========================================================
+   NOTA DE PRENSA · EL ESPEJO DE FRIDA
+   AJUSTE FINAL DE ESCALA, IMÁGENES Y LEGIBILIDAD
+   2026-09-25
+========================================================= */
+
+/* La nota no debe sentirse más ancha que el resto del sitio. */
+.press-article {
+  overflow: hidden;
+}
+
+.article-header {
+  padding: clamp(72px, 8vw, 110px) 20px clamp(55px, 7vw, 85px);
+}
+
+.article-header-inner {
+  width: min(calc(100% - 8px), 980px);
+}
+
+/* Titular grande, pero no desproporcionado. */
+.article-header h1 {
+  max-width: 900px;
+  font-size: clamp(3.2rem, 6.4vw, 6rem);
+  line-height: .92;
+  letter-spacing: clamp(-4px, -.055em, -2px);
+}
+
+.article-lead {
+  max-width: 760px;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+}
+
+.article-breadcrumb,
+.article-category {
+  font-size: .74rem;
+}
+
+.article-information small {
+  font-size: .68rem;
+}
+
+.article-information strong {
+  font-size: .9rem;
+}
+
+/* =========================================================
+   IMAGEN PRINCIPAL
+   La fotografía del elenco es HORIZONTAL.
+   No se fuerza a cuadrado ni a vertical.
+========================================================= */
+
+.article-hero-image {
+  width: min(calc(100% - 40px), 980px);
+  margin: 38px auto 0;
+}
+
+.article-hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: 22px;
+  background: #101014;
+}
+
+.article-hero-image figcaption {
+  max-width: 980px;
+  margin: 10px auto 0;
+  font-size: .76rem;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   CUERPO EDITORIAL
+========================================================= */
+
+.article-layout {
+  width: min(calc(100% - 40px), 1000px);
+  margin: 72px auto 105px;
+  grid-template-columns: 190px minmax(0, 690px);
+  gap: 58px;
+}
+
+.article-sidebar-label {
+  font-size: .68rem;
+}
+
+.article-sidebar-data small {
+  font-size: .65rem;
+}
+
+.article-sidebar-data strong {
+  font-size: .84rem;
+}
+
+.article-body > p {
+  font-size: 1.03rem;
+  line-height: 1.82;
+}
+
+.article-body .article-intro {
+  font-size: 1.14rem;
+  line-height: 1.8;
+}
+
+.article-body h2 {
+  margin: 62px 0 24px;
+  font-size: clamp(2.15rem, 4.2vw, 3.45rem);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+/* =========================================================
+   IMÁGENES INTERIORES
+   Ya no ocupan todo el ancho disponible del artículo.
+========================================================= */
+
+.article-inline-image {
+  width: min(100%, 660px);
+  margin: 55px auto;
+}
+
+.article-inline-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: 18px;
+  background: #101014;
+}
+
+.article-inline-image figcaption {
+  margin-top: 10px;
+  font-size: .75rem;
+  line-height: 1.55;
+}
+
+/* Pullquote y bloques especiales más contenidos. */
+.article-pullquote {
+  margin: 55px 0;
+  padding: 38px 38px 38px 48px;
+}
+
+.article-pullquote p {
+  font-size: clamp(1.45rem, 3vw, 2.05rem);
+}
+
+.article-body .editorial-note {
+  font-size: .74rem;
+}
+
+.article-highlight {
+  margin: 62px 0;
+  padding: clamp(30px, 5vw, 48px);
+}
+
+.article-highlight-label,
+.article-video-placeholder > span {
+  font-size: .68rem;
+}
+
+.article-highlight p {
+  font-size: .98rem;
+}
+
+.article-video-placeholder {
+  margin-top: 62px;
+  padding: 42px 35px;
+}
+
+.article-video-placeholder p {
+  font-size: .88rem;
+}
+
+.article-tags span {
+  font-size: .65rem;
+}
+
+.article-back {
+  font-size: .75rem;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .article-layout {
+    width: min(calc(100% - 36px), 760px);
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .article-sidebar-data {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .article-hero-image {
+    width: min(calc(100% - 36px), 900px);
+  }
+}
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .article-header {
+    padding: 52px 18px 44px;
+  }
+
+  .article-header-inner {
+    width: 100%;
+  }
+
+  .article-breadcrumb {
+    margin-bottom: 30px;
+    font-size: .7rem;
+  }
+
+  .article-category {
+    font-size: .69rem;
+    letter-spacing: 2px;
+  }
+
+  .article-header h1 {
+    margin-top: 16px;
+    font-size: clamp(2.65rem, 12vw, 4rem);
+    line-height: .94;
+    letter-spacing: -2.5px;
+  }
+
+  .article-lead {
+    margin-top: 26px;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .article-information {
+    margin-top: 38px;
+    padding-top: 20px;
+    gap: 12px;
+  }
+
+  .article-information div {
+    padding-bottom: 12px;
+  }
+
+  /*
+     MUY IMPORTANTE:
+     eliminamos el antiguo aspect-ratio: 1/1.
+     El elenco conserva su formato horizontal también
+     en celular.
+  */
+  .article-hero-image {
+    width: calc(100% - 28px);
+    margin-top: 22px;
+  }
+
+  .article-hero-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: 16px;
+  }
+
+  .article-layout {
+    width: calc(100% - 32px);
+    margin: 52px auto 78px;
+  }
+
+  .article-sidebar-data {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .article-body > p {
+    font-size: .98rem;
+    line-height: 1.78;
+  }
+
+  .article-body .article-intro {
+    font-size: 1.06rem;
+  }
+
+  .article-body h2 {
+    margin-top: 52px;
+    font-size: clamp(2rem, 10vw, 2.85rem);
+  }
+
+  .article-pullquote {
+    margin: 42px 0;
+    padding: 34px 22px 34px 32px;
+  }
+
+  .article-inline-image {
+    width: min(100%, 560px);
+    margin: 42px auto;
+  }
+
+  .article-inline-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: 16px;
+  }
+
+  .article-highlight {
+    margin: 50px 0;
+    padding: 28px 22px;
+  }
+
+  .article-video-placeholder {
+    margin-top: 50px;
+    padding: 34px 22px;
+  }
+}
