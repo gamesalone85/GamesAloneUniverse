@@ -1667,6 +1667,10 @@ section {
     overflow-y: auto;
 }
 
+body.promo-open {
+    overflow: hidden;
+}
+
 
 /* =========================================================
    ESTADO OCULTO
