@@ -151,7 +151,7 @@ section {
 .nav {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 36px;
 }
 
 .nav a {
@@ -161,7 +161,7 @@ section {
 
     color: var(--crema);
 
-    font-size: .72rem;
+    font-size: .94rem;
     font-weight: 500;
 
     text-decoration: none;
@@ -201,7 +201,7 @@ section {
 .hero {
     min-height: 100svh;
 
-    background-image: url("../img/fondo.jpg");
+    background-image: url("../../img/chocolates/fondo.jpg");
     background-size: cover;
     background-position: center;
 
@@ -238,7 +238,7 @@ section {
 
     color: var(--dorado);
 
-    font-size: .65rem;
+    font-size: .96rem;
     font-weight: 600;
 
     letter-spacing: 2.5px;
@@ -301,7 +301,7 @@ section {
 
     color: var(--texto);
 
-    font-size: .92rem;
+    font-size: 1.04rem;
     line-height: 1.85;
 }
 
@@ -325,17 +325,17 @@ section {
 .btn-secondary,
 .cta-primary,
 .cta-whatsapp {
-    min-height: 50px;
+    min-height: 54px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    padding: 0 24px;
+    padding: 0 27px;
 
     border-radius: var(--radius-sm);
 
-    font-size: .72rem;
+    font-size: .94rem;
     font-weight: 600;
 
     text-decoration: none;
@@ -390,7 +390,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .66rem;
+    font-size: 1rem;
     letter-spacing: .4px;
 }
 
@@ -403,7 +403,7 @@ section {
 
     color: #756960;
 
-    font-size: .58rem;
+    font-size: .96rem;
     letter-spacing: .5px;
 }
 
@@ -489,7 +489,7 @@ section {
 .brand-intro-inner > p {
     color: var(--texto);
 
-    font-size: .85rem;
+    font-size: 1rem;
     line-height: 1.9;
 }
 
@@ -529,7 +529,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .84rem;
+    font-size: 1rem;
     line-height: 1.8;
 }
 
@@ -614,7 +614,7 @@ section {
 
     color: var(--dorado-claro);
 
-    font-size: .53rem;
+    font-size: .72rem;
     font-weight: 600;
 
     letter-spacing: 1.5px;
@@ -623,7 +623,7 @@ section {
 }
 
 .temporada-content {
-    padding: 25px 24px 27px;
+    padding: 28px 26px 30px;
 }
 
 .product-kicker {
@@ -633,7 +633,7 @@ section {
 
     color: var(--dorado);
 
-    font-size: .54rem;
+    font-size: .73rem;
     font-weight: 600;
 
     letter-spacing: 1.7px;
@@ -656,7 +656,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .76rem;
+    font-size: .96rem;
     line-height: 1.75;
 }
 
@@ -668,7 +668,7 @@ section {
 
     color: var(--dorado-claro);
 
-    font-size: .68rem;
+    font-size: .88rem;
     font-weight: 600;
 
     text-decoration: none;
@@ -751,7 +751,7 @@ section {
 }
 
 .card-content {
-    padding: 30px 27px;
+    padding: 34px 30px;
 
     display: flex;
     flex-direction: column;
@@ -815,7 +815,7 @@ section {
 .signature-inner p {
     color: var(--muted);
 
-    font-size: .68rem;
+    font-size: .88rem;
     text-align: center;
 
     letter-spacing: .3px;
@@ -962,9 +962,9 @@ section {
 .paso {
     position: relative;
 
-    min-height: 220px;
+    min-height: 235px;
 
-    padding: 30px 25px;
+    padding: 32px 27px;
 
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -1002,7 +1002,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .74rem;
+    font-size: .94rem;
     line-height: 1.7;
 }
 
@@ -1087,7 +1087,7 @@ section {
 
     color: var(--texto);
 
-    font-size: .85rem;
+    font-size: 1rem;
     line-height: 1.85;
 }
 
@@ -1158,7 +1158,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .82rem;
+    font-size: .98rem;
     line-height: 1.9;
 }
 
@@ -1199,7 +1199,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .68rem;
+    font-size: .88rem;
 }
 
 .footer-links {
@@ -1214,7 +1214,7 @@ section {
 
     color: var(--dorado);
 
-    font-size: .55rem;
+    font-size: .74rem;
     font-weight: 600;
 
     letter-spacing: 2px;
@@ -1223,7 +1223,7 @@ section {
 .footer-links a {
     color: var(--muted);
 
-    font-size: .68rem;
+    font-size: .88rem;
 
     text-decoration: none;
 }
@@ -1247,7 +1247,7 @@ section {
 
     color: #675b53;
 
-    font-size: .58rem;
+    font-size: .96rem;
 }
 
 
@@ -1342,7 +1342,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .78rem;
+    font-size: .96rem;
     line-height: 1.7;
 }
 
@@ -1371,7 +1371,7 @@ section {
 .form-group label {
     color: var(--crema);
 
-    font-size: .66rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
@@ -1389,7 +1389,7 @@ section {
 
     padding: 13px 14px;
 
-    font-size: .78rem;
+    font-size: .96rem;
 
     transition:
         border-color .2s ease,
@@ -1397,7 +1397,7 @@ section {
 }
 
 .form-group input {
-    min-height: 47px;
+    min-height: 50px;
 }
 
 .form-group textarea {
@@ -1456,13 +1456,13 @@ section {
 
 .cancel-btn,
 .submit-btn {
-    min-height: 46px;
+    min-height: 50px;
 
     padding: 0 21px;
 
     border-radius: var(--radius-sm);
 
-    font-size: .7rem;
+    font-size: .9rem;
     font-weight: 600;
 
     cursor: pointer;
@@ -1515,7 +1515,7 @@ section {
     background: var(--verde-whatsapp);
     color: #06180c;
 
-    font-size: .7rem;
+    font-size: .9rem;
     font-weight: 700;
 
     cursor: pointer;
@@ -1590,7 +1590,7 @@ section {
 }
 
 .chat-header h3 {
-    font-size: .78rem;
+    font-size: .96rem;
 }
 
 .chat-header span {
@@ -1598,7 +1598,7 @@ section {
 
     margin-top: 2px;
 
-    font-size: .6rem;
+    font-size: .78rem;
 
     opacity: .75;
 }
@@ -1610,7 +1610,7 @@ section {
 .chat-body p {
     margin-bottom: 8px;
 
-    font-size: .72rem;
+    font-size: .94rem;
     line-height: 1.55;
 }
 
@@ -1620,7 +1620,7 @@ section {
     align-items: center;
     justify-content: center;
 
-    min-height: 46px;
+    min-height: 50px;
 
     margin: 0 18px 18px;
 
@@ -1629,7 +1629,7 @@ section {
     background: var(--verde-whatsapp);
     color: #071b0d;
 
-    font-size: .7rem;
+    font-size: .9rem;
     font-weight: 700;
 
     text-decoration: none;
@@ -1793,7 +1793,7 @@ section {
 }
 
 .cookie-text h4 {
-    font-size: .72rem;
+    font-size: .94rem;
 }
 
 .cookie-text p {
@@ -1801,7 +1801,7 @@ section {
 
     color: var(--muted);
 
-    font-size: .62rem;
+    font-size: .82rem;
     line-height: 1.55;
 }
 
@@ -1822,7 +1822,7 @@ section {
     background: var(--dorado);
     color: var(--cacao-950);
 
-    font-size: .65rem;
+    font-size: .96rem;
     font-weight: 600;
 
     cursor: pointer;
@@ -1872,7 +1872,7 @@ section {
 
     color: var(--dorado-claro);
 
-    font-size: .76rem;
+    font-size: .96rem;
 }
 
 .sarita-toast span {
@@ -1882,7 +1882,7 @@ section {
 
     color: var(--texto);
 
-    font-size: .67rem;
+    font-size: .86rem;
     line-height: 1.55;
 }
 
@@ -1894,6 +1894,31 @@ section {
     color: #efaaaa;
 }
 
+
+/* =========================================================
+   LEGIBILIDAD
+========================================================= */
+
+p,
+a,
+button,
+input,
+textarea,
+label {
+    text-rendering: optimizeLegibility;
+}
+
+.hero-description,
+.brand-intro-inner > p,
+.section-heading p,
+.temporada-header p,
+.temporada-content p,
+.card-content p,
+.paso p,
+.cta-content p,
+.marca-box p {
+    letter-spacing: .01em;
+}
 
 /* =========================================================
    TABLET
@@ -1962,7 +1987,7 @@ section {
 
     .nav a {
         padding: 24px 0;
-        font-size: .61rem;
+        font-size: .84rem;
     }
 
     .nav a:nth-child(2),
@@ -2003,7 +2028,7 @@ section {
     }
 
     .hero-description {
-        font-size: .82rem;
+        font-size: .98rem;
     }
 
     .hero-buttons {
@@ -2017,7 +2042,7 @@ section {
 
     .hero-signature {
         flex-wrap: wrap;
-        font-size: .6rem;
+        font-size: .78rem;
     }
 
     .brand-intro,
@@ -2245,7 +2270,7 @@ section {
     }
 
     .tag {
-        font-size: .55rem;
+        font-size: .74rem;
         letter-spacing: 1.5px;
     }
 
