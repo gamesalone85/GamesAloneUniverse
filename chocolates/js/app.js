@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const openCtaBtn =
         document.getElementById("openModalCta");
 
+    const openAlianzaBtn =
+        document.getElementById("openAlianzaModal");
+
     const closeBtn =
         document.getElementById("closeModal");
 
@@ -125,6 +128,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (openCtaBtn) {
 
         openCtaBtn.addEventListener(
+            "click",
+            openModal
+        );
+
+    }
+
+
+    /*
+       BOTÓN DE LA ALIANZA
+       CALAVERAS SANDUNGUERAS
+    */
+
+    if (openAlianzaBtn) {
+
+        openAlianzaBtn.addEventListener(
             "click",
             openModal
         );
