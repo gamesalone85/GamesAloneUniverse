@@ -547,6 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        POPUP PROMOCIONAL
+       SE MUESTRA EN CADA CARGA
     ===================================================== */
 
     const promoPopup =
@@ -559,57 +560,37 @@ document.addEventListener("DOMContentLoaded", () => {
             "closePromo"
         );
 
+    const continuePromo =
+        document.getElementById(
+            "continuePromo"
+        );
 
-    let promoSeen = null;
+
+    let promoTimer = null;
 
 
-    try {
+    function openPromoPopup() {
 
-        promoSeen =
-            sessionStorage.getItem(
-                "sarita_promo_seen"
-            );
+        if (!promoPopup) return;
 
-    } catch (error) {
 
-        console.warn(
-            "No se pudo leer sessionStorage:",
-            error
+        promoPopup.classList.remove(
+            "hidden"
+        );
+
+        promoPopup.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.classList.add(
+            "promo-open"
         );
 
     }
 
 
-    if (promoPopup) {
-
-        if (promoSeen === "true") {
-
-            promoPopup.classList.add(
-                "hidden"
-            );
-
-            promoPopup.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-        } else {
-
-            promoPopup.classList.remove(
-                "hidden"
-            );
-
-            promoPopup.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-        }
-
-    }
-
-
-    function hidePromo() {
+    function closePromoPopup() {
 
         if (!promoPopup) return;
 
@@ -623,35 +604,108 @@ document.addEventListener("DOMContentLoaded", () => {
             "true"
         );
 
-
-        try {
-
-            sessionStorage.setItem(
-                "sarita_promo_seen",
-                "true"
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "No se pudo guardar el estado del popup:",
-                error
-            );
-
-        }
+        document.body.classList.remove(
+            "promo-open"
+        );
 
     }
 
+
+    /*
+       El popup aparece un segundo después
+       de CADA carga de la página.
+
+       No usamos:
+       - localStorage
+       - sessionStorage
+       - cookies
+
+       Por tanto, al recargar o regresar
+       a /chocolates/ volverá a aparecer.
+    */
+
+    if (promoPopup) {
+
+        promoPopup.classList.add(
+            "hidden"
+        );
+
+        promoPopup.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        promoTimer =
+            window.setTimeout(
+                () => {
+
+                    openPromoPopup();
+
+                    promoTimer = null;
+
+                },
+                1000
+            );
+
+    }
+
+
+    /* CERRAR CON X */
 
     if (closePromo) {
 
         closePromo.addEventListener(
             "click",
-            hidePromo
+            () => {
+
+                if (promoTimer) {
+
+                    window.clearTimeout(
+                        promoTimer
+                    );
+
+                    promoTimer = null;
+
+                }
+
+
+                closePromoPopup();
+
+            }
         );
 
     }
 
+
+    /* SEGUIR EXPLORANDO */
+
+    if (continuePromo) {
+
+        continuePromo.addEventListener(
+            "click",
+            () => {
+
+                if (promoTimer) {
+
+                    window.clearTimeout(
+                        promoTimer
+                    );
+
+                    promoTimer = null;
+
+                }
+
+
+                closePromoPopup();
+
+            }
+        );
+
+    }
+
+
+    /* CERRAR AL TOCAR EL FONDO */
 
     if (promoPopup) {
 
@@ -660,10 +714,22 @@ document.addEventListener("DOMContentLoaded", () => {
             (event) => {
 
                 if (
-                    event.target === promoPopup
+                    event.target ===
+                    promoPopup
                 ) {
 
-                    hidePromo();
+                    if (promoTimer) {
+
+                        window.clearTimeout(
+                            promoTimer
+                        );
+
+                        promoTimer = null;
+
+                    }
+
+
+                    closePromoPopup();
 
                 }
 
@@ -671,6 +737,39 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
+
+
+    /* CERRAR CON ESC */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                promoPopup &&
+                !promoPopup.classList.contains(
+                    "hidden"
+                )
+            ) {
+
+                if (promoTimer) {
+
+                    window.clearTimeout(
+                        promoTimer
+                    );
+
+                    promoTimer = null;
+
+                }
+
+
+                closePromoPopup();
+
+            }
+
+        }
+    );
 
 
     /* =====================================================
@@ -1005,6 +1104,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "No se pudo leer la preferencia de Analytics:",
                 error
             );
+
 
             return null;
 
