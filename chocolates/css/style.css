@@ -2780,3 +2780,820 @@ label {
         transition-duration: .01ms !important;
     }
 }
+/* =========================================================
+   ALIANZA
+   CALAVERAS SANDUNGUERAS × CHOCOLATE ARTÍSTICO SARITA
+   2026
+========================================================= */
+
+.alianza-sandungueras {
+    position: relative;
+    overflow: hidden;
+
+    padding: 110px 6%;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(201, 164, 92, .09),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(201, 164, 92, .045),
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            var(--cacao-900),
+            var(--cacao-950)
+        );
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.alianza-sandungueras-inner {
+    position: relative;
+
+    width: min(1160px, 100%);
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.15fr)
+        minmax(360px, .85fr);
+
+    align-items: center;
+
+    gap: 52px;
+}
+
+
+/* =========================================================
+   IMAGEN DE LA ALIANZA
+========================================================= */
+
+.alianza-sandungueras-image {
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(201, 164, 92, .30);
+
+    border-radius: var(--radius-xl);
+
+    background: var(--cacao-900);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0, 0, 0, .40);
+}
+
+
+/*
+   La imagen es horizontal.
+   No se recorta y no se deforma.
+*/
+
+.alianza-sandungueras-image img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+    object-position: center;
+
+    transition:
+        transform .6s ease;
+}
+
+
+.alianza-sandungueras-image:hover img {
+    transform: scale(1.015);
+}
+
+
+/* =========================================================
+   DETALLE DORADO DE LA IMAGEN
+========================================================= */
+
+.alianza-sandungueras-image::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    border-radius: inherit;
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(255, 255, 255, .025);
+}
+
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.alianza-sandungueras-content {
+    position: relative;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.alianza-sandungueras-content .eyebrow {
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 32px;
+
+    padding: 0 13px;
+
+    border:
+        1px solid
+        rgba(201, 164, 92, .28);
+
+    border-radius: 999px;
+
+    background:
+        rgba(201, 164, 92, .055);
+
+    color: var(--dorado);
+
+    font-size: .76rem;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.alianza-sandungueras-content h2 {
+    margin-top: 20px;
+
+    max-width: 540px;
+
+    color: var(--marfil);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            2.35rem,
+            4.5vw,
+            4rem
+        );
+
+    line-height: 1.03;
+
+    font-weight: 600;
+
+    letter-spacing: -.035em;
+}
+
+
+.alianza-sandungueras-content h2 span {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--dorado-claro);
+}
+
+
+/* =========================================================
+   FRASE PRINCIPAL
+========================================================= */
+
+.alianza-lead {
+    max-width: 520px;
+
+    margin-top: 23px;
+
+    color: var(--crema);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1.22rem;
+
+    font-style: italic;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   TEXTOS
+========================================================= */
+
+.alianza-sandungueras-content > p:not(.alianza-lead) {
+    max-width: 550px;
+
+    margin-top: 17px;
+
+    color: var(--texto);
+
+    font-size: .98rem;
+
+    line-height: 1.85;
+}
+
+
+.alianza-sandungueras-content strong {
+    color: var(--marfil);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.alianza-sandungueras-actions {
+    margin-top: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    flex-wrap: wrap;
+}
+
+
+.alianza-primary,
+.alianza-secondary {
+    min-height: 52px;
+
+    padding: 0 22px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-sm);
+
+    font-family:
+        "Poppins",
+        Arial,
+        sans-serif;
+
+    font-size: .9rem;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+}
+
+
+/* BOTÓN PRINCIPAL */
+
+.alianza-primary {
+    border:
+        1px solid
+        var(--dorado);
+
+    background:
+        var(--dorado);
+
+    color:
+        var(--cacao-950);
+}
+
+
+.alianza-primary:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--dorado-claro);
+
+    background:
+        var(--dorado-claro);
+
+    color:
+        var(--cacao-950);
+}
+
+
+/* BOTÓN SECUNDARIO */
+
+.alianza-secondary {
+    border:
+        1px solid
+        rgba(255, 255, 255, .16);
+
+    background:
+        rgba(255, 255, 255, .035);
+
+    color:
+        var(--crema);
+}
+
+
+.alianza-secondary:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--border-gold);
+
+    background:
+        rgba(201, 164, 92, .06);
+
+    color:
+        var(--dorado-claro);
+}
+
+
+/* =========================================================
+   FIRMA
+   CHOCOLATE × ARTE × TRADICIÓN
+========================================================= */
+
+.alianza-sandungueras-signature {
+    margin-top: 31px;
+
+    padding-top: 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, .07);
+
+    color: var(--muted);
+
+    font-size: .72rem;
+
+    font-weight: 600;
+
+    letter-spacing: 1.8px;
+}
+
+
+.alianza-sandungueras-signature span:nth-child(2),
+.alianza-sandungueras-signature span:nth-child(4) {
+    color: var(--dorado);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1rem;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   TARJETA
+   EDICIÓN ESPECIAL CALAVERAS SANDUNGUERAS
+========================================================= */
+
+.temporada-card-alianza {
+    border-color:
+        rgba(201, 164, 92, .30);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(201, 164, 92, .055),
+            rgba(255, 255, 255, .02)
+        );
+}
+
+
+.temporada-card-alianza:hover {
+    border-color:
+        rgba(201, 164, 92, .55);
+}
+
+
+/* =========================================================
+   BADGE ESPECIAL
+========================================================= */
+
+.temporada-card-alianza .badge {
+    border-color:
+        rgba(201, 164, 92, .45);
+
+    background:
+        rgba(12, 7, 5, .90);
+
+    color:
+        var(--dorado-claro);
+}
+
+
+/* =========================================================
+   IMAGEN DE LA TARJETA
+========================================================= */
+
+.temporada-card-alianza > img {
+    object-position: center;
+
+    filter:
+        saturate(.95)
+        contrast(1.02);
+
+    transition:
+        transform .45s ease,
+        filter .45s ease;
+}
+
+
+.temporada-card-alianza:hover > img {
+    transform:
+        scale(1.02);
+
+    filter:
+        saturate(1)
+        contrast(1.04);
+}
+
+
+/* =========================================================
+   OFFSET DEL ANCLA
+========================================================= */
+
+#edicion-calaveras {
+    scroll-margin-top: 100px;
+}
+
+
+#calaveras-sandungueras {
+    scroll-margin-top: 90px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .alianza-sandungueras {
+        padding:
+            90px
+            5%;
+    }
+
+
+    .alianza-sandungueras-inner {
+        grid-template-columns: 1fr;
+
+        width:
+            min(
+                850px,
+                100%
+            );
+
+        gap: 42px;
+    }
+
+
+    .alianza-sandungueras-image {
+        width: 100%;
+    }
+
+
+    .alianza-sandungueras-content {
+        width:
+            min(
+                720px,
+                100%
+            );
+
+        margin:
+            0 auto;
+
+        text-align:
+            center;
+    }
+
+
+    .alianza-sandungueras-content h2 {
+        max-width: 680px;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .alianza-lead {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .alianza-sandungueras-content > p:not(.alianza-lead) {
+        max-width: 680px;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .alianza-sandungueras-actions {
+        justify-content: center;
+    }
+
+
+    .alianza-sandungueras-signature {
+        justify-content: center;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .alianza-sandungueras {
+        padding:
+            78px
+            20px;
+    }
+
+
+    .alianza-sandungueras-inner {
+        gap: 32px;
+    }
+
+
+    /*
+       La imagen conserva su formato horizontal.
+       No usamos altura fija.
+    */
+
+    .alianza-sandungueras-image {
+        border-radius:
+            18px;
+
+        box-shadow:
+            0 20px 50px
+            rgba(0, 0, 0, .35);
+    }
+
+
+    .alianza-sandungueras-image img {
+        width: 100%;
+        height: auto;
+
+        object-fit: contain;
+    }
+
+
+    .alianza-sandungueras-content {
+        text-align: center;
+    }
+
+
+    .alianza-sandungueras-content .eyebrow {
+        min-height: 30px;
+
+        padding:
+            0 11px;
+
+        font-size: .68rem;
+
+        letter-spacing:
+            1.6px;
+    }
+
+
+    .alianza-sandungueras-content h2 {
+        margin-top: 17px;
+
+        font-size:
+            clamp(
+                2rem,
+                10vw,
+                3rem
+            );
+
+        line-height: 1.06;
+    }
+
+
+    .alianza-sandungueras-content h2 span {
+        margin-top: 6px;
+    }
+
+
+    .alianza-lead {
+        margin-top: 19px;
+
+        font-size: 1.08rem;
+
+        line-height: 1.55;
+    }
+
+
+    .alianza-sandungueras-content > p:not(.alianza-lead) {
+        margin-top: 15px;
+
+        font-size: .94rem;
+
+        line-height: 1.75;
+    }
+
+
+    .alianza-sandungueras-actions {
+        margin-top: 26px;
+
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+    }
+
+
+    .alianza-primary,
+    .alianza-secondary {
+        width: 100%;
+
+        min-height: 51px;
+
+        padding:
+            0
+            17px;
+    }
+
+
+    .alianza-sandungueras-signature {
+        margin-top: 27px;
+
+        padding-top: 19px;
+
+        justify-content: center;
+
+        gap: 7px;
+
+        font-size: .65rem;
+
+        letter-spacing:
+            1.3px;
+    }
+
+
+    /*
+       Tarjeta de la edición especial.
+    */
+
+    .temporada-card-alianza > img {
+        height: auto;
+
+        aspect-ratio:
+            16 / 10;
+
+        object-fit: cover;
+
+        object-position:
+            center;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUEÑO
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .alianza-sandungueras {
+        padding:
+            65px
+            17px;
+    }
+
+
+    .alianza-sandungueras-inner {
+        gap: 27px;
+    }
+
+
+    .alianza-sandungueras-image {
+        border-radius:
+            15px;
+    }
+
+
+    .alianza-sandungueras-content h2 {
+        font-size:
+            clamp(
+                1.85rem,
+                10.5vw,
+                2.6rem
+            );
+    }
+
+
+    .alianza-lead {
+        font-size: 1rem;
+    }
+
+
+    .alianza-sandungueras-content > p:not(.alianza-lead) {
+        font-size: .9rem;
+
+        line-height: 1.7;
+    }
+
+
+    .alianza-primary,
+    .alianza-secondary {
+        min-height: 49px;
+
+        font-size: .86rem;
+    }
+
+
+    .alianza-sandungueras-signature {
+        line-height: 1.8;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESIBILIDAD
+   REDUCCIÓN DE MOVIMIENTO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .alianza-sandungueras-image img,
+    .alianza-primary,
+    .alianza-secondary,
+    .temporada-card-alianza,
+    .temporada-card-alianza > img {
+        transition: none;
+    }
+
+
+    .alianza-sandungueras-image:hover img,
+    .temporada-card-alianza:hover > img,
+    .alianza-primary:hover,
+    .alianza-secondary:hover {
+        transform: none;
+    }
+
+}
