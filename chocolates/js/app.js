@@ -16,6 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const COTIZACION_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbx6M7ROD49A5-LDFiMxXqf9R8s_GzIfPaztTjcc4IKJb00tmtMJ1TMr9DU6U4P5gSM6/exec";
 
+    const GA_MEASUREMENT_ID =
+        "G-EGZ2977YBH";
+
+    const CONSENT_KEY =
+        "ga18_cookie_consent";
+
 
     /* =====================================================
        MODAL COTIZACIÓN
@@ -46,7 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         modal.classList.add("active");
 
-        document.body.classList.add("modal-open");
+        document.body.classList.add(
+            "modal-open"
+        );
 
         modal.setAttribute(
             "aria-hidden",
@@ -183,7 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const fechaEvento =
-        document.getElementById("fechaEvento");
+        document.getElementById(
+            "fechaEvento"
+        );
 
 
     if (fechaEvento) {
@@ -353,6 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         true
                     );
 
+
                 } finally {
 
                     if (submitBtn) {
@@ -422,19 +433,25 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        document.body.appendChild(toast);
+        document.body.appendChild(
+            toast
+        );
 
 
         requestAnimationFrame(() => {
 
-            toast.classList.add("active");
+            toast.classList.add(
+                "active"
+            );
 
         });
 
 
         window.setTimeout(() => {
 
-            toast.classList.remove("active");
+            toast.classList.remove(
+                "active"
+            );
 
 
             window.setTimeout(() => {
@@ -642,8 +659,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             (event) => {
 
-                if (event.target === promoPopup) {
+                if (
+                    event.target === promoPopup
+                ) {
+
                     hidePromo();
+
                 }
 
             }
@@ -896,8 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       COOKIES
-       CORREGIDO PARA MÓVIL
+       PRIVACIDAD Y GOOGLE ANALYTICS
     ===================================================== */
 
     const cookieBar =
@@ -910,13 +930,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "acceptCookies"
         );
 
+    const rejectCookies =
+        document.getElementById(
+            "rejectCookies"
+        );
 
-    /*
-       Oculta el aviso de forma explícita.
 
-       No dependemos únicamente de quitar
-       la clase "active".
-    */
+    let analyticsLoaded = false;
+
+
+    /* =====================================================
+       MOSTRAR / OCULTAR CONSENTIMIENTO
+    ===================================================== */
 
     function hideCookieBar() {
 
@@ -962,71 +987,300 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    let cookieAccepted = null;
+    /* =====================================================
+       LEER CONSENTIMIENTO
+    ===================================================== */
 
+    function readConsent() {
 
-    try {
+        try {
 
-        cookieAccepted =
-            localStorage.getItem(
-                "sarita_cookie_notice"
+            return localStorage.getItem(
+                CONSENT_KEY
             );
 
-    } catch (error) {
+        } catch (error) {
 
-        console.warn(
-            "No se pudo leer localStorage:",
-            error
+            console.warn(
+                "No se pudo leer la preferencia de Analytics:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       GUARDAR CONSENTIMIENTO
+    ===================================================== */
+
+    function saveConsent(value) {
+
+        try {
+
+            localStorage.setItem(
+                CONSENT_KEY,
+                value
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "No se pudo guardar la preferencia de Analytics:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CONSENTIMIENTO GOOGLE
+    ===================================================== */
+
+    function setGoogleConsent(value) {
+
+        window.dataLayer =
+            window.dataLayer || [];
+
+
+        window.gtag =
+            window.gtag ||
+            function () {
+
+                window.dataLayer.push(
+                    arguments
+                );
+
+            };
+
+
+        window.gtag(
+            "consent",
+            "update",
+            {
+
+                analytics_storage:
+                    value,
+
+                ad_storage:
+                    "denied",
+
+                ad_user_data:
+                    "denied",
+
+                ad_personalization:
+                    "denied"
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CARGAR GOOGLE ANALYTICS
+    ===================================================== */
+
+    function loadGoogleAnalytics() {
+
+        /*
+         * Analytics nunca se descarga antes
+         * de que exista consentimiento.
+         */
+
+        if (
+            readConsent() !==
+            "accepted"
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         * Evita cargar GA más de una vez.
+         */
+
+        if (analyticsLoaded) {
+
+            return;
+
+        }
+
+
+        if (
+            document.querySelector(
+                'script[data-ga18-analytics="true"]'
+            )
+        ) {
+
+            analyticsLoaded = true;
+
+            return;
+
+        }
+
+
+        analyticsLoaded = true;
+
+
+        window.dataLayer =
+            window.dataLayer || [];
+
+
+        window.gtag =
+            window.gtag ||
+            function () {
+
+                window.dataLayer.push(
+                    arguments
+                );
+
+            };
+
+
+        /*
+         * Consentimiento concedido antes
+         * de inicializar la medición.
+         */
+
+        setGoogleConsent(
+            "granted"
+        );
+
+
+        window.gtag(
+            "js",
+            new Date()
+        );
+
+
+        window.gtag(
+            "config",
+            GA_MEASUREMENT_ID,
+            {
+
+                anonymize_ip: true,
+
+                allow_google_signals: false,
+
+                allow_ad_personalization_signals: false
+
+            }
+        );
+
+
+        /*
+         * Carga dinámica del script oficial.
+         */
+
+        const analyticsScript =
+            document.createElement(
+                "script"
+            );
+
+
+        analyticsScript.async =
+            true;
+
+
+        analyticsScript.src =
+            "https://www.googletagmanager.com/gtag/js?id=" +
+            encodeURIComponent(
+                GA_MEASUREMENT_ID
+            );
+
+
+        analyticsScript.dataset.ga18Analytics =
+            "true";
+
+
+        document.head.appendChild(
+            analyticsScript
+        );
+
+    }
+
+
+    /* =====================================================
+       ESTADO INICIAL DE CONSENTIMIENTO
+    ===================================================== */
+
+    const savedConsent =
+        readConsent();
+
+
+    /*
+     * Usuario que ya aceptó anteriormente.
+     */
+
+    if (
+        savedConsent ===
+        "accepted"
+    ) {
+
+        hideCookieBar();
+
+
+        setGoogleConsent(
+            "granted"
+        );
+
+
+        /*
+         * Retraso ligero para priorizar
+         * la carga visual del sitio.
+         */
+
+        window.setTimeout(
+            loadGoogleAnalytics,
+            1200
         );
 
     }
 
 
     /*
-       Si ya se aceptó anteriormente,
-       se mantiene oculto desde el inicio.
-    */
+     * Usuario que rechazó anteriormente.
+     */
 
-    if (cookieAccepted === "accepted") {
+    else if (
+        savedConsent ===
+        "rejected"
+    ) {
 
         hideCookieBar();
 
-    } else {
 
-        /*
-           Se muestra con un pequeño retraso
-           para no competir con el popup.
-        */
+        setGoogleConsent(
+            "denied"
+        );
+
+    }
+
+
+    /*
+     * Primera visita o sin decisión.
+     */
+
+    else {
+
+        setGoogleConsent(
+            "denied"
+        );
+
 
         window.setTimeout(
             () => {
 
-                /*
-                   Comprobamos otra vez por si
-                   el usuario ya aceptó durante
-                   esos 700 ms.
-                */
-
-                let currentConsent = null;
-
-
-                try {
-
-                    currentConsent =
-                        localStorage.getItem(
-                            "sarita_cookie_notice"
-                        );
-
-                } catch (error) {
-
-                    currentConsent = null;
-
-                }
-
-
                 if (
-                    currentConsent !==
-                    "accepted"
+                    readConsent() === null
                 ) {
 
                     showCookieBar();
@@ -1040,6 +1294,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =====================================================
+       ACEPTAR ANALYTICS
+    ===================================================== */
+
     if (acceptCookies) {
 
         acceptCookies.addEventListener(
@@ -1050,35 +1308,52 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.stopPropagation();
 
 
-                /*
-                   Primero lo quitamos de pantalla.
+                saveConsent(
+                    "accepted"
+                );
 
-                   Así el cierre no depende de que
-                   localStorage funcione.
-                */
 
                 hideCookieBar();
 
 
-                /*
-                   Después guardamos la preferencia.
-                */
+                setGoogleConsent(
+                    "granted"
+                );
 
-                try {
 
-                    localStorage.setItem(
-                        "sarita_cookie_notice",
-                        "accepted"
-                    );
+                loadGoogleAnalytics();
 
-                } catch (error) {
+            }
+        );
 
-                    console.warn(
-                        "No se pudo guardar la preferencia de cookies:",
-                        error
-                    );
+    }
 
-                }
+
+    /* =====================================================
+       RECHAZAR ANALYTICS
+    ===================================================== */
+
+    if (rejectCookies) {
+
+        rejectCookies.addEventListener(
+            "click",
+            (event) => {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+
+                saveConsent(
+                    "rejected"
+                );
+
+
+                hideCookieBar();
+
+
+                setGoogleConsent(
+                    "denied"
+                );
 
             }
         );
@@ -1129,8 +1404,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
+
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+
                     });
 
                 }
