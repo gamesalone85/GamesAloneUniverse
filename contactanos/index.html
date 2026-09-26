@@ -128,6 +128,19 @@ Contacto | GamesAlone18 Universe
   href="./contact.css"
 >
 
+<style>
+.contact-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+</style>
+
 
 <!-- ==================================================
      STRUCTURED DATA
@@ -465,6 +478,26 @@ gtag(
           id="contactForm"
           class="contact-form"
         >
+
+          <!-- Protección anti-bot: honeypot invisible -->
+          <div class="contact-honeypot" aria-hidden="true">
+            <label for="website">No llenar este campo</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+            >
+          </div>
+
+          <!-- Tiempo de inicio del formulario -->
+          <input
+            type="hidden"
+            id="formStarted"
+            name="formStarted"
+            value=""
+          >
 
 
           <div class="form-group">
@@ -1078,6 +1111,23 @@ document.getElementById(
 );
 
 
+const websiteField =
+document.getElementById(
+  "website"
+);
+
+
+const formStartedField =
+document.getElementById(
+  "formStarted"
+);
+
+
+if (formStartedField) {
+  formStartedField.value = String(Date.now());
+}
+
+
 if (
   contactForm &&
   responseBox &&
@@ -1085,12 +1135,26 @@ if (
 ) {
 
 
+let sending = false;
+
+
 contactForm.addEventListener(
 "submit",
-function (event) {
+async function (event) {
 
 
 event.preventDefault();
+
+
+if (sending) {
+  return;
+}
+
+
+if (!contactForm.checkValidity()) {
+  contactForm.reportValidity();
+  return;
+}
 
 
 const nombre =
@@ -1117,35 +1181,45 @@ document.getElementById(
 ).value.trim();
 
 
+const website =
+websiteField
+  ? websiteField.value.trim()
+  : "";
 
-if (
-  nombre.length < 3
-) {
 
-responseBox.textContent =
-"⚠ Ingresa un nombre válido.";
+const formStarted =
+formStartedField
+  ? formStartedField.value
+  : String(Date.now());
 
-return;
 
+if (nombre.length < 3) {
+  responseBox.textContent =
+  "⚠ Ingresa un nombre válido.";
+  return;
 }
 
 
-
-if (
-  mensaje.length < 10
-) {
-
-responseBox.textContent =
-"⚠ El mensaje debe contener al menos 10 caracteres.";
-
-return;
-
+if (mensaje.length < 10) {
+  responseBox.textContent =
+  "⚠ El mensaje debe contener al menos 10 caracteres.";
+  return;
 }
 
 
+/*
+ * Si el honeypot fue llenado, no enviamos nada.
+ * Para no dar pistas a bots, mostramos una respuesta genérica.
+ */
+if (website !== "") {
+  responseBox.textContent =
+  "⚠ No fue posible procesar la solicitud.";
+  return;
+}
 
-submitButton.disabled =
-true;
+
+sending = true;
+submitButton.disabled = true;
 
 
 submitButton.innerHTML =
@@ -1156,80 +1230,83 @@ responseBox.textContent =
 "Enviando mensaje...";
 
 
+try {
 
-fetch(
-CONTACT_ENDPOINT,
-{
+  const response = await fetch(
+    CONTACT_ENDPOINT,
+    {
+      method: "POST",
+      body: new URLSearchParams({
+        nombre: nombre,
+        email: email,
+        telefono: telefono,
+        mensaje: mensaje,
+        website: website,
+        formStarted: formStarted,
+        token: CONTACT_TOKEN
+      })
+    }
+  );
 
-method:
-"POST",
 
-body:
-new URLSearchParams({
+  if (!response.ok) {
+    throw new Error(
+      "HTTP " + response.status
+    );
+  }
 
-nombre:
-nombre,
 
-email:
-email,
+  const result = await response.json();
 
-telefono:
-telefono,
 
-mensaje:
-mensaje,
+  if (!result || result.ok !== true) {
+    throw new Error(
+      "Solicitud rechazada"
+    );
+  }
 
-token:
-CONTACT_TOKEN
 
-})
+  responseBox.textContent =
+  "✓ Gracias por contactarnos. Recibimos tu mensaje y te responderemos pronto.";
+
+
+  contactForm.reset();
+
+
+  if (formStartedField) {
+    formStartedField.value = String(Date.now());
+  }
+
 
 }
-)
+catch (error) {
+
+  console.error(
+    "Error al enviar contacto:",
+    error
+  );
 
 
-.then(function () {
+  responseBox.textContent =
+  "⚠ No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";
+
+}
+finally {
+
+  sending = false;
+  submitButton.disabled = false;
 
 
-responseBox.textContent =
-"✓ Gracias por contactarnos. Recibimos tu mensaje y te responderemos pronto.";
+  submitButton.innerHTML =
+  "<span aria-hidden=\"true\">➤</span> Enviar mensaje";
 
-
-contactForm.reset();
-
-
-})
-
-
-.catch(function () {
-
-
-responseBox.textContent =
-"⚠ Ocurrió un error al enviar el mensaje. Intenta nuevamente o contáctanos por WhatsApp.";
-
-
-})
-
-
-.finally(function () {
-
-
-submitButton.disabled =
-false;
-
-
-submitButton.innerHTML =
-"<span aria-hidden=\"true\">➤</span> Enviar mensaje";
-
-
-});
+}
 
 
 }
 );
 
 }
-
 
 
 /* ==================================================
