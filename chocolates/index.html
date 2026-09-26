@@ -207,17 +207,21 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
 
 
 <!-- ==================================================
-     PROMOCIÓN
+     POPUP PROMOCIONAL
 ================================================== -->
 
 <div
-    class="promo-popup"
+    class="promo-popup hidden"
     id="promoPopup"
-    aria-hidden="false"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="promoTitle"
 >
 
     <div class="promo-content">
 
+        <!-- CERRAR -->
         <button
             class="promo-close"
             id="closePromo"
@@ -227,18 +231,64 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             ×
         </button>
 
-        <a
-            href="https://wa.me/5215529924478?text=Hola,%20me%20interesa%20la%20promoción%20de%20Chocolate%20Artístico%20Sarita."
-            target="_blank"
-            rel="noopener noreferrer"
-        >
+
+        <!-- IMAGEN PROMOCIONAL -->
+        <div class="promo-image">
 
             <img
                 src="../img/chocolates/choco webb.jpg"
-                alt="Promoción de Chocolate Artístico Sarita"
+                alt="Edición especial de Chocolate Artístico Sarita"
             >
 
-        </a>
+        </div>
+
+
+        <!-- CONTENIDO -->
+        <div class="promo-copy">
+
+            <span class="promo-eyebrow">
+                EDICIÓN ESPECIAL
+            </span>
+
+            <h2 id="promoTitle">
+                Un detalle hecho para momentos especiales.
+            </h2>
+
+            <p>
+                Descubre nuestras creaciones y encuentra
+                el chocolate ideal para regalar,
+                celebrar o sorprender.
+            </p>
+
+
+            <div class="promo-actions">
+
+                <a
+                    class="promo-primary"
+                    href="https://wa.me/5215529924478?text=Hola,%20vi%20la%20edición%20especial%20en%20su%20página%20y%20quiero%20hacer%20un%20pedido."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <i
+                        class="fab fa-whatsapp"
+                        aria-hidden="true"
+                    ></i>
+
+                    Quiero hacer un pedido
+                </a>
+
+
+                <button
+                    class="promo-secondary"
+                    id="continuePromo"
+                    type="button"
+                >
+                    Seguir explorando
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
