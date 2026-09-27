@@ -1,6 +1,7 @@
 /* =========================================================
    CHOCOLATE ARTÍSTICO SARITA
    APP.JS 2026
+   PEDIDOS + COLABORACIONES
 ========================================================= */
 
 "use strict";
@@ -14,7 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const COTIZACION_ENDPOINT =
-        "https://script.google.com/macros/s/AKfycbx6M7ROD49A5-LDFiMxXqf9R8s_GzIfPaztTjcc4IKJb00tmtMJ1TMr9DU6U4P5gSM6/exec";
+        "https://script.google.com/macros/s/AKfycbyuFPdF6OXOFT1J8MoUzU3ocvU-AXr43-aH1BPvQPx7kx46KzB-_x5OlZE2-rIkf-w/exec";
+
+    const COTIZACION_TOKEN =
+        "SARITA2026";
 
     const GA_MEASUREMENT_ID =
         "G-EGZ2977YBH";
@@ -24,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MODAL COTIZACIÓN
+       ELEMENTOS DEL MODAL
     ===================================================== */
 
     const modal =
@@ -42,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const openAlianzaBtn =
         document.getElementById("openAlianzaModal");
 
+    const openEdicionBtn =
+        document.getElementById("openEdicionModal");
+
     const closeBtn =
         document.getElementById("closeModal");
 
@@ -49,11 +56,429 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("cancelModalBtn");
 
 
-    function openModal() {
+    /* =====================================================
+       ELEMENTOS DEL FORMULARIO
+    ===================================================== */
+
+    const form =
+        document.getElementById("cotizacionForm");
+
+    const tipoPedido =
+        document.getElementById("tipoPedido");
+
+    const tipoColaboracion =
+        document.getElementById("tipoColaboracion");
+
+    const productoProyecto =
+        document.getElementById("productoProyecto");
+
+    const productoProyectoLabel =
+        document.getElementById("productoProyectoLabel");
+
+    const productoProyectoHelper =
+        document.getElementById("productoProyectoHelper");
+
+    const cantidad =
+        document.getElementById("cantidad");
+
+    const fechaEvento =
+        document.getElementById("fechaEvento");
+
+    const fechaLabel =
+        document.getElementById("fechaLabel");
+
+    const descripcion =
+        document.getElementById("descripcion");
+
+    const descripcionLabel =
+        document.getElementById("descripcionLabel");
+
+    const requestInfo =
+        document.getElementById("requestInfo");
+
+    const formResponse =
+        document.getElementById("formResponse");
+
+    const submitSolicitud =
+        document.getElementById("submitSolicitud");
+
+
+    /* =====================================================
+       LIMPIAR RESPUESTA
+    ===================================================== */
+
+    function clearFormResponse() {
+
+        if (!formResponse) return;
+
+        formResponse.textContent = "";
+
+        formResponse.classList.remove(
+            "success",
+            "error"
+        );
+
+    }
+
+
+    /* =====================================================
+       MOSTRAR RESPUESTA
+    ===================================================== */
+
+    function setFormResponse(
+        message,
+        type = ""
+    ) {
+
+        if (!formResponse) return;
+
+        formResponse.textContent =
+            message;
+
+        formResponse.classList.remove(
+            "success",
+            "error"
+        );
+
+        if (type) {
+
+            formResponse.classList.add(
+                type
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       TIPO SELECCIONADO
+    ===================================================== */
+
+    function getSelectedType() {
+
+        const selected =
+            document.querySelector(
+                'input[name="tipo"]:checked'
+            );
+
+        return selected
+            ? selected.value
+            : "";
+
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR FORMULARIO SEGÚN TIPO
+    ===================================================== */
+
+    function updateRequestType() {
+
+        const tipo =
+            getSelectedType();
+
+
+        clearFormResponse();
+
+
+        if (tipo === "PEDIDO") {
+
+
+            if (productoProyectoLabel) {
+
+                productoProyectoLabel.textContent =
+                    "¿Qué necesitas?";
+
+            }
+
+
+            if (productoProyecto) {
+
+                productoProyecto.placeholder =
+                    "Ej. Caja de 20 chocolates para cumpleaños";
+
+            }
+
+
+            if (productoProyectoHelper) {
+
+                productoProyectoHelper.textContent =
+                    "No necesitas elegir de un catálogo. Describe libremente el producto o presentación que necesitas.";
+
+            }
+
+
+            if (cantidad) {
+
+                cantidad.placeholder =
+                    "Ej. 1 caja, 50 piezas, 100 chocolates...";
+
+            }
+
+
+            if (fechaLabel) {
+
+                fechaLabel.textContent =
+                    "Fecha en que lo necesitas";
+
+            }
+
+
+            if (descripcionLabel) {
+
+                descripcionLabel.textContent =
+                    "Cuéntanos cómo lo imaginas";
+
+            }
+
+
+            if (descripcion) {
+
+                descripcion.placeholder =
+                    "Ej. Temática, colores, presentación, ocasión, decoración o cualquier detalle que quieras compartir.";
+
+            }
+
+
+            if (requestInfo) {
+
+                requestInfo.textContent =
+                    "Revisaremos tu solicitud y nos comunicaremos contigo para confirmar diseño, cantidad, precio, disponibilidad y entrega.";
+
+            }
+
+
+            if (submitSolicitud) {
+
+                submitSolicitud.textContent =
+                    "Enviar pedido";
+
+            }
+
+
+            return;
+
+        }
+
+
+        if (tipo === "COLABORACION") {
+
+
+            if (productoProyectoLabel) {
+
+                productoProyectoLabel.textContent =
+                    "Nombre del proyecto, marca, evento o producción";
+
+            }
+
+
+            if (productoProyecto) {
+
+                productoProyecto.placeholder =
+                    "Ej. Calaveras Sandungueras, obra de teatro, marca o evento";
+
+            }
+
+
+            if (productoProyectoHelper) {
+
+                productoProyectoHelper.textContent =
+                    "Indícanos el nombre de tu proyecto, producción, evento, marca o propuesta.";
+
+            }
+
+
+            if (cantidad) {
+
+                cantidad.placeholder =
+                    "Ej. 100 piezas, 50 invitados, por definir...";
+
+            }
+
+
+            if (fechaLabel) {
+
+                fechaLabel.textContent =
+                    "Fecha del proyecto o evento";
+
+            }
+
+
+            if (descripcionLabel) {
+
+                descripcionLabel.textContent =
+                    "Cuéntanos tu propuesta";
+
+            }
+
+
+            if (descripcion) {
+
+                descripcion.placeholder =
+                    "Explícanos en qué consiste el proyecto, qué tipo de colaboración imaginas y cómo te gustaría integrar Chocolate Artístico Sarita.";
+
+            }
+
+
+            if (requestInfo) {
+
+                requestInfo.textContent =
+                    "Revisaremos la información de tu proyecto y nos comunicaremos contigo para conocer más detalles y valorar la propuesta.";
+
+            }
+
+
+            if (submitSolicitud) {
+
+                submitSolicitud.textContent =
+                    "Enviar colaboración";
+
+            }
+
+
+            return;
+
+        }
+
+
+        /* SIN SELECCIÓN */
+
+        if (productoProyectoLabel) {
+
+            productoProyectoLabel.textContent =
+                "¿Qué necesitas o qué proyecto tienes en mente?";
+
+        }
+
+
+        if (productoProyecto) {
+
+            productoProyecto.placeholder =
+                "Ej. Caja de chocolates para regalo o nombre de tu proyecto";
+
+        }
+
+
+        if (productoProyectoHelper) {
+
+            productoProyectoHelper.textContent =
+                "No necesitas elegir de un catálogo. Describe libremente lo que necesitas.";
+
+        }
+
+
+        if (cantidad) {
+
+            cantidad.placeholder =
+                "Ej. 1 caja, 100 piezas...";
+
+        }
+
+
+        if (fechaLabel) {
+
+            fechaLabel.textContent =
+                "Fecha en que lo necesitas";
+
+        }
+
+
+        if (descripcionLabel) {
+
+            descripcionLabel.textContent =
+                "Cuéntanos cómo lo imaginas";
+
+        }
+
+
+        if (descripcion) {
+
+            descripcion.placeholder =
+                "Temática, colores, presentación, ocasión o cualquier detalle que quieras compartir.";
+
+        }
+
+
+        if (requestInfo) {
+
+            requestInfo.textContent =
+                "Selecciona Pedido o Colaboración para adaptar la solicitud a lo que necesitas.";
+
+        }
+
+
+        if (submitSolicitud) {
+
+            submitSolicitud.textContent =
+                "Enviar solicitud";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SELECCIONAR TIPO PROGRAMÁTICAMENTE
+    ===================================================== */
+
+    function selectRequestType(type) {
+
+        if (
+            type === "PEDIDO" &&
+            tipoPedido
+        ) {
+
+            tipoPedido.checked = true;
+
+        }
+
+
+        if (
+            type === "COLABORACION" &&
+            tipoColaboracion
+        ) {
+
+            tipoColaboracion.checked = true;
+
+        }
+
+
+        updateRequestType();
+
+    }
+
+
+    /* =====================================================
+       ABRIR MODAL
+    ===================================================== */
+
+    function openModal(
+        preferredType = ""
+    ) {
 
         if (!modal) return;
 
-        modal.classList.add("active");
+
+        clearFormResponse();
+
+
+        if (preferredType) {
+
+            selectRequestType(
+                preferredType
+            );
+
+        } else {
+
+            updateRequestType();
+
+        }
+
+
+        modal.classList.add(
+            "active"
+        );
 
         document.body.classList.add(
             "modal-open"
@@ -65,27 +490,47 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        window.setTimeout(() => {
+        window.setTimeout(
+            () => {
 
-            const firstInput =
-                modal.querySelector(
-                    "input:not([type='checkbox'])"
-                );
+                const selectedType =
+                    modal.querySelector(
+                        'input[name="tipo"]:checked'
+                    );
 
-            if (firstInput) {
-                firstInput.focus();
-            }
 
-        }, 100);
+                const focusTarget =
+                    selectedType ||
+                    modal.querySelector(
+                        'input[name="tipo"]'
+                    );
+
+
+                if (focusTarget) {
+
+                    focusTarget.focus();
+
+                }
+
+            },
+            100
+        );
 
     }
 
+
+    /* =====================================================
+       CERRAR MODAL
+    ===================================================== */
 
     function closeModal() {
 
         if (!modal) return;
 
-        modal.classList.remove("active");
+
+        modal.classList.remove(
+            "active"
+        );
 
         document.body.classList.remove(
             "modal-open"
@@ -99,11 +544,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =====================================================
+       BOTONES DEL MODAL
+    ===================================================== */
+
     if (openBtn) {
 
         openBtn.addEventListener(
             "click",
-            openModal
+            () => {
+
+                openModal();
+
+            }
         );
 
     }
@@ -129,22 +582,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
         openCtaBtn.addEventListener(
             "click",
-            openModal
+            () => {
+
+                openModal();
+
+            }
         );
 
     }
 
 
     /*
-       BOTÓN DE LA ALIANZA
-       CALAVERAS SANDUNGUERAS
+       ALIANZA CALAVERAS SANDUNGUERAS
+       ABRE DIRECTAMENTE COMO COLABORACIÓN
     */
 
     if (openAlianzaBtn) {
 
         openAlianzaBtn.addEventListener(
             "click",
-            openModal
+            () => {
+
+                openModal(
+                    "COLABORACION"
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       EDICIÓN CALAVERAS
+       LA ABRIMOS COMO PEDIDO
+       PORQUE EL USUARIO ESTÁ CONSULTANDO
+       LA EDICIÓN DE CHOCOLATE.
+    */
+
+    if (openEdicionBtn) {
+
+        openEdicionBtn.addEventListener(
+            "click",
+            () => {
+
+                openModal(
+                    "PEDIDO"
+                );
+
+
+                if (productoProyecto) {
+
+                    productoProyecto.value =
+                        "Edición especial Calaveras Sandungueras";
+
+                }
+
+            }
         );
 
     }
@@ -176,8 +670,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             (event) => {
 
-                if (event.target === modal) {
+                if (
+                    event.target === modal
+                ) {
+
                     closeModal();
+
                 }
 
             }
@@ -193,7 +691,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (
                 event.key === "Escape" &&
                 modal &&
-                modal.classList.contains("active")
+                modal.classList.contains(
+                    "active"
+                )
             ) {
 
                 closeModal();
@@ -205,14 +705,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FECHA MÍNIMA DEL EVENTO
+       CAMBIO PEDIDO / COLABORACIÓN
     ===================================================== */
 
-    const fechaEvento =
-        document.getElementById(
-            "fechaEvento"
+    if (tipoPedido) {
+
+        tipoPedido.addEventListener(
+            "change",
+            updateRequestType
         );
 
+    }
+
+
+    if (tipoColaboracion) {
+
+        tipoColaboracion.addEventListener(
+            "change",
+            updateRequestType
+        );
+
+    }
+
+
+    /* =====================================================
+       FECHA MÍNIMA
+    ===================================================== */
 
     if (fechaEvento) {
 
@@ -225,12 +743,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const month =
             String(
                 today.getMonth() + 1
-            ).padStart(2, "0");
+            ).padStart(
+                2,
+                "0"
+            );
 
         const day =
             String(
                 today.getDate()
-            ).padStart(2, "0");
+            ).padStart(
+                2,
+                "0"
+            );
 
 
         fechaEvento.min =
@@ -240,14 +764,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FORMULARIO DE COTIZACIÓN
+       FORMULARIO
     ===================================================== */
-
-    const form =
-        document.getElementById(
-            "cotizacionForm"
-        );
-
 
     if (form) {
 
@@ -256,6 +774,9 @@ document.addEventListener("DOMContentLoaded", () => {
             async (event) => {
 
                 event.preventDefault();
+
+
+                clearFormResponse();
 
 
                 if (!form.checkValidity()) {
@@ -267,7 +788,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
+                const tipo =
+                    getSelectedType();
+
+
+                if (
+                    tipo !== "PEDIDO" &&
+                    tipo !== "COLABORACION"
+                ) {
+
+                    setFormResponse(
+                        "Selecciona si deseas realizar un pedido o proponer una colaboración.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
                 const submitBtn =
+                    submitSolicitud ||
                     form.querySelector(
                         ".submit-btn"
                     );
@@ -276,12 +817,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const originalText =
                     submitBtn
                         ? submitBtn.textContent
-                        : "";
+                        : "Enviar solicitud";
 
 
                 if (submitBtn) {
 
-                    submitBtn.disabled = true;
+                    submitBtn.disabled =
+                        true;
 
                     submitBtn.textContent =
                         "Enviando...";
@@ -292,43 +834,60 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data =
                     new URLSearchParams({
 
+                        token:
+                            COTIZACION_TOKEN,
+
+                        website:
+                            document
+                                .getElementById(
+                                    "website"
+                                )
+                                ?.value
+                                .trim() || "",
+
+                        tipo:
+                            tipo,
+
                         nombre:
                             document
-                                .getElementById("nombre")
+                                .getElementById(
+                                    "nombre"
+                                )
+                                ?.value
+                                .trim() || "",
+
+                        email:
+                            document
+                                .getElementById(
+                                    "email"
+                                )
                                 ?.value
                                 .trim() || "",
 
                         telefono:
                             document
-                                .getElementById("telefono")
+                                .getElementById(
+                                    "telefono"
+                                )
                                 ?.value
                                 .trim() || "",
 
-                        correo:
-                            document
-                                .getElementById("correo")
-                                ?.value
-                                .trim() || "",
-
-                        evento:
-                            document
-                                .getElementById("evento")
+                        productoProyecto:
+                            productoProyecto
                                 ?.value
                                 .trim() || "",
 
                         cantidad:
-                            document
-                                .getElementById("cantidad")
-                                ?.value || "",
+                            cantidad
+                                ?.value
+                                .trim() || "",
 
                         fecha:
-                            document
-                                .getElementById("fechaEvento")
+                            fechaEvento
                                 ?.value || "",
 
                         descripcion:
-                            document
-                                .getElementById("descripcion")
+                            descripcion
                                 ?.value
                                 .trim() || ""
 
@@ -341,8 +900,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         await fetch(
                             COTIZACION_ENDPOINT,
                             {
-                                method: "POST",
-                                body: data
+                                method:
+                                    "POST",
+
+                                body:
+                                    data
                             }
                         );
 
@@ -356,28 +918,210 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
 
-                    form.reset();
+                    const result =
+                        (
+                            await response.text()
+                        ).trim();
 
-                    closeModal();
+
+                    /* -------------------------------------
+                       SOLICITUD RECIBIDA
+                    ------------------------------------- */
+
+                    if (
+                        result.startsWith(
+                            "RECIBIDO|"
+                        )
+                    ) {
+
+                        const folio =
+                            result
+                                .split("|")[1]
+                                ?.trim() || "";
+
+
+                        const successMessage =
+                            tipo === "PEDIDO"
+
+                                ? (
+                                    "Recibimos tu solicitud" +
+                                    (
+                                        folio
+                                            ? ` con folio ${folio}.`
+                                            : "."
+                                    ) +
+                                    " Revisaremos los detalles y nos comunicaremos contigo."
+                                )
+
+                                : (
+                                    "Recibimos tu propuesta de colaboración" +
+                                    (
+                                        folio
+                                            ? ` con folio ${folio}.`
+                                            : "."
+                                    ) +
+                                    " Revisaremos el proyecto y nos comunicaremos contigo."
+                                );
+
+
+                        setFormResponse(
+                            successMessage,
+                            "success"
+                        );
+
+
+                        showToast(
+                            "Solicitud recibida",
+                            folio
+                                ? `Tu folio es ${folio}.`
+                                : "Tu información fue registrada correctamente."
+                        );
+
+
+                        /*
+                           Guardamos temporalmente el mensaje
+                           antes del reset para que el usuario
+                           pueda verlo dentro del modal.
+                        */
+
+                        if (form) {
+
+                            form.reset();
+
+                        }
+
+
+                        updateRequestType();
+
+
+                        /*
+                           updateRequestType limpia la respuesta,
+                           así que la restauramos.
+                        */
+
+                        setFormResponse(
+                            successMessage,
+                            "success"
+                        );
+
+
+                        /*
+                           Cerramos después de unos segundos
+                           para que el folio sea visible.
+                        */
+
+                        window.setTimeout(
+                            () => {
+
+                                closeModal();
+
+                                clearFormResponse();
+
+                            },
+                            3500
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /* -------------------------------------
+                       ERRORES DEL BACKEND
+                    ------------------------------------- */
+
+                    const errorMessages = {
+
+                        ERROR_TOKEN:
+                            "No fue posible validar la solicitud.",
+
+                        ERROR_DATOS:
+                            "Faltan datos necesarios para procesar la solicitud.",
+
+                        ERROR_SPAM:
+                            "La solicitud no pudo ser procesada.",
+
+                        ERROR_TIPO:
+                            "Selecciona Pedido o Colaboración.",
+
+                        ERROR_NOMBRE:
+                            "Revisa el nombre ingresado.",
+
+                        ERROR_EMAIL:
+                            "Ingresa un correo electrónico válido.",
+
+                        ERROR_TELEFONO:
+                            "Revisa el teléfono o WhatsApp ingresado.",
+
+                        ERROR_PRODUCTO:
+                            tipo === "PEDIDO"
+                                ? "Describe qué chocolates o presentación necesitas."
+                                : "Indica el nombre de tu proyecto, marca, evento o producción.",
+
+                        ERROR_CANTIDAD:
+                            "Indica una cantidad aproximada válida.",
+
+                        ERROR_DESCRIPCION:
+                            "La descripción es demasiado extensa.",
+
+                        ERROR_CONTENIDO:
+                            "La solicitud contiene información que no pudo ser procesada.",
+
+                        ERROR_LIMITE:
+                            "Se han realizado varios intentos. Espera unos minutos antes de volver a enviar.",
+
+                        ERROR_REPETIDO:
+                            "Esta solicitud parece haberse enviado recientemente. Revisa tu correo o espera un momento antes de intentarlo nuevamente.",
+
+                        ERROR_OCUPADO:
+                            "El sistema está procesando otra solicitud. Inténtalo nuevamente en unos segundos.",
+
+                        ERROR:
+                            "No pudimos registrar la solicitud en este momento."
+
+                    };
+
+
+                    const message =
+                        errorMessages[result] ||
+                        "No pudimos procesar la solicitud. Inténtalo nuevamente o contáctanos por WhatsApp.";
+
+
+                    setFormResponse(
+                        message,
+                        "error"
+                    );
 
 
                     showToast(
-                        "Solicitud enviada",
-                        "Recibimos tus datos. Nos pondremos en contacto contigo."
+                        "No pudimos enviar la solicitud",
+                        message,
+                        true
                     );
 
 
                 } catch (error) {
 
                     console.error(
-                        "Error al enviar cotización:",
+                        "Error al enviar solicitud Sarita:",
                         error
                     );
 
 
+                    const message =
+                        "No pudimos comunicarnos con el sistema. Inténtalo nuevamente o contáctanos directamente por WhatsApp.";
+
+
+                    setFormResponse(
+                        message,
+                        "error"
+                    );
+
+
                     showToast(
-                        "No pudimos enviar la solicitud",
-                        "Inténtalo nuevamente o contáctanos directamente por WhatsApp.",
+                        "Error de conexión",
+                        message,
                         true
                     );
 
@@ -386,10 +1130,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (submitBtn) {
 
-                        submitBtn.disabled = false;
+                        submitBtn.disabled =
+                            false;
 
-                        submitBtn.textContent =
-                            originalText;
+
+                        /*
+                           Si el formulario fue reiniciado,
+                           el botón vuelve al texto general.
+                        */
+
+                        if (
+                            !getSelectedType()
+                        ) {
+
+                            submitBtn.textContent =
+                                "Enviar solicitud";
+
+                        } else {
+
+                            submitBtn.textContent =
+                                originalText;
+
+                        }
 
                     }
 
@@ -399,6 +1161,13 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
+
+
+    /* =====================================================
+       ESTADO INICIAL DEL FORMULARIO
+    ===================================================== */
+
+    updateRequestType();
 
 
     /* =====================================================
@@ -418,28 +1187,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (existingToast) {
+
             existingToast.remove();
+
         }
 
 
         const toast =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         toast.className =
             "sarita-toast" +
-            (isError ? " error" : "");
+            (
+                isError
+                    ? " error"
+                    : ""
+            );
 
 
         const toastTitle =
-            document.createElement("strong");
+            document.createElement(
+                "strong"
+            );
 
         toastTitle.textContent =
             title;
 
 
         const toastMessage =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
         toastMessage.textContent =
             message;
@@ -456,29 +1237,37 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        requestAnimationFrame(() => {
+        requestAnimationFrame(
+            () => {
 
-            toast.classList.add(
-                "active"
-            );
+                toast.classList.add(
+                    "active"
+                );
 
-        });
-
-
-        window.setTimeout(() => {
-
-            toast.classList.remove(
-                "active"
-            );
+            }
+        );
 
 
-            window.setTimeout(() => {
+        window.setTimeout(
+            () => {
 
-                toast.remove();
+                toast.classList.remove(
+                    "active"
+                );
 
-            }, 300);
 
-        }, 5000);
+                window.setTimeout(
+                    () => {
+
+                        toast.remove();
+
+                    },
+                    300
+                );
+
+            },
+            5000
+        );
 
     }
 
@@ -631,15 +1420,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /*
        El popup aparece un segundo después
-       de CADA carga de la página.
+       de cada carga.
 
-       No usamos:
-       - localStorage
-       - sessionStorage
-       - cookies
-
-       Por tanto, al recargar o regresar
-       a /chocolates/ volverá a aparecer.
+       No utilizamos almacenamiento para
+       ocultarlo permanentemente.
     */
 
     if (promoPopup) {
@@ -660,7 +1444,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     openPromoPopup();
 
-                    promoTimer = null;
+                    promoTimer =
+                        null;
 
                 },
                 1000
@@ -668,8 +1453,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* CERRAR CON X */
 
     if (closePromo) {
 
@@ -683,7 +1466,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         promoTimer
                     );
 
-                    promoTimer = null;
+                    promoTimer =
+                        null;
 
                 }
 
@@ -695,8 +1479,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* SEGUIR EXPLORANDO */
 
     if (continuePromo) {
 
@@ -710,7 +1492,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         promoTimer
                     );
 
-                    promoTimer = null;
+                    promoTimer =
+                        null;
 
                 }
 
@@ -722,8 +1505,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* CERRAR AL TOCAR EL FONDO */
 
     if (promoPopup) {
 
@@ -742,7 +1523,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             promoTimer
                         );
 
-                        promoTimer = null;
+                        promoTimer =
+                            null;
 
                     }
 
@@ -756,8 +1538,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* CERRAR CON ESC */
 
     document.addEventListener(
         "keydown",
@@ -777,7 +1557,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         promoTimer
                     );
 
-                    promoTimer = null;
+                    promoTimer =
+                        null;
 
                 }
 
@@ -828,7 +1609,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        let currentIndex = 0;
+        let currentIndex =
+            0;
 
 
         function getVisibleSlides() {
@@ -862,14 +1644,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function updateCarousel() {
 
-            if (!slides.length) return;
+            if (!slides.length) {
+
+                return;
+
+            }
 
 
             const targetSlide =
                 slides[currentIndex];
 
 
-            if (!targetSlide) return;
+            if (!targetSlide) {
+
+                return;
+
+            }
 
 
             const offset =
@@ -925,8 +1715,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        let touchStartX = 0;
-        let touchEndX = 0;
+        let touchStartX =
+            0;
+
+        let touchEndX =
+            0;
 
 
         track.addEventListener(
@@ -934,12 +1727,14 @@ document.addEventListener("DOMContentLoaded", () => {
             (event) => {
 
                 touchStartX =
-                    event.changedTouches[0]
+                    event
+                        .changedTouches[0]
                         .screenX;
 
             },
             {
-                passive: true
+                passive:
+                    true
             }
         );
 
@@ -949,7 +1744,8 @@ document.addEventListener("DOMContentLoaded", () => {
             (event) => {
 
                 touchEndX =
-                    event.changedTouches[0]
+                    event
+                        .changedTouches[0]
                         .screenX;
 
 
@@ -959,7 +1755,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 if (
-                    Math.abs(distance) < 45
+                    Math.abs(
+                        distance
+                    ) < 45
                 ) {
 
                     return;
@@ -967,7 +1765,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                if (distance > 0) {
+                if (
+                    distance > 0
+                ) {
 
                     currentIndex =
                         Math.min(
@@ -990,7 +1790,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             },
             {
-                passive: true
+                passive:
+                    true
             }
         );
 
@@ -1053,7 +1854,8 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    let analyticsLoaded = false;
+    let analyticsLoaded =
+        false;
 
 
     /* =====================================================
@@ -1062,7 +1864,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function hideCookieBar() {
 
-        if (!cookieBar) return;
+        if (!cookieBar) {
+
+            return;
+
+        }
 
 
         cookieBar.classList.remove(
@@ -1084,7 +1890,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showCookieBar() {
 
-        if (!cookieBar) return;
+        if (!cookieBar) {
+
+            return;
+
+        }
 
 
         cookieBar.classList.remove(
@@ -1206,11 +2016,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadGoogleAnalytics() {
 
-        /*
-         * Analytics nunca se descarga antes
-         * de que exista consentimiento.
-         */
-
         if (
             readConsent() !==
             "accepted"
@@ -1220,10 +2025,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        /*
-         * Evita cargar GA más de una vez.
-         */
 
         if (analyticsLoaded) {
 
@@ -1238,14 +2039,16 @@ document.addEventListener("DOMContentLoaded", () => {
             )
         ) {
 
-            analyticsLoaded = true;
+            analyticsLoaded =
+                true;
 
             return;
 
         }
 
 
-        analyticsLoaded = true;
+        analyticsLoaded =
+            true;
 
 
         window.dataLayer =
@@ -1263,11 +2066,6 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
 
-        /*
-         * Consentimiento concedido antes
-         * de inicializar la medición.
-         */
-
         setGoogleConsent(
             "granted"
         );
@@ -1284,19 +2082,18 @@ document.addEventListener("DOMContentLoaded", () => {
             GA_MEASUREMENT_ID,
             {
 
-                anonymize_ip: true,
+                anonymize_ip:
+                    true,
 
-                allow_google_signals: false,
+                allow_google_signals:
+                    false,
 
-                allow_ad_personalization_signals: false
+                allow_ad_personalization_signals:
+                    false
 
             }
         );
 
-
-        /*
-         * Carga dinámica del script oficial.
-         */
 
         const analyticsScript =
             document.createElement(
@@ -1327,16 +2124,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ESTADO INICIAL DE CONSENTIMIENTO
+       ESTADO INICIAL DEL CONSENTIMIENTO
     ===================================================== */
 
     const savedConsent =
         readConsent();
 
-
-    /*
-     * Usuario que ya aceptó anteriormente.
-     */
 
     if (
         savedConsent ===
@@ -1351,11 +2144,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /*
-         * Retraso ligero para priorizar
-         * la carga visual del sitio.
-         */
-
         window.setTimeout(
             loadGoogleAnalytics,
             1200
@@ -1363,10 +2151,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /*
-     * Usuario que rechazó anteriormente.
-     */
 
     else if (
         savedConsent ===
@@ -1383,10 +2167,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /*
-     * Primera visita o sin decisión.
-     */
-
     else {
 
         setGoogleConsent(
@@ -1398,7 +2178,8 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 if (
-                    readConsent() === null
+                    readConsent() ===
+                    null
                 ) {
 
                     showCookieBar();
@@ -1423,6 +2204,7 @@ document.addEventListener("DOMContentLoaded", () => {
             (event) => {
 
                 event.preventDefault();
+
                 event.stopPropagation();
 
 
@@ -1458,6 +2240,7 @@ document.addEventListener("DOMContentLoaded", () => {
             (event) => {
 
                 event.preventDefault();
+
                 event.stopPropagation();
 
 
@@ -1487,54 +2270,60 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelectorAll(
             'a[href^="#"]'
         )
-        .forEach((link) => {
+        .forEach(
+            (link) => {
 
-            link.addEventListener(
-                "click",
-                (event) => {
+                link.addEventListener(
+                    "click",
+                    (event) => {
 
-                    const href =
-                        link.getAttribute(
-                            "href"
-                        );
+                        const href =
+                            link.getAttribute(
+                                "href"
+                            );
 
 
-                    if (
-                        !href ||
-                        href === "#"
-                    ) {
+                        if (
+                            !href ||
+                            href === "#"
+                        ) {
 
-                        return;
+                            return;
+
+                        }
+
+
+                        const target =
+                            document.querySelector(
+                                href
+                            );
+
+
+                        if (!target) {
+
+                            return;
+
+                        }
+
+
+                        event.preventDefault();
+
+
+                        target.scrollIntoView({
+
+                            behavior:
+                                "smooth",
+
+                            block:
+                                "start"
+
+                        });
 
                     }
+                );
 
-
-                    const target =
-                        document.querySelector(
-                            href
-                        );
-
-
-                    if (!target) return;
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-
-                        behavior:
-                            "smooth",
-
-                        block:
-                            "start"
-
-                    });
-
-                }
-            );
-
-        });
+            }
+        );
 
 
 });
