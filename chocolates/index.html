@@ -2098,6 +2098,7 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
 
 <!-- ==================================================
      MODAL SOLICITUD
+     CATÁLOGO · DISEÑO PERSONALIZADO · COLABORACIÓN
 ================================================== -->
 
 <div
@@ -2121,7 +2122,14 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
         </button>
 
 
-        <span class="eyebrow">
+        <!-- ==========================================
+             ENCABEZADO DINÁMICO
+        =========================================== -->
+
+        <span
+            class="eyebrow"
+            id="solicitudEyebrow"
+        >
             CUÉNTANOS TU IDEA
         </span>
 
@@ -2135,15 +2143,18 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             class="modal-subtitle"
             id="solicitudSubtitle"
         >
-            Primero indícanos si deseas realizar un
-            pedido o proponernos una colaboración.
+            Puedes elegir productos de nuestro catálogo,
+            solicitar un diseño personalizado o proponernos
+            una colaboración.
         </p>
 
 
         <form id="cotizacionForm">
 
 
-            <!-- HONEYPOT ANTISPAM -->
+            <!-- ======================================
+                 HONEYPOT ANTISPAM
+            ======================================= -->
 
             <div
                 class="form-honeypot"
@@ -2165,10 +2176,13 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </div>
 
 
-            <!-- TIPO DE SOLICITUD -->
+            <!-- ======================================
+                 TIPO DE SOLICITUD
+            ======================================= -->
 
             <fieldset
                 class="request-type-group form-group-full"
+                id="requestTypeGroup"
             >
 
                 <legend>
@@ -2178,6 +2192,8 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
 
                 <div class="request-type-options">
 
+
+                    <!-- PEDIDO DE CATÁLOGO -->
 
                     <label
                         class="request-type-card"
@@ -2199,14 +2215,16 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
                             </strong>
 
                             <small>
-                                Para regalos, celebraciones,
-                                eventos o pedidos personalizados.
+                                Elige uno o varios productos
+                                disponibles en nuestro catálogo.
                             </small>
 
                         </span>
 
                     </label>
 
+
+                    <!-- COLABORACIÓN -->
 
                     <label
                         class="request-type-card"
@@ -2243,7 +2261,34 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </fieldset>
 
 
-            <!-- DATOS PERSONALES -->
+            <!-- ======================================
+                 AVISO DE DISEÑO PERSONALIZADO
+                 JS LO MOSTRARÁ SOLO EN ESE MODO
+            ======================================= -->
+
+            <div
+                class="request-info form-group-full"
+                id="customDesignInfo"
+                hidden
+            >
+
+                <strong>
+                    Diseño personalizado
+                </strong>
+
+                <br>
+
+                Esta opción es para crear algo diferente
+                a los productos disponibles en nuestro catálogo.
+                Cuéntanos tu idea y revisaremos contigo
+                la posibilidad de realizarla.
+
+            </div>
+
+
+            <!-- ======================================
+                 DATOS PERSONALES
+            ======================================= -->
 
             <div class="form-group">
 
@@ -2299,7 +2344,9 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </div>
 
 
-            <!-- CAMPO DINÁMICO PEDIDO / COLABORACIÓN -->
+            <!-- ======================================
+                 PRODUCTO / PROYECTO / DISEÑO
+            ======================================= -->
 
             <div class="form-group form-group-full">
 
@@ -2310,30 +2357,38 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
                     ¿Qué necesitas o qué proyecto tienes en mente?
                 </label>
 
+
                 <input
                     type="text"
                     id="productoProyecto"
                     name="productoProyecto"
                     maxlength="300"
-                    placeholder="Ej. Caja de chocolates para regalo o nombre de tu proyecto"
+                    placeholder="Describe brevemente lo que necesitas"
                     required
                 >
+
 
                 <small
                     class="form-helper"
                     id="productoProyectoHelper"
                 >
-                    No necesitas elegir de un catálogo. Describe libremente lo que necesitas.
+                    Selecciona el tipo de solicitud para
+                    adaptar este formulario.
                 </small>
 
             </div>
 
 
-            <!-- CANTIDAD -->
+            <!-- ======================================
+                 CANTIDAD
+            ======================================= -->
 
             <div class="form-group">
 
-                <label for="cantidad">
+                <label
+                    for="cantidad"
+                    id="cantidadLabel"
+                >
                     Cantidad aproximada
                 </label>
 
@@ -2342,14 +2397,16 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
                     id="cantidad"
                     name="cantidad"
                     maxlength="120"
-                    placeholder="Ej. 1 caja, 100 piezas..."
+                    placeholder="Ej. 1 caja, 50 piezas..."
                     required
                 >
 
             </div>
 
 
-            <!-- FECHA -->
+            <!-- ======================================
+                 FECHA
+            ======================================= -->
 
             <div class="form-group">
 
@@ -2370,7 +2427,9 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </div>
 
 
-            <!-- DESCRIPCIÓN -->
+            <!-- ======================================
+                 DESCRIPCIÓN
+            ======================================= -->
 
             <div class="form-group form-group-full">
 
@@ -2382,7 +2441,7 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
                 </label>
 
                 <textarea
-                    rows="5"
+                    rows="6"
                     id="descripcion"
                     name="descripcion"
                     maxlength="2000"
@@ -2392,7 +2451,9 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </div>
 
 
-            <!-- AVISO SEGÚN TIPO -->
+            <!-- ======================================
+                 AVISO DINÁMICO
+            ======================================= -->
 
             <div
                 class="request-info form-group-full"
@@ -2406,9 +2467,13 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </div>
 
 
-            <!-- CONSENTIMIENTO -->
+            <!-- ======================================
+                 CONSENTIMIENTO
+            ======================================= -->
 
-            <div class="form-group checkbox-group form-group-full">
+            <div
+                class="form-group checkbox-group form-group-full"
+            >
 
                 <label class="checkbox-label">
 
@@ -2447,7 +2512,9 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             </div>
 
 
-            <!-- RESPUESTA -->
+            <!-- ======================================
+                 RESPUESTA DEL SERVIDOR
+            ======================================= -->
 
             <div
                 id="formResponse"
@@ -2457,9 +2524,13 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
             ></div>
 
 
-            <!-- BOTONES -->
+            <!-- ======================================
+                 BOTONES
+            ======================================= -->
 
-            <div class="modal-buttons form-group-full">
+            <div
+                class="modal-buttons form-group-full"
+            >
 
                 <button
                     type="button"
@@ -2485,7 +2556,6 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
     </div>
 
 </div>
-
 
 <!-- ==================================================
      FOOTER
