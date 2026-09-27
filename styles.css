@@ -726,3 +726,20 @@ main{padding-top:var(--header)}
     }
 
 }
+
+.footer-cookie-link {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.footer-cookie-link:hover,
+.footer-cookie-link:focus-visible {
+  text-decoration: underline;
+}
