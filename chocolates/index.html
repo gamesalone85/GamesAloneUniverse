@@ -176,6 +176,11 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
     href="css/style.css"
 >
 
+<link
+    rel="stylesheet"
+    href="css/catalogo.css"
+>
+
 
 <!-- ==================================================
      DATOS ESTRUCTURADOS
@@ -842,12 +847,116 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
 
 
 <!-- ==================================================
+     CATÁLOGO ACTUAL
+================================================== -->
+
+<section class="catalogo-actual" id="catalogo">
+
+    <div class="section-heading">
+        <span class="eyebrow">CATÁLOGO ACTUAL</span>
+        <h2>Presentaciones disponibles</h2>
+        <p>
+            Conoce algunas de nuestras presentaciones actuales.
+            También podemos crear propuestas personalizadas para
+            celebraciones, eventos y proyectos especiales.
+        </p>
+    </div>
+
+    <div class="catalogo-grid">
+
+        <article class="catalogo-card">
+            <div class="catalogo-image">
+                <img src="../img/chocolates/choco webb.jpg" alt="Calaveras de chocolate Sarita" loading="lazy">
+            </div>
+            <div class="catalogo-content">
+                <span class="catalogo-code">SAR-CAL-01</span>
+                <h3>Calaveras de chocolate</h3>
+                <p class="catalogo-presentacion">Caja con 12 piezas</p>
+                <p class="catalogo-price"><span>$50</span> MXN</p>
+                <button type="button" class="catalogo-request" data-product="Calaveras de chocolate — Caja con 12 piezas — $50 MXN">Solicitar este producto</button>
+            </div>
+        </article>
+
+        <article class="catalogo-card">
+            <div class="catalogo-image">
+                <img src="../img/chocolates/choco webb.jpg" alt="Pan de muerto de chocolate Sarita" loading="lazy">
+            </div>
+            <div class="catalogo-content">
+                <span class="catalogo-code">SAR-PDM-01</span>
+                <h3>Pan de muerto de chocolate</h3>
+                <p class="catalogo-presentacion">Caja con 12 piezas</p>
+                <p class="catalogo-price"><span>$60</span> MXN</p>
+                <button type="button" class="catalogo-request" data-product="Pan de muerto de chocolate — Caja con 12 piezas — $60 MXN">Solicitar este producto</button>
+            </div>
+        </article>
+
+        <article class="catalogo-card">
+            <div class="catalogo-image">
+                <img src="../img/chocolates/barritas.jpg" alt="Mini barritas de chocolate Sarita" loading="lazy">
+            </div>
+            <div class="catalogo-content">
+                <span class="catalogo-code">SAR-MIN-01</span>
+                <h3>Mini barritas</h3>
+                <p class="catalogo-presentacion">Caja con 20 piezas</p>
+                <p class="catalogo-price"><span>$80</span> MXN</p>
+                <button type="button" class="catalogo-request" data-product="Mini barritas — Caja con 20 piezas — $80 MXN">Solicitar este producto</button>
+            </div>
+        </article>
+
+        <article class="catalogo-card">
+            <div class="catalogo-image">
+                <img src="../img/chocolates/corazon.jpg" alt="Corazón diamante de chocolate Sarita" loading="lazy">
+            </div>
+            <div class="catalogo-content">
+                <span class="catalogo-code">SAR-COR-01</span>
+                <h3>Corazón diamante</h3>
+                <p class="catalogo-presentacion">Caja con 12 piezas</p>
+                <p class="catalogo-price"><span>$90</span> MXN</p>
+                <button type="button" class="catalogo-request" data-product="Corazón diamante — Caja con 12 piezas — $90 MXN">Solicitar este producto</button>
+            </div>
+        </article>
+
+        <article class="catalogo-card">
+            <div class="catalogo-image">
+                <img src="../img/chocolates/lenguas.jpg" alt="Lenguas de gato de chocolate Sarita" loading="lazy">
+            </div>
+            <div class="catalogo-content">
+                <span class="catalogo-code">SAR-LDG-01</span>
+                <h3>Lenguas de gato</h3>
+                <p class="catalogo-presentacion">Caja con 12 piezas</p>
+                <p class="catalogo-price"><span>$70</span> MXN</p>
+                <button type="button" class="catalogo-request" data-product="Lenguas de gato — Caja con 12 piezas — $70 MXN">Solicitar este producto</button>
+            </div>
+        </article>
+
+        <article class="catalogo-card catalogo-card-custom">
+            <div class="catalogo-custom-mark" aria-hidden="true">S</div>
+            <div class="catalogo-content">
+                <span class="catalogo-code">DISEÑO ESPECIAL</span>
+                <h3>¿Tienes otra idea?</h3>
+                <p class="catalogo-presentacion">Cuéntanos qué necesitas y revisamos contigo una propuesta personalizada.</p>
+                <button type="button" class="catalogo-request" data-product="Diseño personalizado / solicitud especial">Solicitar diseño personalizado</button>
+            </div>
+        </article>
+
+    </div>
+
+    <p class="catalogo-legal">
+        Precios en MXN. Sujetos a cambio sin previo aviso y a disponibilidad.
+        El precio final se confirma antes de iniciar el pedido.
+        <a href="terminos.html">Consulta los Términos y Condiciones.</a>
+    </p>
+
+</section>
+
+
+<!-- ==================================================
      EXPERIENCIAS
 ================================================== -->
 
 <section
     class="productos"
-    id="catalogo"
+    id="experiencias"
 >
 
     <div class="section-heading">
@@ -1973,6 +2082,7 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
      JAVASCRIPT
 ================================================== -->
 
+<script src="js/catalogo.js"></script>
 <script src="js/app.js"></script>
 
 </body>
