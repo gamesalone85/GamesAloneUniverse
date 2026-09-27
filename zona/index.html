@@ -228,12 +228,12 @@
 
 
   <!-- ==================================================
-       RECAPTCHA
-       Se conserva del módulo original.
+       RECAPTCHA v3
+       Protección anti-bots para suscripción y códigos.
   ================================================== -->
 
   <script
-    src="https://www.google.com/recaptcha/api.js"
+    src="https://www.google.com/recaptcha/api.js?render=6Ld2XtItAAAAAKAn8AjaTb-ek1ew69xMfGVVtuEt"
     async
     defer
   ></script>
@@ -909,6 +909,8 @@ const CODE_ENDPOINT =
 const CODE_TOKEN =
 "GA18SECURE";
 
+const RECAPTCHA_SITE_KEY =
+"6Ld2XtItAAAAAKAn8AjaTb-ek1ew69xMfGVVtuEt";
 
 const CONSENT_STORAGE_KEY =
 "ga18_cookie_consent";
@@ -917,7 +919,61 @@ const CONSENT_STORAGE_KEY =
 const GA_ID =
 "G-EGZ2977YBH";
 
+/* ==================================================
+   RECAPTCHA v3
+================================================== */
 
+function getRecaptchaToken(action) {
+
+  return new Promise(function (resolve, reject) {
+
+    if (
+      typeof grecaptcha === "undefined"
+    ) {
+
+      reject(
+        new Error("RECAPTCHA_NOT_LOADED")
+      );
+
+      return;
+    }
+
+
+    grecaptcha.ready(function () {
+
+      grecaptcha
+        .execute(
+          RECAPTCHA_SITE_KEY,
+          {
+            action: action
+          }
+        )
+        .then(function (token) {
+
+          if (!token) {
+
+            reject(
+              new Error("RECAPTCHA_EMPTY_TOKEN")
+            );
+
+            return;
+          }
+
+          resolve(token);
+
+        })
+        .catch(function (error) {
+
+          reject(error);
+
+        });
+
+    });
+
+  });
+
+}
+  
 
 /* ==================================================
    SUSCRIPCIÓN
@@ -970,119 +1026,160 @@ if (button) {
 }
 
 
-fetch(
-SUBSCRIPTION_ENDPOINT,
-{
-
-method: "POST",
-
-body: new URLSearchParams({
-  email: email
-})
-
-}
+getRecaptchaToken(
+  "zona_suscripcion"
 )
+
+.then(function (recaptchaToken) {
+
+  return fetch(
+    SUBSCRIPTION_ENDPOINT,
+    {
+
+      method: "POST",
+
+      body: new URLSearchParams({
+
+        email: email,
+
+        recaptcha_token:
+          recaptchaToken
+
+      })
+
+    }
+  );
+
+})
 
 .then(function (res) {
 
-return res.text();
+  return res.text();
 
 })
 
 .then(function (data) {
 
-data = String(data).trim();
+  data =
+    String(data).trim();
 
-if (data === "NUEVO") {
 
-respuesta.innerHTML =
-`
-<div class="success-message">
-  ✅ Afiliación creada. Revisa tu correo para conocer tu número de afiliación.
-</div>
-`;
+  if (data === "NUEVO") {
 
-subscriptionForm.reset();
+    respuesta.innerHTML =
+    `
+    <div class="success-message">
+      ✅ Afiliación creada. Revisa tu correo para conocer tu número de afiliación.
+    </div>
+    `;
 
-}
-else if (data === "EXISTE") {
+    subscriptionForm.reset();
 
-respuesta.innerHTML =
-`
-<div class="success-message">
-  ✅ Ya formas parte de GamesAlone18. Te reenviamos tu número de afiliación por correo.
-</div>
-`;
+  }
 
-subscriptionForm.reset();
 
-}
-else if (data === "ERROR_EMAIL" || data === "ERROR_DATOS") {
+  else if (data === "EXISTE") {
 
-respuesta.innerHTML =
-`
-<div class="error-message">
-  ⚠ Ingresa un correo electrónico válido.
-</div>
-`;
+    respuesta.innerHTML =
+    `
+    <div class="success-message">
+      ✅ Ya formas parte de GamesAlone18. Te reenviamos tu número de afiliación por correo.
+    </div>
+    `;
 
-}
-else if (data === "ERROR_LIMITE") {
+    subscriptionForm.reset();
 
-respuesta.innerHTML =
-`
-<div class="error-message">
-  ⚠ Se realizaron demasiados intentos. Espera unos minutos antes de volver a intentarlo.
-</div>
-`;
+  }
 
-}
-else if (data === "ERROR_OCUPADO") {
 
-respuesta.innerHTML =
-`
-<div class="error-message">
-  ⚠ El sistema está procesando otra solicitud. Intenta nuevamente en unos segundos.
-</div>
-`;
+  else if (
+    data === "ERROR_EMAIL" ||
+    data === "ERROR_DATOS"
+  ) {
 
-}
-else {
+    respuesta.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ Ingresa un correo electrónico válido.
+    </div>
+    `;
 
-respuesta.innerHTML =
-`
-<div class="error-message">
-  ⚠ No fue posible procesar la afiliación. Intenta nuevamente.
-</div>
-`;
+  }
 
-}
+
+  else if (
+    data === "ERROR_RECAPTCHA"
+  ) {
+
+    respuesta.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ No pudimos verificar la solicitud. Actualiza la página e intenta nuevamente.
+    </div>
+    `;
+
+  }
+
+
+  else if (
+    data === "ERROR_LIMITE"
+  ) {
+
+    respuesta.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ Se realizaron demasiados intentos. Espera unos minutos antes de volver a intentarlo.
+    </div>
+    `;
+
+  }
+
+
+  else if (
+    data === "ERROR_OCUPADO"
+  ) {
+
+    respuesta.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ El sistema está procesando otra solicitud. Intenta nuevamente en unos segundos.
+    </div>
+    `;
+
+  }
+
+
+  else {
+
+    respuesta.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ No fue posible procesar la afiliación. Intenta nuevamente.
+    </div>
+    `;
+
+  }
 
 })
 
 .catch(function () {
 
-respuesta.innerHTML =
-`
-<div class="error-message">
-  ⚠ Ocurrió un error al procesar la solicitud.
-</div>
-`;
+  respuesta.innerHTML =
+  `
+  <div class="error-message">
+    ⚠ No fue posible verificar o procesar la solicitud. Intenta nuevamente.
+  </div>
+  `;
 
 })
 
 .finally(function () {
 
-if (button) {
-  button.disabled = false;
-}
+  if (button) {
+    button.disabled = false;
+  }
 
 });
-
-}
-);
-
-}
 
 
 
@@ -1143,188 +1240,250 @@ if (button) {
 }
 
 
-fetch(
-CODE_ENDPOINT,
-{
+getRecaptchaToken(
+  "zona_codigo"
+)
 
-method: "POST",
+.then(function (recaptchaToken) {
 
-body: new URLSearchParams({
+  return fetch(
+    CODE_ENDPOINT,
+    {
 
-email: email,
+      method: "POST",
 
-codigo: codigo,
+      body: new URLSearchParams({
 
-token: CODE_TOKEN
+        email: email,
+
+        codigo: codigo,
+
+        token: CODE_TOKEN,
+
+        recaptcha_token:
+          recaptchaToken
+
+      })
+
+    }
+  );
 
 })
 
-}
-)
-
 .then(function (res) {
 
-return res.text();
+  return res.text();
 
 })
 
 .then(function (data) {
 
-
-data =
-String(data).trim();
-
-
-if (
-  data.startsWith(
-    "VALIDO"
-  )
-) {
+  data =
+    String(data).trim();
 
 
-const partes =
-data.split("|");
+  if (
+    data.startsWith(
+      "VALIDO"
+    )
+  ) {
+
+    const partes =
+      data.split("|");
 
 
-const producto =
-partes[1] || "";
+    const producto =
+      partes[1] || "";
 
 
-const descuento =
-partes[2] || "";
+    const descuento =
+      partes[2] || "";
 
 
-const mes =
-partes[3] || "";
+    const mes =
+      partes[3] || "";
 
 
-resultado.innerHTML =
-`
-<div class="success-card">
+    resultado.innerHTML =
+    `
+    <div class="success-card">
 
-  <div class="success-icon">
+      <div class="success-icon">
 
-    <i class="bi bi-patch-check-fill"></i>
+        <i class="bi bi-patch-check-fill"></i>
 
-  </div>
+      </div>
 
-  <h3>
-    Código Activado
-  </h3>
+      <h3>
+        Código Activado
+      </h3>
 
-  <div class="reward-grid">
+      <div class="reward-grid">
 
-    <div class="reward-item">
+        <div class="reward-item">
 
-      <span>
-        🎁 Producto
-      </span>
+          <span>
+            🎁 Producto
+          </span>
 
-      <strong>
-        ${escapeHTML(producto)}
-      </strong>
+          <strong>
+            ${escapeHTML(producto)}
+          </strong>
+
+        </div>
+
+        <div class="reward-item">
+
+          <span>
+            💸 Descuento
+          </span>
+
+          <strong>
+            ${escapeHTML(descuento)}
+          </strong>
+
+        </div>
+
+        <div class="reward-item">
+
+          <span>
+            📅 Mes
+          </span>
+
+          <strong>
+            ${escapeHTML(mes)}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <p class="success-note">
+
+        📲 En breve recibirás información
+        para aplicar tu beneficio.
+
+      </p>
 
     </div>
+    `;
 
-    <div class="reward-item">
+  }
 
-      <span>
-        💸 Descuento
-      </span>
 
-      <strong>
-        ${escapeHTML(descuento)}
-      </strong>
+  else if (
+    data === "INVALIDO_USADO"
+  ) {
 
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ Este código ya fue utilizado.
     </div>
+    `;
 
-    <div class="reward-item">
+  }
 
-      <span>
-        📅 Mes
-      </span>
 
-      <strong>
-        ${escapeHTML(mes)}
-      </strong>
+  else if (
+    data === "INVALIDO_EXPIRADO"
+  ) {
 
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ⏳ Este código expiró.
     </div>
+    `;
 
-  </div>
-
-  <p class="success-note">
-
-    📲 En breve recibirás información
-    para aplicar tu beneficio.
-
-  </p>
-
-</div>
-`;
-
-}
+  }
 
 
-else if (
-  data ===
-  "INVALIDO_USADO"
-) {
+  else if (
+    data === "ERROR_RECAPTCHA"
+  ) {
 
-resultado.innerHTML =
-`
-<div class="error-message">
-  ⚠ Este código ya fue utilizado.
-</div>
-`;
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ No pudimos verificar la solicitud. Actualiza la página e intenta nuevamente.
+    </div>
+    `;
 
-}
-
-
-else if (
-  data ===
-  "INVALIDO_EXPIRADO"
-) {
-
-resultado.innerHTML =
-`
-<div class="error-message">
-  ⏳ Este código expiró.
-</div>
-`;
-
-}
+  }
 
 
-else {
+  else if (
+    data === "ERROR_LIMITE"
+  ) {
 
-resultado.innerHTML =
-`
-<div class="error-message">
-  ❌ Código inválido.
-</div>
-`;
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ Se realizaron demasiados intentos. Espera unos minutos antes de volver a intentarlo.
+    </div>
+    `;
 
-}
+  }
 
+
+  else if (
+    data === "ERROR_REPETIDO"
+  ) {
+
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ Esta solicitud acaba de ser procesada. Espera unos segundos antes de intentarlo nuevamente.
+    </div>
+    `;
+
+  }
+
+
+  else if (
+    data === "ERROR_OCUPADO"
+  ) {
+
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ⚠ El sistema está procesando otra solicitud. Intenta nuevamente en unos segundos.
+    </div>
+    `;
+
+  }
+
+
+  else {
+
+    resultado.innerHTML =
+    `
+    <div class="error-message">
+      ❌ Código inválido.
+    </div>
+    `;
+
+  }
 
 })
 
 .catch(function () {
 
-resultado.innerHTML =
-`
-<div class="error-message">
-  ⚠ Error de conexión.
-</div>
-`;
+  resultado.innerHTML =
+  `
+  <div class="error-message">
+    ⚠ No fue posible verificar o procesar la solicitud. Intenta nuevamente.
+  </div>
+  `;
 
 })
 
 .finally(function () {
 
-if (button) {
-  button.disabled = false;
-}
+  if (button) {
+    button.disabled = false;
+  }
 
 });
 
