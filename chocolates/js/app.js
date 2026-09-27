@@ -2779,7 +2779,316 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+/* =====================================================
+   CARRUSEL DE GALERÍA
+===================================================== */
 
+const carouselContainer =
+    document.querySelector(
+        ".carousel-container"
+    );
+
+const carouselTrack =
+    carouselContainer
+        ? carouselContainer.querySelector(
+            ".carousel-track"
+        )
+        : null;
+
+const carouselPrev =
+    carouselContainer
+        ? carouselContainer.querySelector(
+            ".carousel-btn.prev"
+        )
+        : null;
+
+const carouselNext =
+    carouselContainer
+        ? carouselContainer.querySelector(
+            ".carousel-btn.next"
+        )
+        : null;
+
+let carouselIndex = 0;
+
+
+/* =====================================================
+   OBTENER ELEMENTOS DEL CARRUSEL
+===================================================== */
+
+function getCarouselItems() {
+
+    return carouselTrack
+        ? Array.from(
+            carouselTrack.querySelectorAll(
+                ":scope > a"
+            )
+        )
+        : [];
+
+}
+
+
+/* =====================================================
+   CANTIDAD DE ELEMENTOS VISIBLES
+===================================================== */
+
+function getCarouselVisibleItems() {
+
+    /*
+       El CSS actual muestra:
+
+       Escritorio = 3 imágenes
+       Móvil      = 1 imagen
+    */
+
+    if (
+        window.matchMedia(
+            "(max-width: 760px)"
+        ).matches
+    ) {
+
+        return 1;
+
+    }
+
+    return 3;
+
+}
+
+
+/* =====================================================
+   OBTENER ESPACIO ENTRE IMÁGENES
+===================================================== */
+
+function getCarouselGap() {
+
+    if (!carouselTrack) {
+
+        return 0;
+
+    }
+
+
+    const styles =
+        window.getComputedStyle(
+            carouselTrack
+        );
+
+
+    const gap =
+        parseFloat(
+            styles.columnGap ||
+            styles.gap ||
+            "0"
+        );
+
+
+    return Number.isFinite(gap)
+        ? gap
+        : 0;
+
+}
+
+
+/* =====================================================
+   ACTUALIZAR POSICIÓN
+===================================================== */
+
+function updateCarousel() {
+
+    if (!carouselTrack) {
+
+        return;
+
+    }
+
+
+    const items =
+        getCarouselItems();
+
+
+    if (!items.length) {
+
+        return;
+
+    }
+
+
+    const visibleItems =
+        Math.min(
+            getCarouselVisibleItems(),
+            items.length
+        );
+
+
+    const maxIndex =
+        Math.max(
+            0,
+            items.length - visibleItems
+        );
+
+
+    /*
+       Evita que el índice salga
+       de los límites del carrusel.
+    */
+
+    carouselIndex =
+        Math.max(
+            0,
+            Math.min(
+                carouselIndex,
+                maxIndex
+            )
+        );
+
+
+    /*
+       Medimos el ancho REAL de la
+       primera imagen.
+
+       Esto permite que funcione tanto
+       en escritorio como en móvil.
+    */
+
+    const itemWidth =
+        items[0]
+            .getBoundingClientRect()
+            .width;
+
+
+    const gap =
+        getCarouselGap();
+
+
+    const offset =
+        carouselIndex *
+        (itemWidth + gap);
+
+
+    carouselTrack.style.transform =
+        `translate3d(-${offset}px, 0, 0)`;
+
+
+    /*
+       Flecha izquierda.
+    */
+
+    if (carouselPrev) {
+
+        carouselPrev.disabled =
+            carouselIndex === 0;
+
+    }
+
+
+    /*
+       Flecha derecha.
+    */
+
+    if (carouselNext) {
+
+        carouselNext.disabled =
+            carouselIndex === maxIndex;
+
+    }
+
+}
+
+
+/* =====================================================
+   EVENTOS DEL CARRUSEL
+===================================================== */
+
+if (
+    carouselTrack &&
+    carouselPrev &&
+    carouselNext
+) {
+
+    /*
+       ANTERIOR
+    */
+
+    carouselPrev.addEventListener(
+        "click",
+        () => {
+
+            carouselIndex -= 1;
+
+            updateCarousel();
+
+        }
+    );
+
+
+    /*
+       SIGUIENTE
+    */
+
+    carouselNext.addEventListener(
+        "click",
+        () => {
+
+            carouselIndex += 1;
+
+            updateCarousel();
+
+        }
+    );
+
+
+    /*
+       RECALCULAR CUANDO CAMBIA
+       EL TAMAÑO DE LA PANTALLA
+    */
+
+    let carouselResizeTimer =
+        null;
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            window.clearTimeout(
+                carouselResizeTimer
+            );
+
+
+            carouselResizeTimer =
+                window.setTimeout(
+                    updateCarousel,
+                    120
+                );
+
+        }
+    );
+
+
+    /*
+       Segunda comprobación cuando
+       hayan terminado de cargar
+       imágenes y recursos.
+    */
+
+    window.addEventListener(
+        "load",
+        updateCarousel,
+        {
+            once: true
+        }
+    );
+
+
+    /*
+       INICIALIZACIÓN
+    */
+
+    updateCarousel();
+
+}
     /* =====================================================
        ESTADO INICIAL
     ===================================================== */
