@@ -1523,3 +1523,597 @@ body {
     letter-spacing: 2.4px;
   }
 }
+
+/* =========================================================
+   GAMESALONE18 UNIVERSE
+   MERCH — FORMULARIO DE SOLICITUD
+   2026-09-26
+========================================================= */
+
+
+/* =========================================================
+   TARJETA
+========================================================= */
+
+.merch-request-card {
+  width: min(100%, 950px);
+  text-align: left;
+}
+
+.merch-request-card > .section-kicker,
+.merch-request-card > h2,
+.merch-request-card > .request-intro {
+  display: block;
+  text-align: center;
+}
+
+.request-intro {
+  max-width: 680px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.merch-form {
+  position: relative;
+
+  width: min(100%, 760px);
+
+  margin:
+    42px auto 0;
+
+  text-align: left;
+}
+
+.merch-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.merch-field {
+  min-width: 0;
+}
+
+.merch-field-full {
+  grid-column:
+    1 / -1;
+}
+
+.merch-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #f4f4f6;
+
+  font-size: .86rem;
+  font-weight: 750;
+}
+
+.merch-field label span {
+  margin-left: 5px;
+
+  color: #777780;
+
+  font-size: .74rem;
+  font-weight: 500;
+}
+
+.merch-field input,
+.merch-field select,
+.merch-field textarea {
+  width: 100%;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  border-radius: 14px;
+
+  outline: none;
+
+  background:
+    rgba(255,255,255,.035);
+
+  color: #fff;
+
+  font: inherit;
+
+  font-size: .94rem;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+.merch-field input,
+.merch-field select {
+  min-height: 52px;
+
+  padding:
+    0 15px;
+}
+
+.merch-field textarea {
+  min-height: 130px;
+
+  padding:
+    14px 15px;
+
+  resize: vertical;
+
+  line-height: 1.55;
+}
+
+.merch-field input::placeholder,
+.merch-field textarea::placeholder {
+  color: #66666f;
+}
+
+.merch-field input:focus,
+.merch-field select:focus,
+.merch-field textarea:focus {
+  border-color:
+    rgba(0,255,174,.55);
+
+  background:
+    rgba(0,255,174,.035);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0,255,174,.07);
+}
+
+.merch-field select {
+  cursor: pointer;
+
+  color-scheme: dark;
+}
+
+.merch-field select option {
+  background: #111115;
+  color: #fff;
+}
+
+
+/* =========================================================
+   HONEYPOT
+========================================================= */
+
+.merch-honeypot {
+  position: absolute !important;
+
+  width: 1px !important;
+  height: 1px !important;
+
+  overflow: hidden !important;
+
+  clip:
+    rect(0 0 0 0) !important;
+
+  clip-path:
+    inset(50%) !important;
+
+  white-space:
+    nowrap !important;
+}
+
+
+/* =========================================================
+   MAYORÍA DE EDAD
+========================================================= */
+
+.age-confirmation {
+  margin-top: 24px;
+
+  padding: 17px 18px;
+
+  border:
+    1px solid rgba(255,207,92,.22);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255,207,92,.055);
+}
+
+.age-confirmation[hidden] {
+  display: none;
+}
+
+.age-confirmation label {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  color: #f5f5f6;
+
+  font-size: .9rem;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+.age-confirmation input {
+  width: 18px;
+  height: 18px;
+
+  margin-top: 2px;
+
+  flex:
+    0 0 18px;
+
+  accent-color:
+    var(--green);
+}
+
+.age-confirmation p {
+  margin:
+    8px 0 0 29px;
+
+  color: #aaa18c;
+
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   AVISO DEL FORMULARIO
+========================================================= */
+
+.merch-form-legal {
+  max-width: none !important;
+
+  margin-top: 24px !important;
+
+  color: #85858d !important;
+
+  font-size: .78rem !important;
+  line-height: 1.65 !important;
+
+  text-align: left;
+}
+
+.merch-form-legal a {
+  color: var(--green);
+}
+
+.merch-form-legal a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   BOTÓN ENVIAR
+========================================================= */
+
+.merch-submit {
+  width: 100%;
+  min-height: 54px;
+
+  margin-top: 24px;
+
+  padding:
+    14px 22px;
+
+  border:
+    1px solid var(--green);
+
+  border-radius: 999px;
+
+  background:
+    var(--green);
+
+  color: #001a11;
+
+  font-size: .92rem;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    opacity .2s ease;
+}
+
+.merch-submit:hover:not(:disabled) {
+  transform:
+    translateY(-2px);
+
+  background:
+    #42ffc3;
+}
+
+.merch-submit:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+
+/* =========================================================
+   RESPUESTAS
+========================================================= */
+
+.merch-response {
+  margin-top: 22px;
+}
+
+.merch-response:empty {
+  display: none;
+}
+
+.merch-message-card {
+  padding: 17px 18px;
+
+  border-radius: 14px;
+
+  text-align: left;
+}
+
+.merch-message-card strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #fff;
+
+  font-size: .92rem;
+}
+
+.merch-message-card p {
+  margin: 0;
+
+  font-size: .84rem;
+  line-height: 1.6;
+}
+
+.merch-response.loading
+.merch-message-card {
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  background:
+    rgba(255,255,255,.04);
+
+  color: #aaaab1;
+}
+
+.merch-response.error
+.merch-message-card {
+  border:
+    1px solid rgba(255,110,110,.22);
+
+  background:
+    rgba(255,80,80,.055);
+
+  color: #d0a5a5;
+}
+
+
+/* =========================================================
+   ÉXITO
+========================================================= */
+
+.merch-success-card {
+  padding:
+    28px 22px;
+
+  border:
+    1px solid rgba(0,255,174,.22);
+
+  border-radius: 20px;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(0,255,174,.09),
+      transparent 65%
+    ),
+    rgba(0,255,174,.025);
+
+  text-align: center;
+}
+
+.merch-success-icon {
+  width: 52px;
+  height: 52px;
+
+  margin:
+    0 auto 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(0,255,174,.35);
+
+  border-radius: 50%;
+
+  background:
+    rgba(0,255,174,.1);
+
+  color: var(--green);
+
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.merch-success-label {
+  display: block;
+
+  color: var(--green);
+
+  font-size: .65rem;
+  font-weight: 900;
+
+  letter-spacing: 2.5px;
+}
+
+.merch-success-card h3 {
+  margin-top: 9px;
+
+  color: #fff;
+
+  font-size:
+    clamp(1.5rem, 4vw, 2rem);
+}
+
+.merch-success-card p {
+  max-width: 580px;
+
+  margin:
+    14px auto 0;
+
+  color: #aaaab2;
+
+  font-size: .88rem;
+  line-height: 1.65;
+}
+
+.merch-folio {
+  display: inline-block;
+
+  margin-top: 8px;
+
+  padding:
+    9px 14px;
+
+  border:
+    1px solid rgba(0,255,174,.22);
+
+  border-radius: 10px;
+
+  background:
+    rgba(0,255,174,.06);
+
+  color: var(--green);
+
+  font-size: 1rem;
+  letter-spacing: .5px;
+}
+
+.merch-success-card small {
+  display: block;
+
+  margin-top: 18px;
+
+  color: #74747c;
+
+  font-size: .75rem;
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   CONTACTO DIRECTO
+========================================================= */
+
+.merch-direct-contact {
+  width: min(100%, 760px);
+
+  margin:
+    35px auto 0;
+
+  padding-top: 30px;
+
+  border-top:
+    1px solid rgba(255,255,255,.08);
+
+  text-align: center;
+}
+
+.merch-direct-contact > span {
+  display: block;
+
+  color: #92929a;
+
+  font-size: .82rem;
+}
+
+.merch-direct-contact
+.whatsapp-button {
+  margin-top: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .merch-form-grid {
+    grid-template-columns:
+      1fr;
+
+    gap: 18px;
+  }
+
+  .merch-field-full {
+    grid-column:
+      auto;
+  }
+
+  .merch-request-card {
+    padding:
+      38px 22px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .merch-request-card {
+    padding:
+      34px 18px;
+
+    border-radius: 22px;
+  }
+
+  .merch-form {
+    margin-top: 32px;
+  }
+
+  .merch-field input,
+  .merch-field select {
+    min-height: 50px;
+
+    font-size: .9rem;
+  }
+
+  .merch-field textarea {
+    font-size: .9rem;
+  }
+
+  .merch-submit {
+    min-height: 52px;
+  }
+
+  .age-confirmation {
+    padding:
+      15px;
+  }
+
+  .age-confirmation p {
+    margin-left: 0;
+  }
+
+}
