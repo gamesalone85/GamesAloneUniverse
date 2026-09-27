@@ -2,9 +2,14 @@
    CHOCOLATE ARTÍSTICO SARITA
    CATÁLOGO MULTIPRODUCTO
    2026
+
+   MODOS:
+   - PEDIDO DESDE CATÁLOGO
+   - DISEÑO PERSONALIZADO
 ========================================================= */
 
 "use strict";
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -20,40 +25,48 @@ document.addEventListener("DOMContentLoaded", () => {
             )
         );
 
+
     const summaryEmpty =
         document.getElementById(
             "catalogoSummaryEmpty"
         );
+
 
     const summaryItems =
         document.getElementById(
             "catalogoSummaryItems"
         );
 
+
     const summaryTotals =
         document.getElementById(
             "catalogoSummaryTotals"
         );
+
 
     const totalBoxesElement =
         document.getElementById(
             "catalogoTotalBoxes"
         );
 
+
     const referencePriceElement =
         document.getElementById(
             "catalogoReferencePrice"
         );
+
 
     const continueButton =
         document.getElementById(
             "catalogoContinue"
         );
 
+
     const clearButton =
         document.getElementById(
             "catalogoClear"
         );
+
 
     const customRequestButton =
         document.getElementById(
@@ -62,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ELEMENTOS DEL FORMULARIO EXISTENTE
+       ELEMENTOS DEL FORMULARIO
     ===================================================== */
 
     const modal =
@@ -70,25 +83,30 @@ document.addEventListener("DOMContentLoaded", () => {
             "cotizacionModal"
         );
 
+
     const tipoPedido =
         document.getElementById(
             "tipoPedido"
         );
+
 
     const productoProyecto =
         document.getElementById(
             "productoProyecto"
         );
 
+
     const cantidad =
         document.getElementById(
             "cantidad"
         );
 
+
     const descripcion =
         document.getElementById(
             "descripcion"
         );
+
 
     const formResponse =
         document.getElementById(
@@ -102,6 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const MAX_PER_PRODUCT = 100;
 
+    const MAX_TOTAL_BOXES = 120;
+
 
     /* =====================================================
        UTILIDADES
@@ -114,9 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".quantity-value"
             );
 
+
         if (!valueElement) {
             return 0;
         }
+
 
         const value =
             Number.parseInt(
@@ -124,9 +146,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 10
             );
 
+
         if (!Number.isFinite(value)) {
             return 0;
         }
+
 
         return Math.max(
             0,
@@ -149,9 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".quantity-value"
             );
 
+
         if (!valueElement) {
             return;
         }
+
 
         const safeQuantity =
             Math.max(
@@ -161,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     MAX_PER_PRODUCT
                 )
             );
+
 
         valueElement.textContent =
             String(safeQuantity);
@@ -227,6 +254,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    function getTotalBoxes(
+        selected =
+            getSelectedProducts()
+    ) {
+
+        return selected.reduce(
+            (
+                total,
+                product
+            ) =>
+                total +
+                product.quantity,
+            0
+        );
+
+    }
+
+
+    function getReferencePrice(
+        selected =
+            getSelectedProducts()
+    ) {
+
+        return selected.reduce(
+            (
+                total,
+                product
+            ) =>
+                total +
+                (
+                    product.price *
+                    product.quantity
+                ),
+            0
+        );
+
+    }
+
+
     function formatMoney(value) {
 
         return new Intl.NumberFormat(
@@ -280,29 +346,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const totalBoxes =
-            selected.reduce(
-                (
-                    total,
-                    product
-                ) =>
-                    total +
-                    product.quantity,
-                0
+            getTotalBoxes(
+                selected
             );
 
 
         const referencePrice =
-            selected.reduce(
-                (
-                    total,
-                    product
-                ) =>
-                    total +
-                    (
-                        product.price *
-                        product.quantity
-                    ),
-                0
+            getReferencePrice(
+                selected
             );
 
 
@@ -313,26 +364,44 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selected.length === 0) {
 
             if (summaryItems) {
-                summaryItems.innerHTML = "";
+
+                summaryItems.innerHTML =
+                    "";
+
             }
+
 
             if (summaryEmpty) {
-                summaryEmpty.hidden = false;
+
+                summaryEmpty.hidden =
+                    false;
+
             }
+
 
             if (summaryTotals) {
-                summaryTotals.hidden = true;
+
+                summaryTotals.hidden =
+                    true;
+
             }
+
 
             if (totalBoxesElement) {
+
                 totalBoxesElement.textContent =
                     "0";
+
             }
 
+
             if (referencePriceElement) {
+
                 referencePriceElement.textContent =
                     "$0 MXN";
+
             }
+
 
             return;
 
@@ -344,11 +413,18 @@ document.addEventListener("DOMContentLoaded", () => {
         =============================================== */
 
         if (summaryEmpty) {
-            summaryEmpty.hidden = true;
+
+            summaryEmpty.hidden =
+                true;
+
         }
 
+
         if (summaryTotals) {
-            summaryTotals.hidden = false;
+
+            summaryTotals.hidden =
+                false;
+
         }
 
 
@@ -362,6 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             const subtotal =
                                 product.price *
                                 product.quantity;
+
 
                             return `
                                 <div class="summary-item">
@@ -418,6 +495,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       COMPROBAR LÍMITE TOTAL
+    ===================================================== */
+
+    function canAddAnotherBox() {
+
+        return (
+            getTotalBoxes() <
+            MAX_TOTAL_BOXES
+        );
+
+    }
+
+
+    /* =====================================================
        BOTONES + / -
     ===================================================== */
 
@@ -429,10 +520,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     ".quantity-plus"
                 );
 
+
             const minusButton =
                 card.querySelector(
                     ".quantity-minus"
                 );
+
 
             const addButton =
                 card.querySelector(
@@ -453,17 +546,31 @@ document.addEventListener("DOMContentLoaded", () => {
                         const current =
                             getQuantity(card);
 
+
                         if (
                             current >=
                             MAX_PER_PRODUCT
                         ) {
+
                             return;
+
                         }
+
+
+                        if (
+                            !canAddAnotherBox()
+                        ) {
+
+                            return;
+
+                        }
+
 
                         setQuantity(
                             card,
                             current + 1
                         );
+
 
                         updateSummary();
 
@@ -486,14 +593,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         const current =
                             getQuantity(card);
 
+
                         if (current <= 0) {
+
                             return;
+
                         }
+
 
                         setQuantity(
                             card,
                             current - 1
                         );
+
 
                         updateSummary();
 
@@ -516,13 +628,25 @@ document.addEventListener("DOMContentLoaded", () => {
                         const current =
                             getQuantity(card);
 
-                        /*
-                           Si todavía no está seleccionado,
-                           lo agregamos con una caja.
 
-                           Si ya tiene cantidad, agregamos
-                           una caja adicional.
-                        */
+                        if (
+                            current >=
+                            MAX_PER_PRODUCT
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        if (
+                            !canAddAnotherBox()
+                        ) {
+
+                            return;
+
+                        }
+
 
                         const next =
                             current === 0
@@ -530,26 +654,18 @@ document.addEventListener("DOMContentLoaded", () => {
                                 : current + 1;
 
 
-                        if (
-                            next >
-                            MAX_PER_PRODUCT
-                        ) {
-                            return;
-                        }
-
-
                         setQuantity(
                             card,
                             next
                         );
 
+
                         updateSummary();
 
 
                         /*
-                           En móvil desplazamos suavemente
-                           hacia el resumen solamente cuando
-                           existe poco espacio horizontal.
+                           En móvil mostramos el resumen
+                           después de agregar.
                         */
 
                         if (
@@ -562,6 +678,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 document.getElementById(
                                     "catalogoSummary"
                                 );
+
 
                             if (summary) {
 
@@ -604,6 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 );
 
+
                 updateSummary();
 
             }
@@ -627,10 +745,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "active"
         );
 
+
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
+
 
         document.body.classList.add(
             "modal-open"
@@ -649,7 +769,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        formResponse.textContent = "";
+
+        formResponse.textContent =
+            "";
+
 
         formResponse.classList.remove(
             "success",
@@ -660,7 +783,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ACTIVAR MODO PEDIDO
+       AVISAR A APP.JS DEL MODO DE APERTURA
+
+       Esto permite distinguir:
+
+       CATALOG
+       CUSTOM
+    ===================================================== */
+
+    function setSaritaRequestMode(
+        mode
+    ) {
+
+        window.SARITA_REQUEST_MODE =
+            mode;
+
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "sarita:request-mode",
+                {
+                    detail: {
+                        mode: mode
+                    }
+                }
+            )
+        );
+
+    }
+
+
+    /* =====================================================
+       ACTIVAR PEDIDO PROGRAMÁTICAMENTE
     ===================================================== */
 
     function selectOrderMode() {
@@ -669,7 +823,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        tipoPedido.checked = true;
+
+        tipoPedido.checked =
+            true;
+
 
         tipoPedido.dispatchEvent(
             new Event(
@@ -684,8 +841,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CONSTRUIR DESGLOSE PARA EL BACKEND
+       DESCRIPCIÓN COMPACTA PARA BACKEND
+
+       Evitamos superar los 300 caracteres del campo
+       productoProyecto cuando hay varios productos.
     ===================================================== */
+
+    function getCompactProductName(
+        product
+    ) {
+
+        const code =
+            String(
+                product.code || ""
+            ).toUpperCase();
+
+
+        const compactNames = {
+
+            "SAR-CAL-01":
+                "Calaveras",
+
+            "SAR-PDM-01":
+                "Pan de muerto",
+
+            "SAR-MIN-01":
+                "Mini barritas",
+
+            "SAR-COR-01":
+                "Corazón diamante",
+
+            "SAR-LDG-01":
+                "Lenguas de gato"
+
+        };
+
+
+        if (
+            compactNames[code]
+        ) {
+
+            return compactNames[code];
+
+        }
+
+
+        return (
+            product.name ||
+            product.code ||
+            "Chocolate"
+        );
+
+    }
+
 
     function buildProductDescription(
         selected
@@ -694,15 +902,62 @@ document.addEventListener("DOMContentLoaded", () => {
         return selected
             .map(
                 product =>
-                    `${product.quantity} × ${product.name} — ${product.presentation} — ${formatMoney(product.price)} MXN`
+                    `${getCompactProductName(product)} x${product.quantity}`
             )
-            .join("\n");
+            .join(" | ");
 
     }
 
 
     /* =====================================================
-       CONTINUAR CON SOLICITUD
+       DESCRIPCIÓN DETALLADA DEL CATÁLOGO
+
+       Esta información va en descripción y no en
+       productoProyecto, por lo que conservamos
+       presentación y precio de referencia.
+    ===================================================== */
+
+    function buildCatalogDetails(
+        selected,
+        referencePrice
+    ) {
+
+        const details =
+            selected
+                .map(
+                    product => {
+
+                        const subtotal =
+                            product.price *
+                            product.quantity;
+
+
+                        return (
+                            `${product.quantity} × ` +
+                            `${product.name} — ` +
+                            `${product.presentation} — ` +
+                            `${formatMoney(subtotal)}`
+                        );
+
+                    }
+                )
+                .join("\n");
+
+
+        return (
+            "Selección realizada desde el catálogo web:\n\n" +
+            details +
+            "\n\n" +
+            "Precio de referencia de la selección: " +
+            `${formatMoney(referencePrice)} MXN. ` +
+            "Precio final y disponibilidad sujetos a confirmación."
+        );
+
+    }
+
+
+    /* =====================================================
+       CONTINUAR CON SOLICITUD DE CATÁLOGO
     ===================================================== */
 
     if (continueButton) {
@@ -718,34 +973,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (
                     selected.length === 0
                 ) {
+
                     return;
+
                 }
 
 
                 const totalBoxes =
-                    selected.reduce(
-                        (
-                            total,
-                            product
-                        ) =>
-                            total +
-                            product.quantity,
-                        0
+                    getTotalBoxes(
+                        selected
                     );
 
 
+                if (
+                    totalBoxes < 1 ||
+                    totalBoxes >
+                        MAX_TOTAL_BOXES
+                ) {
+
+                    return;
+
+                }
+
+
                 const referencePrice =
-                    selected.reduce(
-                        (
-                            total,
-                            product
-                        ) =>
-                            total +
-                            (
-                                product.price *
-                                product.quantity
-                            ),
-                        0
+                    getReferencePrice(
+                        selected
                     );
 
 
@@ -756,6 +1009,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* =======================================
+                   IMPORTANTE:
+
+                   Avisamos PRIMERO a app.js que este
+                   PEDIDO viene del catálogo.
+
+                   De esta forma app.js NO lo devuelve
+                   nuevamente al catálogo.
+                ======================================= */
+
+                setSaritaRequestMode(
+                    "CATALOG"
+                );
+
+
+                /* =======================================
                    PEDIDO
                 ======================================= */
 
@@ -763,13 +1031,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* =======================================
-                   PRODUCTOS
+                   PRODUCTOS COMPACTOS
                 ======================================= */
 
                 if (productoProyecto) {
 
                     productoProyecto.value =
                         productDescription;
+
 
                     productoProyecto.dispatchEvent(
                         new Event(
@@ -784,7 +1053,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* =======================================
-                   CANTIDAD
+                   CANTIDAD TOTAL
                 ======================================= */
 
                 if (cantidad) {
@@ -793,6 +1062,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         totalBoxes === 1
                             ? "1 caja en total"
                             : `${totalBoxes} cajas en total`;
+
 
                     cantidad.dispatchEvent(
                         new Event(
@@ -807,23 +1077,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* =======================================
-                   DESCRIPCIÓN
-                   NO SOBREESCRIBIR SI EL CLIENTE
-                   YA HABÍA ESCRITO ALGO
+                   DETALLE DEL PEDIDO
+
+                   Aquí sí conservamos la información
+                   completa del catálogo.
                 ======================================= */
 
-                if (
-                    descripcion &&
-                    !descripcion.value.trim()
-                ) {
+                if (descripcion) {
 
                     descripcion.value =
-                        `Selección realizada desde el catálogo web. Precio de referencia de la selección: ${formatMoney(referencePrice)} MXN. Precio final y disponibilidad sujetos a confirmación.`;
+                        buildCatalogDetails(
+                            selected,
+                            referencePrice
+                        );
+
+
+                    descripcion.dispatchEvent(
+                        new Event(
+                            "input",
+                            {
+                                bubbles: true
+                            }
+                        )
+                    );
 
                 }
 
 
                 clearFormResponse();
+
 
                 openFormModal();
 
@@ -839,6 +1121,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             document.getElementById(
                                 "nombre"
                             );
+
 
                         if (
                             nombre &&
@@ -857,6 +1140,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "telefono"
                             );
 
+
                         if (
                             telefono &&
                             !telefono.value.trim()
@@ -869,8 +1153,34 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
 
 
-                        if (cantidad) {
-                            cantidad.focus();
+                        const email =
+                            document.getElementById(
+                                "email"
+                            );
+
+
+                        if (
+                            email &&
+                            !email.value.trim()
+                        ) {
+
+                            email.focus();
+
+                            return;
+
+                        }
+
+
+                        const fecha =
+                            document.getElementById(
+                                "fechaEvento"
+                            );
+
+
+                        if (fecha) {
+
+                            fecha.focus();
+
                         }
 
                     },
@@ -884,7 +1194,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       SOLICITUD PERSONALIZADA
+       SOLICITAR DISEÑO PERSONALIZADO
     ===================================================== */
 
     if (customRequestButton) {
@@ -893,18 +1203,32 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
+                /*
+                   Este sigue siendo PEDIDO para Apps Script.
+
+                   CUSTOM solamente sirve para que la
+                   interfaz sepa que NO es un producto
+                   existente del catálogo.
+                */
+
+                setSaritaRequestMode(
+                    "CUSTOM"
+                );
+
+
                 selectOrderMode();
 
 
                 /*
-                   En una solicitud personalizada
-                   no arrastramos productos del catálogo.
+                   No arrastramos ningún producto del
+                   catálogo al diseño personalizado.
                 */
 
                 if (productoProyecto) {
 
                     productoProyecto.value =
-                        "Diseño personalizado / pedido especial";
+                        "";
+
 
                     productoProyecto.dispatchEvent(
                         new Event(
@@ -919,14 +1243,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 if (cantidad) {
-                    cantidad.value = "";
+
+                    cantidad.value =
+                        "";
+
+
+                    cantidad.dispatchEvent(
+                        new Event(
+                            "input",
+                            {
+                                bubbles: true
+                            }
+                        )
+                    );
+
+                }
+
+
+                if (descripcion) {
+
+                    descripcion.value =
+                        "";
+
+
+                    descripcion.dispatchEvent(
+                        new Event(
+                            "input",
+                            {
+                                bubbles: true
+                            }
+                        )
+                    );
+
                 }
 
 
                 clearFormResponse();
 
+
                 openFormModal();
 
+
+                /* =======================================
+                   FOCO
+                ======================================= */
 
                 window.setTimeout(
                     () => {
@@ -936,8 +1296,23 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "nombre"
                             );
 
-                        if (nombre) {
+
+                        if (
+                            nombre &&
+                            !nombre.value.trim()
+                        ) {
+
                             nombre.focus();
+
+                            return;
+
+                        }
+
+
+                        if (productoProyecto) {
+
+                            productoProyecto.focus();
+
                         }
 
                     },
@@ -948,6 +1323,39 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
+
+
+    /* =====================================================
+       RESETEAR MODO EXTERNO
+
+       app.js podrá disparar este evento después de
+       enviar correctamente una solicitud.
+    ===================================================== */
+
+    window.addEventListener(
+        "sarita:reset-catalog",
+        () => {
+
+            catalogItems.forEach(
+                card => {
+
+                    setQuantity(
+                        card,
+                        0
+                    );
+
+                }
+            );
+
+
+            updateSummary();
+
+
+            window.SARITA_REQUEST_MODE =
+                "";
+
+        }
+    );
 
 
     /* =====================================================
