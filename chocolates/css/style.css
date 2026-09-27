@@ -4345,3 +4345,512 @@ label {
     }
 
 }
+
+/* ==========================================================
+   NOVEDADES · CHOCOLATE ARTÍSTICO SARITA
+   ========================================================== */
+
+.sarita-novedades {
+    position: relative;
+    padding: 90px 24px;
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(176, 116, 74, 0.10),
+            transparent 32%
+        ),
+        linear-gradient(
+            180deg,
+            #160d09 0%,
+            #1d110c 100%
+        );
+    overflow: hidden;
+}
+
+.sarita-novedades-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+}
+
+
+/* ==========================================================
+   ENCABEZADO
+   ========================================================== */
+
+.sarita-novedades-heading {
+    max-width: 720px;
+    margin-bottom: 42px;
+}
+
+.sarita-novedades-heading .eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.sarita-novedades-heading h2 {
+    margin: 0 0 18px;
+    color: #fff;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.08;
+}
+
+.sarita-novedades-heading h2 span {
+    color: #d8a66c;
+}
+
+.sarita-novedades-heading > p {
+    max-width: 620px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+
+/* ==========================================================
+   NOVEDAD DESTACADA
+   ========================================================== */
+
+.novedad-destacada {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+    min-height: 580px;
+    border: 1px solid rgba(216, 166, 108, 0.22);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.035);
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.30);
+    overflow: hidden;
+}
+
+
+/* ==========================================================
+   IMAGEN
+   ========================================================== */
+
+.novedad-destacada-image {
+    position: relative;
+    min-height: 580px;
+    overflow: hidden;
+    background: #0e0907;
+}
+
+.novedad-destacada-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            90deg,
+            transparent 60%,
+            rgba(22, 13, 9, 0.30) 100%
+        );
+    pointer-events: none;
+}
+
+.novedad-destacada-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 580px;
+    object-fit: cover;
+    object-position: center;
+    transition:
+        transform 0.6s ease,
+        filter 0.6s ease;
+}
+
+.novedad-destacada:hover .novedad-destacada-image img {
+    transform: scale(1.025);
+}
+
+
+/* ==========================================================
+   ETIQUETA PRÓXIMAMENTE
+   ========================================================== */
+
+.novedad-status {
+    position: absolute;
+    z-index: 2;
+    top: 22px;
+    left: 22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+
+    background: rgba(17, 10, 7, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    color: #fff;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+
+/* ==========================================================
+   CONTENIDO
+   ========================================================== */
+
+.novedad-destacada-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: clamp(36px, 5vw, 64px);
+}
+
+.novedad-kicker {
+    display: block;
+
+    margin-bottom: 14px;
+
+    color: #d8a66c;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+}
+
+.novedad-destacada-content h3 {
+    margin: 0 0 18px;
+
+    color: #fff;
+
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.1rem, 4vw, 3.5rem);
+    line-height: 1;
+}
+
+.novedad-destacada-content > p {
+    margin: 0 0 16px;
+
+    color: rgba(255, 255, 255, 0.70);
+
+    font-size: 0.96rem;
+    line-height: 1.75;
+}
+
+.novedad-destacada-content .novedad-lead {
+    margin-bottom: 20px;
+
+    color: #f1d7b8;
+
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.45;
+}
+
+
+/* ==========================================================
+   BLOQUE DE MISTERIO
+   ========================================================== */
+
+.novedad-misterio {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin: 16px 0 24px;
+    padding: 17px 18px;
+
+    border: 1px solid rgba(216, 166, 108, 0.18);
+    border-radius: 14px;
+
+    background: rgba(216, 166, 108, 0.06);
+}
+
+.novedad-misterio > span {
+    display: flex;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(216, 166, 108, 0.32);
+    border-radius: 50%;
+
+    color: #d8a66c;
+
+    font-family: "Playfair Display", serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.novedad-misterio p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.novedad-misterio strong {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #fff;
+    font-weight: 600;
+}
+
+
+/* ==========================================================
+   FECHA / UBICACIÓN
+   ========================================================== */
+
+.novedad-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 26px;
+
+    color: rgba(255, 255, 255, 0.50);
+
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+}
+
+
+/* ==========================================================
+   BOTÓN
+   ========================================================== */
+
+.novedad-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    gap: 10px;
+
+    min-height: 48px;
+    padding: 0 22px;
+
+    border: 1px solid #d8a66c;
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: #f5dfc4;
+    text-decoration: none;
+
+    font-size: 0.84rem;
+    font-weight: 600;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.novedad-action:hover {
+    background: #d8a66c;
+    color: #160d09;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(216, 166, 108, 0.18);
+}
+
+.novedad-action:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+}
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (max-width: 980px) {
+
+    .sarita-novedades {
+        padding: 72px 22px;
+    }
+
+    .novedad-destacada {
+        grid-template-columns: 1fr 0.9fr;
+        min-height: 520px;
+    }
+
+    .novedad-destacada-image {
+        min-height: 520px;
+    }
+
+    .novedad-destacada-image img {
+        min-height: 520px;
+    }
+
+    .novedad-destacada-content {
+        padding: 38px;
+    }
+
+}
+
+
+/* ==========================================================
+   MÓVIL
+   ========================================================== */
+
+@media (max-width: 760px) {
+
+    .sarita-novedades {
+        padding: 58px 16px;
+    }
+
+    .sarita-novedades-heading {
+        margin-bottom: 28px;
+    }
+
+    .sarita-novedades-heading h2 {
+        font-size: clamp(2rem, 10vw, 2.7rem);
+    }
+
+    .sarita-novedades-heading > p {
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+
+    .novedad-destacada {
+        display: block;
+        min-height: 0;
+
+        border-radius: 20px;
+    }
+
+
+    .novedad-destacada-image {
+        width: 100%;
+        min-height: 0;
+
+        aspect-ratio: 4 / 5;
+    }
+
+    .novedad-destacada-image::after {
+        background:
+            linear-gradient(
+                180deg,
+                transparent 70%,
+                rgba(22, 13, 9, 0.22) 100%
+            );
+    }
+
+    .novedad-destacada-image img {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+
+        object-fit: cover;
+        object-position: center;
+    }
+
+
+    .novedad-status {
+        top: 15px;
+        left: 15px;
+
+        padding: 8px 13px;
+
+        font-size: 0.65rem;
+    }
+
+
+    .novedad-destacada-content {
+        padding: 30px 22px 32px;
+    }
+
+    .novedad-kicker {
+        font-size: 0.68rem;
+    }
+
+    .novedad-destacada-content h3 {
+        font-size: clamp(2rem, 11vw, 2.8rem);
+    }
+
+    .novedad-destacada-content > p {
+        font-size: 0.91rem;
+    }
+
+    .novedad-destacada-content .novedad-lead {
+        font-size: 1.15rem;
+    }
+
+
+    .novedad-misterio {
+        gap: 13px;
+
+        margin: 12px 0 22px;
+        padding: 14px;
+    }
+
+    .novedad-misterio > span {
+        flex-basis: 38px;
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 1.25rem;
+    }
+
+    .novedad-misterio p {
+        font-size: 0.82rem;
+    }
+
+
+    .novedad-meta {
+        gap: 8px;
+
+        margin-bottom: 22px;
+
+        font-size: 0.65rem;
+    }
+
+
+    .novedad-action {
+        width: 100%;
+        min-height: 50px;
+
+        align-self: stretch;
+    }
+
+}
+
+
+/* ==========================================================
+   MÓVILES PEQUEÑOS
+   ========================================================== */
+
+@media (max-width: 420px) {
+
+    .sarita-novedades {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .novedad-destacada-content {
+        padding: 26px 18px 28px;
+    }
+
+    .novedad-misterio {
+        align-items: flex-start;
+    }
+
+}
