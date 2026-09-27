@@ -1,0 +1,240 @@
+/* =========================================================
+   CHOCOLATE ARTÍSTICO SARITA
+   CATÁLOGO ACTUAL 2026
+   Complemento de css/style.css
+========================================================= */
+
+.catalogo-actual {
+    padding: 110px 6%;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(201, 164, 92, .07), transparent 34%),
+        var(--cacao-950);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.catalogo-grid {
+    width: min(1160px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.catalogo-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, .025);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .16);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.catalogo-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-gold);
+    box-shadow: 0 24px 55px rgba(0, 0, 0, .25);
+}
+
+.catalogo-image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--cacao-850);
+}
+
+.catalogo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .45s ease;
+}
+
+.catalogo-card:hover .catalogo-image img {
+    transform: scale(1.025);
+}
+
+.catalogo-content {
+    flex: 1;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.catalogo-code {
+    display: inline-flex;
+    margin-bottom: 10px;
+    color: var(--dorado);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.catalogo-content h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.catalogo-presentacion {
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: .92rem;
+    line-height: 1.65;
+}
+
+.catalogo-price {
+    margin-top: 18px;
+    color: var(--crema);
+    font-size: .82rem;
+    font-weight: 500;
+    letter-spacing: .8px;
+}
+
+.catalogo-price span {
+    color: var(--dorado-claro);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.catalogo-request {
+    width: 100%;
+    min-height: 48px;
+    margin-top: auto;
+    padding: 12px 16px;
+    border: 1px solid var(--dorado);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--dorado-claro);
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.catalogo-price + .catalogo-request {
+    margin-top: 20px;
+}
+
+.catalogo-request:hover,
+.catalogo-request:focus-visible {
+    background: var(--dorado);
+    color: var(--cacao-950);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.catalogo-card-custom {
+    position: relative;
+    justify-content: center;
+    min-height: 100%;
+    background:
+        radial-gradient(circle at 80% 20%, rgba(201, 164, 92, .12), transparent 32%),
+        var(--cacao-850);
+}
+
+.catalogo-card-custom .catalogo-content {
+    justify-content: center;
+}
+
+.catalogo-custom-mark {
+    position: absolute;
+    right: 20px;
+    top: 8px;
+    color: rgba(201, 164, 92, .09);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 9rem;
+    font-style: italic;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.catalogo-card-custom .catalogo-request {
+    margin-top: 24px;
+}
+
+.catalogo-legal {
+    width: min(900px, 100%);
+    margin: 28px auto 0;
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.catalogo-legal a {
+    color: var(--dorado-claro);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 1000px) {
+    .catalogo-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .catalogo-actual {
+        padding: 80px 20px;
+    }
+
+    .catalogo-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .catalogo-card {
+        display: grid;
+        grid-template-columns: minmax(120px, .8fr) minmax(0, 1.2fr);
+    }
+
+    .catalogo-image {
+        height: 100%;
+        min-height: 250px;
+        aspect-ratio: auto;
+    }
+
+    .catalogo-content {
+        padding: 22px 18px;
+    }
+
+    .catalogo-card-custom {
+        display: flex;
+        min-height: 260px;
+    }
+}
+
+@media (max-width: 520px) {
+    .catalogo-card {
+        display: flex;
+    }
+
+    .catalogo-image {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    .catalogo-content {
+        padding: 22px;
+    }
+
+    .catalogo-price span {
+        font-size: 1.8rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .catalogo-card,
+    .catalogo-image img,
+    .catalogo-request {
+        transition: none !important;
+    }
+}
