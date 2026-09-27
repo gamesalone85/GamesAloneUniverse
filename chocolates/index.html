@@ -848,104 +848,666 @@ Chocolate Personalizado en CDMX | Chocolate Artístico Sarita
 
 <!-- ==================================================
      CATÁLOGO ACTUAL
+     SOLICITUD MULTIPRODUCTO
 ================================================== -->
 
 <section class="catalogo-actual" id="catalogo">
 
     <div class="section-heading">
-        <span class="eyebrow">CATÁLOGO ACTUAL</span>
-        <h2>Presentaciones disponibles</h2>
+
+        <span class="eyebrow">
+            CATÁLOGO ACTUAL
+        </span>
+
+        <h2>
+            Arma tu solicitud
+        </h2>
+
         <p>
-            Conoce algunas de nuestras presentaciones actuales.
-            También podemos crear propuestas personalizadas para
-            celebraciones, eventos y proyectos especiales.
+            Selecciona uno o varios productos y dinos
+            cuántas cajas necesitas de cada presentación.
+            Después podrás completar los datos de tu solicitud.
         </p>
-    </div>
-
-    <div class="catalogo-grid">
-
-        <article class="catalogo-card">
-            <div class="catalogo-image">
-                <img src="../img/chocolates/choco webb.jpg" alt="Calaveras de chocolate Sarita" loading="lazy">
-            </div>
-            <div class="catalogo-content">
-                <span class="catalogo-code">SAR-CAL-01</span>
-                <h3>Calaveras de chocolate</h3>
-                <p class="catalogo-presentacion">Caja con 12 piezas</p>
-                <p class="catalogo-price"><span>$50</span> MXN</p>
-                <button type="button" class="catalogo-request" data-product="Calaveras de chocolate — Caja con 12 piezas — $50 MXN">Solicitar este producto</button>
-            </div>
-        </article>
-
-        <article class="catalogo-card">
-            <div class="catalogo-image">
-                <img src="../img/chocolates/choco webb.jpg" alt="Pan de muerto de chocolate Sarita" loading="lazy">
-            </div>
-            <div class="catalogo-content">
-                <span class="catalogo-code">SAR-PDM-01</span>
-                <h3>Pan de muerto de chocolate</h3>
-                <p class="catalogo-presentacion">Caja con 12 piezas</p>
-                <p class="catalogo-price"><span>$60</span> MXN</p>
-                <button type="button" class="catalogo-request" data-product="Pan de muerto de chocolate — Caja con 12 piezas — $60 MXN">Solicitar este producto</button>
-            </div>
-        </article>
-
-        <article class="catalogo-card">
-            <div class="catalogo-image">
-                <img src="../img/chocolates/barritas.jpg" alt="Mini barritas de chocolate Sarita" loading="lazy">
-            </div>
-            <div class="catalogo-content">
-                <span class="catalogo-code">SAR-MIN-01</span>
-                <h3>Mini barritas</h3>
-                <p class="catalogo-presentacion">Caja con 20 piezas</p>
-                <p class="catalogo-price"><span>$80</span> MXN</p>
-                <button type="button" class="catalogo-request" data-product="Mini barritas — Caja con 20 piezas — $80 MXN">Solicitar este producto</button>
-            </div>
-        </article>
-
-        <article class="catalogo-card">
-            <div class="catalogo-image">
-                <img src="../img/chocolates/corazon.jpg" alt="Corazón diamante de chocolate Sarita" loading="lazy">
-            </div>
-            <div class="catalogo-content">
-                <span class="catalogo-code">SAR-COR-01</span>
-                <h3>Corazón diamante</h3>
-                <p class="catalogo-presentacion">Caja con 12 piezas</p>
-                <p class="catalogo-price"><span>$90</span> MXN</p>
-                <button type="button" class="catalogo-request" data-product="Corazón diamante — Caja con 12 piezas — $90 MXN">Solicitar este producto</button>
-            </div>
-        </article>
-
-        <article class="catalogo-card">
-            <div class="catalogo-image">
-                <img src="../img/chocolates/lenguas.jpg" alt="Lenguas de gato de chocolate Sarita" loading="lazy">
-            </div>
-            <div class="catalogo-content">
-                <span class="catalogo-code">SAR-LDG-01</span>
-                <h3>Lenguas de gato</h3>
-                <p class="catalogo-presentacion">Caja con 12 piezas</p>
-                <p class="catalogo-price"><span>$70</span> MXN</p>
-                <button type="button" class="catalogo-request" data-product="Lenguas de gato — Caja con 12 piezas — $70 MXN">Solicitar este producto</button>
-            </div>
-        </article>
-
-        <article class="catalogo-card catalogo-card-custom">
-            <div class="catalogo-custom-mark" aria-hidden="true">S</div>
-            <div class="catalogo-content">
-                <span class="catalogo-code">DISEÑO ESPECIAL</span>
-                <h3>¿Tienes otra idea?</h3>
-                <p class="catalogo-presentacion">Cuéntanos qué necesitas y revisamos contigo una propuesta personalizada.</p>
-                <button type="button" class="catalogo-request" data-product="Diseño personalizado / solicitud especial">Solicitar diseño personalizado</button>
-            </div>
-        </article>
 
     </div>
 
-    <p class="catalogo-legal">
-        Precios en MXN. Sujetos a cambio sin previo aviso y a disponibilidad.
-        El precio final se confirma antes de iniciar el pedido.
-        <a href="terminos.html">Consulta los Términos y Condiciones.</a>
-    </p>
+
+    <!-- ==============================================
+         CONTENEDOR CATÁLOGO + RESUMEN
+    =============================================== -->
+
+    <div class="catalogo-layout">
+
+
+        <!-- ==========================================
+             PRODUCTOS
+        =========================================== -->
+
+        <div class="catalogo-grid">
+
+
+            <!-- CALAVERAS -->
+
+            <article
+                class="catalogo-card"
+                data-catalog-item
+                data-code="SAR-CAL-01"
+                data-name="Calaveras de chocolate"
+                data-presentation="Caja con 12 piezas"
+                data-price="50"
+            >
+
+                <div class="catalogo-image">
+
+                    <img
+                        src="../img/chocolates/choco webb.jpg"
+                        alt="Calaveras de chocolate Sarita"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+                <div class="catalogo-content">
+
+                    <span class="catalogo-code">
+                        SAR-CAL-01
+                    </span>
+
+                    <h3>
+                        Calaveras de chocolate
+                    </h3>
+
+                    <p class="catalogo-presentacion">
+                        Caja con 12 piezas
+                    </p>
+
+                    <p class="catalogo-price">
+                        <span>$50</span> MXN
+                    </p>
+
+
+                    <div
+                        class="catalogo-quantity"
+                        aria-label="Cantidad de cajas de Calaveras de chocolate"
+                    >
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-minus"
+                            aria-label="Quitar una caja de Calaveras de chocolate"
+                        >
+                            −
+                        </button>
+
+                        <span
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-plus"
+                            aria-label="Agregar una caja de Calaveras de chocolate"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="catalogo-add"
+                    >
+                        Agregar a mi solicitud
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- PAN DE MUERTO -->
+
+            <article
+                class="catalogo-card"
+                data-catalog-item
+                data-code="SAR-PDM-01"
+                data-name="Pan de muerto de chocolate"
+                data-presentation="Caja con 12 piezas"
+                data-price="60"
+            >
+
+                <div class="catalogo-image">
+
+                    <img
+                        src="../img/chocolates/choco webb.jpg"
+                        alt="Pan de muerto de chocolate Sarita"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+                <div class="catalogo-content">
+
+                    <span class="catalogo-code">
+                        SAR-PDM-01
+                    </span>
+
+                    <h3>
+                        Pan de muerto de chocolate
+                    </h3>
+
+                    <p class="catalogo-presentacion">
+                        Caja con 12 piezas
+                    </p>
+
+                    <p class="catalogo-price">
+                        <span>$60</span> MXN
+                    </p>
+
+
+                    <div
+                        class="catalogo-quantity"
+                        aria-label="Cantidad de cajas de Pan de muerto de chocolate"
+                    >
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-minus"
+                            aria-label="Quitar una caja de Pan de muerto de chocolate"
+                        >
+                            −
+                        </button>
+
+                        <span
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-plus"
+                            aria-label="Agregar una caja de Pan de muerto de chocolate"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="catalogo-add"
+                    >
+                        Agregar a mi solicitud
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- MINI BARRITAS -->
+
+            <article
+                class="catalogo-card"
+                data-catalog-item
+                data-code="SAR-MIN-01"
+                data-name="Mini barritas"
+                data-presentation="Caja con 20 piezas"
+                data-price="80"
+            >
+
+                <div class="catalogo-image">
+
+                    <img
+                        src="../img/chocolates/barritas.jpg"
+                        alt="Mini barritas de chocolate Sarita"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+                <div class="catalogo-content">
+
+                    <span class="catalogo-code">
+                        SAR-MIN-01
+                    </span>
+
+                    <h3>
+                        Mini barritas
+                    </h3>
+
+                    <p class="catalogo-presentacion">
+                        Caja con 20 piezas
+                    </p>
+
+                    <p class="catalogo-price">
+                        <span>$80</span> MXN
+                    </p>
+
+
+                    <div
+                        class="catalogo-quantity"
+                        aria-label="Cantidad de cajas de Mini barritas"
+                    >
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-minus"
+                            aria-label="Quitar una caja de Mini barritas"
+                        >
+                            −
+                        </button>
+
+                        <span
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-plus"
+                            aria-label="Agregar una caja de Mini barritas"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="catalogo-add"
+                    >
+                        Agregar a mi solicitud
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- CORAZÓN DIAMANTE -->
+
+            <article
+                class="catalogo-card"
+                data-catalog-item
+                data-code="SAR-COR-01"
+                data-name="Corazón diamante"
+                data-presentation="Caja con 12 piezas"
+                data-price="90"
+            >
+
+                <div class="catalogo-image">
+
+                    <img
+                        src="../img/chocolates/corazon.jpg"
+                        alt="Corazón diamante de Chocolate Artístico Sarita"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+                <div class="catalogo-content">
+
+                    <span class="catalogo-code">
+                        SAR-COR-01
+                    </span>
+
+                    <h3>
+                        Corazón diamante
+                    </h3>
+
+                    <p class="catalogo-presentacion">
+                        Caja con 12 piezas
+                    </p>
+
+                    <p class="catalogo-price">
+                        <span>$90</span> MXN
+                    </p>
+
+
+                    <div
+                        class="catalogo-quantity"
+                        aria-label="Cantidad de cajas de Corazón diamante"
+                    >
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-minus"
+                            aria-label="Quitar una caja de Corazón diamante"
+                        >
+                            −
+                        </button>
+
+                        <span
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-plus"
+                            aria-label="Agregar una caja de Corazón diamante"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="catalogo-add"
+                    >
+                        Agregar a mi solicitud
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- LENGUAS DE GATO -->
+
+            <article
+                class="catalogo-card"
+                data-catalog-item
+                data-code="SAR-LDG-01"
+                data-name="Lenguas de gato"
+                data-presentation="Caja con 12 piezas"
+                data-price="70"
+            >
+
+                <div class="catalogo-image">
+
+                    <img
+                        src="../img/chocolates/lenguas.jpg"
+                        alt="Lenguas de gato de Chocolate Artístico Sarita"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+                <div class="catalogo-content">
+
+                    <span class="catalogo-code">
+                        SAR-LDG-01
+                    </span>
+
+                    <h3>
+                        Lenguas de gato
+                    </h3>
+
+                    <p class="catalogo-presentacion">
+                        Caja con 12 piezas
+                    </p>
+
+                    <p class="catalogo-price">
+                        <span>$70</span> MXN
+                    </p>
+
+
+                    <div
+                        class="catalogo-quantity"
+                        aria-label="Cantidad de cajas de Lenguas de gato"
+                    >
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-minus"
+                            aria-label="Quitar una caja de Lenguas de gato"
+                        >
+                            −
+                        </button>
+
+                        <span
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-btn quantity-plus"
+                            aria-label="Agregar una caja de Lenguas de gato"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="catalogo-add"
+                    >
+                        Agregar a mi solicitud
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- DISEÑO PERSONALIZADO -->
+
+            <article class="catalogo-card catalogo-card-custom">
+
+                <div
+                    class="catalogo-custom-mark"
+                    aria-hidden="true"
+                >
+                    S
+                </div>
+
+
+                <div class="catalogo-content">
+
+                    <span class="catalogo-code">
+                        DISEÑO ESPECIAL
+                    </span>
+
+                    <h3>
+                        ¿Tienes otra idea?
+                    </h3>
+
+                    <p class="catalogo-presentacion">
+
+                        Si necesitas otro diseño,
+                        presentación, temática o cantidad,
+                        también podemos revisar una propuesta
+                        personalizada contigo.
+
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="catalogo-custom-request"
+                        id="catalogoCustomRequest"
+                    >
+                        Solicitar diseño personalizado
+                    </button>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <!-- ==========================================
+             RESUMEN DE SOLICITUD
+        =========================================== -->
+
+        <aside
+            class="catalogo-summary"
+            id="catalogoSummary"
+            aria-labelledby="catalogoSummaryTitle"
+        >
+
+            <div class="summary-header">
+
+                <span class="eyebrow">
+                    TU SELECCIÓN
+                </span>
+
+                <h3 id="catalogoSummaryTitle">
+                    Tu solicitud
+                </h3>
+
+                <p>
+                    Puedes combinar diferentes
+                    presentaciones en una sola solicitud.
+                </p>
+
+            </div>
+
+
+            <!-- ESTADO VACÍO -->
+
+            <div
+                class="summary-empty"
+                id="catalogoSummaryEmpty"
+            >
+
+                <div
+                    class="summary-empty-icon"
+                    aria-hidden="true"
+                >
+                    S
+                </div>
+
+                <strong>
+                    Aún no has agregado productos
+                </strong>
+
+                <span>
+                    Utiliza los botones + o
+                    “Agregar a mi solicitud”.
+                </span>
+
+            </div>
+
+
+            <!-- PRODUCTOS SELECCIONADOS -->
+
+            <div
+                class="summary-items"
+                id="catalogoSummaryItems"
+                aria-live="polite"
+            >
+            </div>
+
+
+            <!-- TOTALES -->
+
+            <div
+                class="summary-totals"
+                id="catalogoSummaryTotals"
+                hidden
+            >
+
+                <div class="summary-total-row">
+
+                    <span>
+                        Cajas seleccionadas
+                    </span>
+
+                    <strong id="catalogoTotalBoxes">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-total-row summary-price-row">
+
+                    <span>
+                        Precio de referencia
+                    </span>
+
+                    <strong id="catalogoReferencePrice">
+                        $0 MXN
+                    </strong>
+
+                </div>
+
+
+                <p class="summary-price-note">
+
+                    Este importe es únicamente una referencia
+                    calculada con los precios publicados actualmente.
+                    El precio y disponibilidad se confirman antes
+                    de iniciar el pedido.
+
+                </p>
+
+
+                <button
+                    type="button"
+                    class="catalogo-continue"
+                    id="catalogoContinue"
+                >
+                    Continuar con mi solicitud
+                </button>
+
+
+                <button
+                    type="button"
+                    class="catalogo-clear"
+                    id="catalogoClear"
+                >
+                    Vaciar selección
+                </button>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- ==============================================
+         INFORMACIÓN DE PRECIOS
+    =============================================== -->
+
+    <div class="catalogo-legal">
+
+        <strong>
+            Información sobre precios
+        </strong>
+
+        <p>
+            Precios expresados en pesos mexicanos (MXN)
+            y sujetos a cambio sin previo aviso y a
+            disponibilidad. El precio final se confirma
+            antes de iniciar el pedido.
+        </p>
+
+        <a href="terminos.html">
+            Consulta los Términos y Condiciones →
+        </a>
+
+    </div>
 
 </section>
 
