@@ -873,16 +873,80 @@ body: new URLSearchParams({
 }
 )
 
-.then(function () {
+.then(function (res) {
+
+return res.text();
+
+})
+
+.then(function (data) {
+
+data = String(data).trim();
+
+if (data === "NUEVO") {
 
 respuesta.innerHTML =
 `
 <div class="success-message">
-  ✅ Revisa tu correo para continuar.
+  ✅ Afiliación creada. Revisa tu correo para conocer tu número de afiliación.
 </div>
 `;
 
 subscriptionForm.reset();
+
+}
+else if (data === "EXISTE") {
+
+respuesta.innerHTML =
+`
+<div class="success-message">
+  ✅ Ya formas parte de GamesAlone18. Te reenviamos tu número de afiliación por correo.
+</div>
+`;
+
+subscriptionForm.reset();
+
+}
+else if (data === "ERROR_EMAIL" || data === "ERROR_DATOS") {
+
+respuesta.innerHTML =
+`
+<div class="error-message">
+  ⚠ Ingresa un correo electrónico válido.
+</div>
+`;
+
+}
+else if (data === "ERROR_LIMITE") {
+
+respuesta.innerHTML =
+`
+<div class="error-message">
+  ⚠ Se realizaron demasiados intentos. Espera unos minutos antes de volver a intentarlo.
+</div>
+`;
+
+}
+else if (data === "ERROR_OCUPADO") {
+
+respuesta.innerHTML =
+`
+<div class="error-message">
+  ⚠ El sistema está procesando otra solicitud. Intenta nuevamente en unos segundos.
+</div>
+`;
+
+}
+else {
+
+respuesta.innerHTML =
+`
+<div class="error-message">
+  ⚠ No fue posible procesar la afiliación. Intenta nuevamente.
+</div>
+`;
+
+}
 
 })
 
