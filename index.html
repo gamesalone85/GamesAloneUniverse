@@ -237,6 +237,26 @@
 
   </script>
 
+
+  <style>
+    .footer-cookie-link {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer-cookie-link:hover,
+    .footer-cookie-link:focus-visible {
+      text-decoration: underline;
+    }
+  </style>
+
 </head>
 
 
@@ -374,51 +394,41 @@
 
 
     <nav
-  class="footer-nav"
-  aria-label="Enlaces del pie"
->
+      class="main-nav"
+      id="mainNav"
+      aria-label="Navegación principal"
+    >
 
-  <a href="./acerca-de-nosotros/">
-    Nosotros
-  </a>
+      <a href="./prensa/">
+        Prensa
+      </a>
 
-  <a href="./prensa/">
-    Prensa
-  </a>
+      <a href="./merch/">
+        Merch
+      </a>
 
-  <a href="./merch/">
-    Merch
-  </a>
+      <a href="./colaboraciones/">
+        Colaboraciones
+      </a>
 
-  <a href="./colaboraciones/">
-    Colaboraciones
-  </a>
+      <a href="./contactanos/">
+        Contacto
+      </a>
 
-  <a href="./contactanos/">
-    Contacto
-  </a>
+      <a
+        class="nav-cta"
+        href="./zona/"
+      >
 
-  <a href="./avisodeprivacidad/">
-    Privacidad
-  </a>
+        <span aria-hidden="true">
+          ✦
+        </span>
 
-  <a href="./terminos-y-condiciones.html">
-    Términos
-  </a>
+        Entrar a la Zona
 
-  <a href="./preguntas-frecuentes/">
-    FAQ
-  </a>
+      </a>
 
-  <button
-    type="button"
-    id="cookiePreferences"
-    class="footer-cookie-link"
-  >
-    Preferencias de cookies
-  </button>
-
-</nav>
+    </nav>
 
   </div>
 
@@ -1082,6 +1092,14 @@
       <a href="./preguntas-frecuentes/">
         FAQ
       </a>
+
+      <button
+        type="button"
+        id="cookiePreferences"
+        class="footer-cookie-link"
+      >
+        Preferencias de cookies
+      </button>
 
     </nav>
 
@@ -1870,6 +1888,11 @@
       "reject-cookies"
     );
 
+  const cookiePreferences =
+    document.getElementById(
+      "cookiePreferences"
+    );
+
 
   let consent =
     null;
@@ -2103,9 +2126,44 @@
         catch (error) {}
 
 
+        window.gtag(
+          "consent",
+          "update",
+          {
+            analytics_storage: "denied",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied"
+          }
+        );
+
+
         banner.classList.add(
           "cookie-hidden"
         );
+
+      }
+    );
+
+  }
+
+
+  if (
+    cookiePreferences &&
+    banner
+  ) {
+
+    cookiePreferences.addEventListener(
+      "click",
+      () => {
+
+        banner.classList.remove(
+          "cookie-hidden"
+        );
+
+        if (accept) {
+          accept.focus();
+        }
 
       }
     );
