@@ -1,7 +1,10 @@
 /* =========================================================
    CHOCOLATE ARTÍSTICO SARITA
    APP.JS 2026
-   PEDIDOS + COLABORACIONES
+
+   PEDIDOS DE CATÁLOGO
+   DISEÑOS PERSONALIZADOS
+   COLABORACIONES
 ========================================================= */
 
 "use strict";
@@ -32,86 +35,210 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const modal =
-        document.getElementById("cotizacionModal");
+        document.getElementById(
+            "cotizacionModal"
+        );
 
     const openBtn =
-        document.getElementById("openModal");
+        document.getElementById(
+            "openModal"
+        );
 
     const openNavBtn =
-        document.getElementById("openModalNav");
+        document.getElementById(
+            "openModalNav"
+        );
 
     const openCtaBtn =
-        document.getElementById("openModalCta");
+        document.getElementById(
+            "openModalCta"
+        );
 
     const openAlianzaBtn =
-        document.getElementById("openAlianzaModal");
+        document.getElementById(
+            "openAlianzaModal"
+        );
 
     const openEdicionBtn =
-        document.getElementById("openEdicionModal");
+        document.getElementById(
+            "openEdicionModal"
+        );
 
     const closeBtn =
-        document.getElementById("closeModal");
+        document.getElementById(
+            "closeModal"
+        );
 
     const cancelBtn =
-        document.getElementById("cancelModalBtn");
+        document.getElementById(
+            "cancelModalBtn"
+        );
 
 
     /* =====================================================
-       ELEMENTOS DEL FORMULARIO
+       ELEMENTOS NUEVOS DEL MODAL
+    ===================================================== */
+
+    const solicitudEyebrow =
+        document.getElementById(
+            "solicitudEyebrow"
+        );
+
+    const solicitudSubtitle =
+        document.getElementById(
+            "solicitudSubtitle"
+        );
+
+    const cotizacionTitle =
+        document.getElementById(
+            "cotizacionTitle"
+        );
+
+    const requestTypeGroup =
+        document.getElementById(
+            "requestTypeGroup"
+        );
+
+    const customDesignInfo =
+        document.getElementById(
+            "customDesignInfo"
+        );
+
+
+    /* =====================================================
+       FORMULARIO
     ===================================================== */
 
     const form =
-        document.getElementById("cotizacionForm");
+        document.getElementById(
+            "cotizacionForm"
+        );
 
     const tipoPedido =
-        document.getElementById("tipoPedido");
+        document.getElementById(
+            "tipoPedido"
+        );
 
     const tipoColaboracion =
-        document.getElementById("tipoColaboracion");
+        document.getElementById(
+            "tipoColaboracion"
+        );
 
     const productoProyecto =
-        document.getElementById("productoProyecto");
+        document.getElementById(
+            "productoProyecto"
+        );
 
     const productoProyectoLabel =
-        document.getElementById("productoProyectoLabel");
+        document.getElementById(
+            "productoProyectoLabel"
+        );
 
     const productoProyectoHelper =
-        document.getElementById("productoProyectoHelper");
+        document.getElementById(
+            "productoProyectoHelper"
+        );
 
     const cantidad =
-        document.getElementById("cantidad");
+        document.getElementById(
+            "cantidad"
+        );
+
+    const cantidadLabel =
+        document.getElementById(
+            "cantidadLabel"
+        );
 
     const fechaEvento =
-        document.getElementById("fechaEvento");
+        document.getElementById(
+            "fechaEvento"
+        );
 
     const fechaLabel =
-        document.getElementById("fechaLabel");
+        document.getElementById(
+            "fechaLabel"
+        );
 
     const descripcion =
-        document.getElementById("descripcion");
+        document.getElementById(
+            "descripcion"
+        );
 
     const descripcionLabel =
-        document.getElementById("descripcionLabel");
+        document.getElementById(
+            "descripcionLabel"
+        );
 
     const requestInfo =
-        document.getElementById("requestInfo");
+        document.getElementById(
+            "requestInfo"
+        );
 
     const formResponse =
-        document.getElementById("formResponse");
+        document.getElementById(
+            "formResponse"
+        );
 
     const submitSolicitud =
-        document.getElementById("submitSolicitud");
+        document.getElementById(
+            "submitSolicitud"
+        );
 
 
     /* =====================================================
-       LIMPIAR RESPUESTA
+       ESTADO
+    ===================================================== */
+
+    let lastFocusedElement =
+        null;
+
+    let internalTypeChange =
+        false;
+
+
+    /*
+       Valores posibles:
+
+       ""
+       DIRECT
+       CATALOG
+       CUSTOM
+       COLLABORATION
+       SPECIAL
+    */
+
+    function getRequestMode() {
+
+        return String(
+            window.SARITA_REQUEST_MODE ||
+            ""
+        ).toUpperCase();
+
+    }
+
+
+    function setRequestMode(mode) {
+
+        window.SARITA_REQUEST_MODE =
+            String(
+                mode || ""
+            ).toUpperCase();
+
+    }
+
+
+    /* =====================================================
+       UTILIDADES
     ===================================================== */
 
     function clearFormResponse() {
 
-        if (!formResponse) return;
+        if (!formResponse) {
+            return;
+        }
 
-        formResponse.textContent = "";
+        formResponse.textContent =
+            "";
 
         formResponse.classList.remove(
             "success",
@@ -121,16 +248,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       MOSTRAR RESPUESTA
-    ===================================================== */
-
     function setFormResponse(
         message,
         type = ""
     ) {
 
-        if (!formResponse) return;
+        if (!formResponse) {
+            return;
+        }
 
         formResponse.textContent =
             message;
@@ -151,10 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       TIPO SELECCIONADO
-    ===================================================== */
-
     function getSelectedType() {
 
         const selected =
@@ -169,180 +290,244 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    function scrollToCatalog() {
+
+        const catalog =
+            document.getElementById(
+                "catalogo"
+            );
+
+        if (!catalog) {
+            return;
+        }
+
+        catalog.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+
+
     /* =====================================================
-       ACTUALIZAR FORMULARIO SEGÚN TIPO
+       CERRAR MODAL
     ===================================================== */
 
-    function updateRequestType() {
+    function closeModal(
+        restoreFocus = true
+    ) {
 
-        const tipo =
-            getSelectedType();
+        if (!modal) {
+            return;
+        }
+
+        modal.classList.remove(
+            "active"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.classList.remove(
+            "modal-open"
+        );
+
+
+        if (
+            restoreFocus &&
+            lastFocusedElement &&
+            typeof lastFocusedElement.focus ===
+                "function"
+        ) {
+
+            window.setTimeout(
+                () => {
+
+                    try {
+
+                        lastFocusedElement.focus();
+
+                    } catch (error) {
+
+                        /* Sin acción */
+
+                    }
+
+                },
+                80
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ABRIR MODAL
+    ===================================================== */
+
+    function openModal(
+        preferredType = "",
+        preferredMode = ""
+    ) {
+
+        if (!modal) {
+            return;
+        }
+
+
+        lastFocusedElement =
+            document.activeElement;
 
 
         clearFormResponse();
 
 
-        if (tipo === "PEDIDO") {
+        if (preferredMode) {
 
-
-            if (productoProyectoLabel) {
-
-                productoProyectoLabel.textContent =
-                    "¿Qué necesitas?";
-
-            }
-
-
-            if (productoProyecto) {
-
-                productoProyecto.placeholder =
-                    "Ej. Caja de 20 chocolates para cumpleaños";
-
-            }
-
-
-            if (productoProyectoHelper) {
-
-                productoProyectoHelper.textContent =
-                    "No necesitas elegir de un catálogo. Describe libremente el producto o presentación que necesitas.";
-
-            }
-
-
-            if (cantidad) {
-
-                cantidad.placeholder =
-                    "Ej. 1 caja, 50 piezas, 100 chocolates...";
-
-            }
-
-
-            if (fechaLabel) {
-
-                fechaLabel.textContent =
-                    "Fecha en que lo necesitas";
-
-            }
-
-
-            if (descripcionLabel) {
-
-                descripcionLabel.textContent =
-                    "Cuéntanos cómo lo imaginas";
-
-            }
-
-
-            if (descripcion) {
-
-                descripcion.placeholder =
-                    "Ej. Temática, colores, presentación, ocasión, decoración o cualquier detalle que quieras compartir.";
-
-            }
-
-
-            if (requestInfo) {
-
-                requestInfo.textContent =
-                    "Revisaremos tu solicitud y nos comunicaremos contigo para confirmar diseño, cantidad, precio, disponibilidad y entrega.";
-
-            }
-
-
-            if (submitSolicitud) {
-
-                submitSolicitud.textContent =
-                    "Enviar pedido";
-
-            }
-
-
-            return;
+            setRequestMode(
+                preferredMode
+            );
 
         }
 
 
-        if (tipo === "COLABORACION") {
+        if (preferredType) {
 
+            selectRequestType(
+                preferredType
+            );
 
-            if (productoProyectoLabel) {
+        } else {
 
-                productoProyectoLabel.textContent =
-                    "Nombre del proyecto, marca, evento o producción";
-
-            }
-
-
-            if (productoProyecto) {
-
-                productoProyecto.placeholder =
-                    "Ej. Calaveras Sandungueras, obra de teatro, marca o evento";
-
-            }
-
-
-            if (productoProyectoHelper) {
-
-                productoProyectoHelper.textContent =
-                    "Indícanos el nombre de tu proyecto, producción, evento, marca o propuesta.";
-
-            }
-
-
-            if (cantidad) {
-
-                cantidad.placeholder =
-                    "Ej. 100 piezas, 50 invitados, por definir...";
-
-            }
-
-
-            if (fechaLabel) {
-
-                fechaLabel.textContent =
-                    "Fecha del proyecto o evento";
-
-            }
-
-
-            if (descripcionLabel) {
-
-                descripcionLabel.textContent =
-                    "Cuéntanos tu propuesta";
-
-            }
-
-
-            if (descripcion) {
-
-                descripcion.placeholder =
-                    "Explícanos en qué consiste el proyecto, qué tipo de colaboración imaginas y cómo te gustaría integrar Chocolate Artístico Sarita.";
-
-            }
-
-
-            if (requestInfo) {
-
-                requestInfo.textContent =
-                    "Revisaremos la información de tu proyecto y nos comunicaremos contigo para conocer más detalles y valorar la propuesta.";
-
-            }
-
-
-            if (submitSolicitud) {
-
-                submitSolicitud.textContent =
-                    "Enviar colaboración";
-
-            }
-
-
-            return;
+            updateRequestType();
 
         }
 
 
-        /* SIN SELECCIÓN */
+        modal.classList.add(
+            "active"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+
+        window.setTimeout(
+            () => {
+
+                const firstFocusable =
+                    modal.querySelector(
+                        "input:not([type='hidden']):not([tabindex='-1']), button, textarea"
+                    );
+
+                if (firstFocusable) {
+
+                    firstFocusable.focus();
+
+                }
+
+            },
+            100
+        );
+
+    }
+
+
+    /* =====================================================
+       SELECCIONAR TIPO PROGRAMÁTICAMENTE
+    ===================================================== */
+
+    function selectRequestType(type) {
+
+        internalTypeChange =
+            true;
+
+
+        if (
+            type === "PEDIDO" &&
+            tipoPedido
+        ) {
+
+            tipoPedido.checked =
+                true;
+
+        }
+
+
+        if (
+            type === "COLABORACION" &&
+            tipoColaboracion
+        ) {
+
+            tipoColaboracion.checked =
+                true;
+
+        }
+
+
+        updateRequestType();
+
+
+        internalTypeChange =
+            false;
+
+    }
+
+
+    /* =====================================================
+       INTERFAZ: SIN TIPO
+    ===================================================== */
+
+    function setDefaultInterface() {
+
+        if (solicitudEyebrow) {
+
+            solicitudEyebrow.textContent =
+                "CUÉNTANOS TU IDEA";
+
+        }
+
+
+        if (cotizacionTitle) {
+
+            cotizacionTitle.textContent =
+                "Solicitud Sarita";
+
+        }
+
+
+        if (solicitudSubtitle) {
+
+            solicitudSubtitle.textContent =
+                "Puedes elegir productos de nuestro catálogo, solicitar un diseño personalizado o proponernos una colaboración.";
+
+        }
+
+
+        if (requestTypeGroup) {
+
+            requestTypeGroup.hidden =
+                false;
+
+        }
+
+
+        if (customDesignInfo) {
+
+            customDesignInfo.hidden =
+                true;
+
+        }
+
 
         if (productoProyectoLabel) {
 
@@ -354,8 +539,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (productoProyecto) {
 
+            productoProyecto.readOnly =
+                false;
+
             productoProyecto.placeholder =
-                "Ej. Caja de chocolates para regalo o nombre de tu proyecto";
+                "Describe brevemente lo que necesitas";
 
         }
 
@@ -363,15 +551,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (productoProyectoHelper) {
 
             productoProyectoHelper.textContent =
-                "No necesitas elegir de un catálogo. Describe libremente lo que necesitas.";
+                "Selecciona el tipo de solicitud para adaptar este formulario.";
+
+        }
+
+
+        if (cantidadLabel) {
+
+            cantidadLabel.textContent =
+                "Cantidad aproximada";
 
         }
 
 
         if (cantidad) {
 
+            cantidad.readOnly =
+                false;
+
             cantidad.placeholder =
-                "Ej. 1 caja, 100 piezas...";
+                "Ej. 1 caja, 50 piezas...";
 
         }
 
@@ -393,6 +592,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (descripcion) {
+
+            descripcion.readOnly =
+                false;
 
             descripcion.placeholder =
                 "Temática, colores, presentación, ocasión o cualquier detalle que quieras compartir.";
@@ -419,192 +621,597 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       SELECCIONAR TIPO PROGRAMÁTICAMENTE
+       INTERFAZ: PEDIDO DESDE CATÁLOGO
     ===================================================== */
 
-    function selectRequestType(type) {
+    function setCatalogInterface() {
 
-        if (
-            type === "PEDIDO" &&
-            tipoPedido
-        ) {
+        if (solicitudEyebrow) {
 
-            tipoPedido.checked = true;
+            solicitudEyebrow.textContent =
+                "TU SELECCIÓN";
 
         }
 
 
-        if (
-            type === "COLABORACION" &&
-            tipoColaboracion
-        ) {
+        if (cotizacionTitle) {
 
-            tipoColaboracion.checked = true;
+            cotizacionTitle.textContent =
+                "Completa tu solicitud";
 
         }
 
 
-        updateRequestType();
+        if (solicitudSubtitle) {
+
+            solicitudSubtitle.textContent =
+                "Ya tenemos los chocolates que elegiste. Completa tus datos para que podamos confirmar disponibilidad, precio y fecha.";
+
+        }
+
+
+        /*
+           Ocultamos los radios porque el cliente
+           ya eligió el camino desde el catálogo.
+        */
+
+        if (requestTypeGroup) {
+
+            requestTypeGroup.hidden =
+                true;
+
+        }
+
+
+        if (customDesignInfo) {
+
+            customDesignInfo.hidden =
+                true;
+
+        }
+
+
+        if (productoProyectoLabel) {
+
+            productoProyectoLabel.textContent =
+                "Productos seleccionados";
+
+        }
+
+
+        if (productoProyecto) {
+
+            productoProyecto.readOnly =
+                true;
+
+            productoProyecto.placeholder =
+                "";
+
+        }
+
+
+        if (productoProyectoHelper) {
+
+            productoProyectoHelper.textContent =
+                "Esta selección proviene del catálogo. Para cambiar productos, cierra esta ventana y modifica tu selección.";
+
+        }
+
+
+        if (cantidadLabel) {
+
+            cantidadLabel.textContent =
+                "Cantidad seleccionada";
+
+        }
+
+
+        if (cantidad) {
+
+            cantidad.readOnly =
+                true;
+
+        }
+
+
+        if (fechaLabel) {
+
+            fechaLabel.textContent =
+                "Fecha en que lo necesitas";
+
+        }
+
+
+        if (descripcionLabel) {
+
+            descripcionLabel.textContent =
+                "Detalles de tu solicitud";
+
+        }
+
+
+        if (descripcion) {
+
+            /*
+               Dejamos editable la descripción porque
+               el cliente puede agregar instrucciones.
+            */
+
+            descripcion.readOnly =
+                false;
+
+        }
+
+
+        if (requestInfo) {
+
+            requestInfo.textContent =
+                "El precio mostrado en el catálogo es de referencia. Confirmaremos disponibilidad, precio final y fecha antes de iniciar el pedido.";
+
+        }
+
+
+        if (submitSolicitud) {
+
+            submitSolicitud.textContent =
+                "Enviar pedido";
+
+        }
 
     }
 
 
     /* =====================================================
-       ABRIR MODAL
+       INTERFAZ: DISEÑO PERSONALIZADO
     ===================================================== */
 
-    function openModal(
-        preferredType = ""
-    ) {
+    function setCustomInterface() {
 
-        if (!modal) return;
+        if (solicitudEyebrow) {
+
+            solicitudEyebrow.textContent =
+                "DISEÑO PERSONALIZADO";
+
+        }
+
+
+        if (cotizacionTitle) {
+
+            cotizacionTitle.textContent =
+                "Cuéntanos tu idea";
+
+        }
+
+
+        if (solicitudSubtitle) {
+
+            solicitudSubtitle.textContent =
+                "¿Tienes una idea diferente a nuestro catálogo? Cuéntanos qué chocolate te gustaría crear y revisaremos contigo las posibilidades.";
+
+        }
+
+
+        if (requestTypeGroup) {
+
+            requestTypeGroup.hidden =
+                true;
+
+        }
+
+
+        if (customDesignInfo) {
+
+            customDesignInfo.hidden =
+                false;
+
+        }
+
+
+        if (productoProyectoLabel) {
+
+            productoProyectoLabel.textContent =
+                "¿Qué diseño tienes en mente?";
+
+        }
+
+
+        if (productoProyecto) {
+
+            productoProyecto.readOnly =
+                false;
+
+            productoProyecto.placeholder =
+                "Ej. Calaveras para una boda, chocolates con temática de dinosaurios, piezas con logotipo...";
+
+        }
+
+
+        if (productoProyectoHelper) {
+
+            productoProyectoHelper.textContent =
+                "Describe brevemente la idea principal. Más abajo podrás contarnos todos los detalles.";
+
+        }
+
+
+        if (cantidadLabel) {
+
+            cantidadLabel.textContent =
+                "Cantidad aproximada";
+
+        }
+
+
+        if (cantidad) {
+
+            cantidad.readOnly =
+                false;
+
+            cantidad.placeholder =
+                "Ej. 20 piezas, 5 cajas, 100 invitados...";
+
+        }
+
+
+        if (fechaLabel) {
+
+            fechaLabel.textContent =
+                "¿Para qué fecha lo necesitas?";
+
+        }
+
+
+        if (descripcionLabel) {
+
+            descripcionLabel.textContent =
+                "Explícanos cómo quieres tu diseño";
+
+        }
+
+
+        if (descripcion) {
+
+            descripcion.readOnly =
+                false;
+
+            descripcion.placeholder =
+                "Cuéntanos la ocasión, temática, colores, forma, personajes, texto, presentación, tamaño o cualquier detalle que nos ayude a imaginar lo que necesitas.";
+
+        }
+
+
+        if (requestInfo) {
+
+            requestInfo.textContent =
+                "Los diseños personalizados están sujetos a revisión de viabilidad, disponibilidad, tiempo de elaboración y cotización. Nos comunicaremos contigo antes de iniciar cualquier trabajo.";
+
+        }
+
+
+        if (submitSolicitud) {
+
+            submitSolicitud.textContent =
+                "Enviar mi idea";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       INTERFAZ: COLABORACIÓN
+    ===================================================== */
+
+    function setCollaborationInterface() {
+
+        if (solicitudEyebrow) {
+
+            solicitudEyebrow.textContent =
+                "COLABOREMOS";
+
+        }
+
+
+        if (cotizacionTitle) {
+
+            cotizacionTitle.textContent =
+                "Propuesta de colaboración";
+
+        }
+
+
+        if (solicitudSubtitle) {
+
+            solicitudSubtitle.textContent =
+                "Cuéntanos sobre tu proyecto, producción, evento, marca o propuesta y cómo imaginas la participación de Chocolate Artístico Sarita.";
+
+        }
+
+
+        if (requestTypeGroup) {
+
+            requestTypeGroup.hidden =
+                false;
+
+        }
+
+
+        if (customDesignInfo) {
+
+            customDesignInfo.hidden =
+                true;
+
+        }
+
+
+        if (productoProyectoLabel) {
+
+            productoProyectoLabel.textContent =
+                "Proyecto, evento o colaboración";
+
+        }
+
+
+        if (productoProyecto) {
+
+            productoProyecto.readOnly =
+                false;
+
+            productoProyecto.placeholder =
+                "Ej. Obra de teatro, marca, producción, evento o proyecto cultural";
+
+        }
+
+
+        if (productoProyectoHelper) {
+
+            productoProyectoHelper.textContent =
+                "Indícanos el nombre de tu proyecto, producción, evento, marca o propuesta.";
+
+        }
+
+
+        if (cantidadLabel) {
+
+            cantidadLabel.textContent =
+                "Cantidad o alcance aproximado";
+
+        }
+
+
+        if (cantidad) {
+
+            cantidad.readOnly =
+                false;
+
+            cantidad.placeholder =
+                "Ej. 100 piezas, 50 invitados, por definir...";
+
+        }
+
+
+        if (fechaLabel) {
+
+            fechaLabel.textContent =
+                "Fecha del proyecto o evento";
+
+        }
+
+
+        if (descripcionLabel) {
+
+            descripcionLabel.textContent =
+                "Cuéntanos tu propuesta";
+
+        }
+
+
+        if (descripcion) {
+
+            descripcion.readOnly =
+                false;
+
+            descripcion.placeholder =
+                "Explícanos en qué consiste el proyecto, qué tipo de colaboración imaginas y cómo te gustaría integrar Chocolate Artístico Sarita.";
+
+        }
+
+
+        if (requestInfo) {
+
+            requestInfo.textContent =
+                "Revisaremos la información de tu proyecto y nos comunicaremos contigo para conocer más detalles y valorar la propuesta.";
+
+        }
+
+
+        if (submitSolicitud) {
+
+            submitSolicitud.textContent =
+                "Enviar colaboración";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR FORMULARIO SEGÚN TIPO Y MODO
+    ===================================================== */
+
+    function updateRequestType() {
+
+        const tipo =
+            getSelectedType();
+
+        const mode =
+            getRequestMode();
 
 
         clearFormResponse();
 
 
-        if (preferredType) {
+        /*
+           PEDIDO DESDE CATÁLOGO
+        */
 
-            selectRequestType(
-                preferredType
-            );
+        if (
+            tipo === "PEDIDO" &&
+            mode === "CATALOG"
+        ) {
 
-        } else {
+            setCatalogInterface();
 
-            updateRequestType();
+            return;
 
         }
 
 
-        modal.classList.add(
-            "active"
-        );
+        /*
+           DISEÑO PERSONALIZADO
+        */
 
-        document.body.classList.add(
-            "modal-open"
-        );
+        if (
+            tipo === "PEDIDO" &&
+            mode === "CUSTOM"
+        ) {
 
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
+            setCustomInterface();
+
+            return;
+
+        }
 
 
-        window.setTimeout(
+        /*
+           PEDIDO DIRECTO.
+
+           Aquí NO mostramos un formulario vacío.
+           Lo mandaremos al catálogo desde el evento
+           change del radio.
+        */
+
+        if (
+            tipo === "PEDIDO"
+        ) {
+
+            setDefaultInterface();
+
+            return;
+
+        }
+
+
+        /*
+           COLABORACIÓN
+        */
+
+        if (
+            tipo === "COLABORACION"
+        ) {
+
+            setRequestMode(
+                "COLLABORATION"
+            );
+
+            setCollaborationInterface();
+
+            return;
+
+        }
+
+
+        setDefaultInterface();
+
+    }
+
+
+    /* =====================================================
+       PEDIDO SELECCIONADO DIRECTAMENTE
+
+       Si el usuario abrió el formulario desde:
+       - navegación
+       - CTA
+       - botón general
+
+       y posteriormente selecciona "Pedido",
+       lo llevamos al catálogo.
+
+       Si PEDIDO fue marcado por catalogo.js,
+       NO hacemos esta redirección.
+    ===================================================== */
+
+    if (tipoPedido) {
+
+        tipoPedido.addEventListener(
+            "change",
             () => {
 
-                const selectedType =
-                    modal.querySelector(
-                        'input[name="tipo"]:checked'
-                    );
+                if (
+                    !tipoPedido.checked
+                ) {
 
-
-                const focusTarget =
-                    selectedType ||
-                    modal.querySelector(
-                        'input[name="tipo"]'
-                    );
-
-
-                if (focusTarget) {
-
-                    focusTarget.focus();
+                    return;
 
                 }
 
-            },
-            100
-        );
 
-    }
+                const mode =
+                    getRequestMode();
 
 
-    /* =====================================================
-       CERRAR MODAL
-    ===================================================== */
+                if (
+                    mode === "CATALOG" ||
+                    mode === "CUSTOM" ||
+                    mode === "SPECIAL"
+                ) {
 
-    function closeModal() {
+                    updateRequestType();
 
-        if (!modal) return;
+                    return;
 
-
-        modal.classList.remove(
-            "active"
-        );
-
-        document.body.classList.remove(
-            "modal-open"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-    }
+                }
 
 
-    /* =====================================================
-       BOTONES DEL MODAL
-    ===================================================== */
+                /*
+                   Si el cambio fue programático desde
+                   otra función interna tampoco hacemos
+                   una navegación accidental.
+                */
 
-    if (openBtn) {
+                if (
+                    internalTypeChange &&
+                    mode
+                ) {
 
-        openBtn.addEventListener(
-            "click",
-            () => {
+                    updateRequestType();
 
-                openModal();
+                    return;
 
-            }
-        );
-
-    }
-
-
-    if (openNavBtn) {
-
-        openNavBtn.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                openModal();
-
-            }
-        );
-
-    }
+                }
 
 
-    if (openCtaBtn) {
+                /*
+                   PEDIDO DIRECTO
+                */
 
-        openCtaBtn.addEventListener(
-            "click",
-            () => {
-
-                openModal();
-
-            }
-        );
-
-    }
+                setRequestMode(
+                    "DIRECT"
+                );
 
 
-    /*
-       ALIANZA CALAVERAS SANDUNGUERAS
-       ABRE DIRECTAMENTE COMO COLABORACIÓN
-    */
+                closeModal(
+                    false
+                );
 
-    if (openAlianzaBtn) {
 
-        openAlianzaBtn.addEventListener(
-            "click",
-            () => {
+                window.setTimeout(
+                    () => {
 
-                openModal(
-                    "COLABORACION"
+                        scrollToCatalog();
+
+                    },
+                    120
                 );
 
             }
@@ -613,21 +1220,184 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /*
-       EDICIÓN CALAVERAS
-       LA ABRIMOS COMO PEDIDO
-       PORQUE EL USUARIO ESTÁ CONSULTANDO
-       LA EDICIÓN DE CHOCOLATE.
-    */
+    if (tipoColaboracion) {
+
+        tipoColaboracion.addEventListener(
+            "change",
+            () => {
+
+                if (
+                    !tipoColaboracion.checked
+                ) {
+
+                    return;
+
+                }
+
+
+                setRequestMode(
+                    "COLLABORATION"
+                );
+
+
+                updateRequestType();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CAMBIO DE MODO DESDE CATALOGO.JS
+    ===================================================== */
+
+    window.addEventListener(
+        "sarita:request-mode",
+        event => {
+
+            const mode =
+                event &&
+                event.detail
+                    ? event.detail.mode
+                    : "";
+
+
+            setRequestMode(
+                mode
+            );
+
+
+            /*
+               catalogo.js enviará después el change
+               de PEDIDO, pero actualizamos también
+               aquí para mantener sincronizada la UI.
+            */
+
+            updateRequestType();
+
+        }
+    );
+
+
+    /* =====================================================
+       BOTONES GENERALES PARA ABRIR MODAL
+    ===================================================== */
+
+    function openGeneralModal() {
+
+        /*
+           Una apertura general empieza sin contexto.
+        */
+
+        setRequestMode(
+            ""
+        );
+
+
+        if (tipoPedido) {
+
+            tipoPedido.checked =
+                false;
+
+        }
+
+
+        if (tipoColaboracion) {
+
+            tipoColaboracion.checked =
+                false;
+
+        }
+
+
+        updateRequestType();
+
+
+        openModal();
+
+    }
+
+
+    [
+        openBtn,
+        openNavBtn,
+        openCtaBtn
+    ].forEach(
+        button => {
+
+            if (!button) {
+                return;
+            }
+
+
+            button.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+                    openGeneralModal();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       ALIANZA / COLABORACIÓN
+    ===================================================== */
+
+    if (openAlianzaBtn) {
+
+        openAlianzaBtn.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+
+                setRequestMode(
+                    "COLLABORATION"
+                );
+
+
+                openModal(
+                    "COLABORACION",
+                    "COLLABORATION"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       EDICIÓN ESPECIAL
+
+       Conservamos el comportamiento existente.
+    ===================================================== */
 
     if (openEdicionBtn) {
 
         openEdicionBtn.addEventListener(
             "click",
-            () => {
+            event => {
+
+                event.preventDefault();
+
+
+                setRequestMode(
+                    "SPECIAL"
+                );
+
 
                 openModal(
-                    "PEDIDO"
+                    "PEDIDO",
+                    "SPECIAL"
                 );
 
 
@@ -638,17 +1408,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
+
+                if (cantidad) {
+
+                    cantidad.value =
+                        "";
+
+                }
+
+
+                if (descripcion) {
+
+                    descripcion.value =
+                        "Solicitud relacionada con la edición especial Calaveras Sandungueras.";
+
+                }
+
+
+                /*
+                   SPECIAL se presenta como diseño/pedido
+                   especial y no como selección de catálogo.
+                */
+
+                setCustomInterface();
+
+
+                if (solicitudEyebrow) {
+
+                    solicitudEyebrow.textContent =
+                        "EDICIÓN ESPECIAL";
+
+                }
+
+
+                if (cotizacionTitle) {
+
+                    cotizacionTitle.textContent =
+                        "Calaveras Sandungueras";
+
+                }
+
             }
         );
 
     }
 
 
+    /* =====================================================
+       CERRAR MODAL
+    ===================================================== */
+
     if (closeBtn) {
 
         closeBtn.addEventListener(
             "click",
-            closeModal
+            () => {
+
+                closeModal();
+
+            }
         );
 
     }
@@ -658,7 +1476,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cancelBtn.addEventListener(
             "click",
-            closeModal
+            () => {
+
+                closeModal();
+
+            }
         );
 
     }
@@ -668,7 +1490,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         modal.addEventListener(
             "click",
-            (event) => {
+            event => {
 
                 if (
                     event.target === modal
@@ -686,7 +1508,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener(
         "keydown",
-        (event) => {
+        event => {
 
             if (
                 event.key === "Escape" &&
@@ -702,30 +1524,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
-
-
-    /* =====================================================
-       CAMBIO PEDIDO / COLABORACIÓN
-    ===================================================== */
-
-    if (tipoPedido) {
-
-        tipoPedido.addEventListener(
-            "change",
-            updateRequestType
-        );
-
-    }
-
-
-    if (tipoColaboracion) {
-
-        tipoColaboracion.addEventListener(
-            "change",
-            updateRequestType
-        );
-
-    }
 
 
     /* =====================================================
@@ -764,14 +1562,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FORMULARIO
+       VALIDACIONES
+    ===================================================== */
+
+    function isValidName(value) {
+
+        const clean =
+            String(
+                value || ""
+            ).trim();
+
+        return (
+            clean.length >= 2 &&
+            clean.length <= 100
+        );
+
+    }
+
+
+    function isValidEmail(value) {
+
+        const clean =
+            String(
+                value || ""
+            ).trim();
+
+        return (
+            clean.length <= 150 &&
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                clean
+            )
+        );
+
+    }
+
+
+    function isValidPhone(value) {
+
+        const clean =
+            String(
+                value || ""
+            ).trim();
+
+        if (
+            clean.length < 7 ||
+            clean.length > 30
+        ) {
+
+            return false;
+
+        }
+
+
+        return /^[0-9+\s().-]+$/.test(
+            clean
+        );
+
+    }
+
+
+    /* =====================================================
+       ENVIAR FORMULARIO
     ===================================================== */
 
     if (form) {
 
         form.addEventListener(
             "submit",
-            async (event) => {
+            async event => {
 
                 event.preventDefault();
 
@@ -779,18 +1637,111 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearFormResponse();
 
 
-                if (!form.checkValidity()) {
+                const tipo =
+                    getSelectedType();
 
-                    form.reportValidity();
+                const mode =
+                    getRequestMode();
+
+
+                /* ==========================================
+                   SEGURIDAD DEL FLUJO PEDIDO
+                =========================================== */
+
+                if (
+                    tipo === "PEDIDO" &&
+                    ![
+                        "CATALOG",
+                        "CUSTOM",
+                        "SPECIAL"
+                    ].includes(mode)
+                ) {
+
+                    closeModal(
+                        false
+                    );
+
+                    scrollToCatalog();
 
                     return;
 
                 }
 
 
-                const tipo =
-                    getSelectedType();
+                /* ==========================================
+                   CAMPOS
+                =========================================== */
 
+                const nombreInput =
+                    document.getElementById(
+                        "nombre"
+                    );
+
+                const emailInput =
+                    document.getElementById(
+                        "email"
+                    );
+
+                const telefonoInput =
+                    document.getElementById(
+                        "telefono"
+                    );
+
+                const websiteInput =
+                    document.getElementById(
+                        "website"
+                    );
+
+                const consentimiento =
+                    document.getElementById(
+                        "consentimiento"
+                    );
+
+
+                const nombre =
+                    nombreInput
+                        ? nombreInput.value.trim()
+                        : "";
+
+                const email =
+                    emailInput
+                        ? emailInput.value.trim()
+                        : "";
+
+                const telefono =
+                    telefonoInput
+                        ? telefonoInput.value.trim()
+                        : "";
+
+                const producto =
+                    productoProyecto
+                        ? productoProyecto.value.trim()
+                        : "";
+
+                const cantidadValue =
+                    cantidad
+                        ? cantidad.value.trim()
+                        : "";
+
+                const fecha =
+                    fechaEvento
+                        ? fechaEvento.value
+                        : "";
+
+                const descripcionValue =
+                    descripcion
+                        ? descripcion.value.trim()
+                        : "";
+
+                const website =
+                    websiteInput
+                        ? websiteInput.value.trim()
+                        : "";
+
+
+                /* ==========================================
+                   VALIDACIÓN
+                =========================================== */
 
                 if (
                     tipo !== "PEDIDO" &&
@@ -798,7 +1749,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) {
 
                     setFormResponse(
-                        "Selecciona si deseas realizar un pedido o proponer una colaboración.",
+                        "Selecciona el tipo de solicitud.",
                         "error"
                     );
 
@@ -807,91 +1758,191 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                const submitBtn =
-                    submitSolicitud ||
-                    form.querySelector(
-                        ".submit-btn"
+                if (
+                    !isValidName(
+                        nombre
+                    )
+                ) {
+
+                    setFormResponse(
+                        "Ingresa un nombre válido.",
+                        "error"
                     );
 
+                    if (nombreInput) {
 
-                const originalText =
-                    submitBtn
-                        ? submitBtn.textContent
-                        : "Enviar solicitud";
+                        nombreInput.focus();
+
+                    }
+
+                    return;
+
+                }
 
 
-                if (submitBtn) {
+                if (
+                    !isValidEmail(
+                        email
+                    )
+                ) {
 
-                    submitBtn.disabled =
+                    setFormResponse(
+                        "Ingresa un correo electrónico válido.",
+                        "error"
+                    );
+
+                    if (emailInput) {
+
+                        emailInput.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (
+                    !isValidPhone(
+                        telefono
+                    )
+                ) {
+
+                    setFormResponse(
+                        "Ingresa un teléfono o WhatsApp válido.",
+                        "error"
+                    );
+
+                    if (telefonoInput) {
+
+                        telefonoInput.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (
+                    !producto ||
+                    producto.length > 300
+                ) {
+
+                    setFormResponse(
+                        "Describe brevemente el producto, diseño o proyecto.",
+                        "error"
+                    );
+
+                    if (productoProyecto) {
+
+                        productoProyecto.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (
+                    !cantidadValue ||
+                    cantidadValue.length > 120
+                ) {
+
+                    setFormResponse(
+                        "Indica una cantidad aproximada.",
+                        "error"
+                    );
+
+                    if (cantidad) {
+
+                        cantidad.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (!fecha) {
+
+                    setFormResponse(
+                        "Selecciona una fecha.",
+                        "error"
+                    );
+
+                    if (fechaEvento) {
+
+                        fechaEvento.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (
+                    descripcionValue.length >
+                    2000
+                ) {
+
+                    setFormResponse(
+                        "La descripción es demasiado larga.",
+                        "error"
+                    );
+
+                    if (descripcion) {
+
+                        descripcion.focus();
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (
+                    consentimiento &&
+                    !consentimiento.checked
+                ) {
+
+                    setFormResponse(
+                        "Debes aceptar los Términos y Condiciones y el Aviso de Privacidad.",
+                        "error"
+                    );
+
+                    consentimiento.focus();
+
+                    return;
+
+                }
+
+
+                /* ==========================================
+                   ENVIANDO
+                =========================================== */
+
+                if (submitSolicitud) {
+
+                    submitSolicitud.disabled =
                         true;
 
-                    submitBtn.textContent =
+                    submitSolicitud.dataset.originalText =
+                        submitSolicitud.textContent;
+
+                    submitSolicitud.textContent =
                         "Enviando...";
 
                 }
 
 
-                const data =
-                    new URLSearchParams({
-
-                        token:
-                            COTIZACION_TOKEN,
-
-                        website:
-                            document
-                                .getElementById(
-                                    "website"
-                                )
-                                ?.value
-                                .trim() || "",
-
-                        tipo:
-                            tipo,
-
-                        nombre:
-                            document
-                                .getElementById(
-                                    "nombre"
-                                )
-                                ?.value
-                                .trim() || "",
-
-                        email:
-                            document
-                                .getElementById(
-                                    "email"
-                                )
-                                ?.value
-                                .trim() || "",
-
-                        telefono:
-                            document
-                                .getElementById(
-                                    "telefono"
-                                )
-                                ?.value
-                                .trim() || "",
-
-                        productoProyecto:
-                            productoProyecto
-                                ?.value
-                                .trim() || "",
-
-                        cantidad:
-                            cantidad
-                                ?.value
-                                .trim() || "",
-
-                        fecha:
-                            fechaEvento
-                                ?.value || "",
-
-                        descripcion:
-                            descripcion
-                                ?.value
-                                .trim() || ""
-
-                    });
+                setFormResponse(
+                    "Enviando solicitud..."
+                );
 
 
                 try {
@@ -900,33 +1951,55 @@ document.addEventListener("DOMContentLoaded", () => {
                         await fetch(
                             COTIZACION_ENDPOINT,
                             {
-                                method:
-                                    "POST",
+                                method: "POST",
 
                                 body:
-                                    data
+                                    new URLSearchParams({
+
+                                        token:
+                                            COTIZACION_TOKEN,
+
+                                        website:
+                                            website,
+
+                                        tipo:
+                                            tipo,
+
+                                        nombre:
+                                            nombre,
+
+                                        email:
+                                            email,
+
+                                        telefono:
+                                            telefono,
+
+                                        productoProyecto:
+                                            producto,
+
+                                        cantidad:
+                                            cantidadValue,
+
+                                        fecha:
+                                            fecha,
+
+                                        descripcion:
+                                            descripcionValue
+
+                                    })
                             }
                         );
 
 
-                    if (!response.ok) {
-
-                        throw new Error(
-                            `HTTP ${response.status}`
-                        );
-
-                    }
-
-
                     const result =
-                        (
+                        String(
                             await response.text()
                         ).trim();
 
 
-                    /* -------------------------------------
-                       SOLICITUD RECIBIDA
-                    ------------------------------------- */
+                    /* ======================================
+                       ÉXITO
+                    ======================================= */
 
                     if (
                         result.startsWith(
@@ -935,91 +2008,75 @@ document.addEventListener("DOMContentLoaded", () => {
                     ) {
 
                         const folio =
-                            result
-                                .split("|")[1]
-                                ?.trim() || "";
-
-
-                        const successMessage =
-                            tipo === "PEDIDO"
-
-                                ? (
-                                    "Recibimos tu solicitud" +
-                                    (
-                                        folio
-                                            ? ` con folio ${folio}.`
-                                            : "."
-                                    ) +
-                                    " Revisaremos los detalles y nos comunicaremos contigo."
-                                )
-
-                                : (
-                                    "Recibimos tu propuesta de colaboración" +
-                                    (
-                                        folio
-                                            ? ` con folio ${folio}.`
-                                            : "."
-                                    ) +
-                                    " Revisaremos el proyecto y nos comunicaremos contigo."
-                                );
+                            result.split("|")[1] ||
+                            "";
 
 
                         setFormResponse(
-                            successMessage,
+                            `Solicitud recibida correctamente. Tu folio es ${folio}. También recibirás una confirmación por correo electrónico.`,
                             "success"
                         );
 
 
-                        showToast(
-                            "Solicitud recibida",
-                            folio
-                                ? `Tu folio es ${folio}.`
-                                : "Tu información fue registrada correctamente."
-                        );
+                        /* ==================================
+                           ANALYTICS SIN PII
+                        =================================== */
 
+                        if (
+                            window.__SARITA_GA_LOADED &&
+                            typeof window.gtag ===
+                                "function"
+                        ) {
 
-                        /*
-                           Guardamos temporalmente el mensaje
-                           antes del reset para que el usuario
-                           pueda verlo dentro del modal.
-                        */
-
-                        if (form) {
-
-                            form.reset();
+                            window.gtag(
+                                "event",
+                                tipo ===
+                                    "COLABORACION"
+                                    ? "sarita_collaboration_request"
+                                    : (
+                                        mode ===
+                                            "CUSTOM"
+                                            ? "sarita_custom_request"
+                                            : "sarita_order_request"
+                                    )
+                            );
 
                         }
 
 
-                        updateRequestType();
+                        /* ==================================
+                           RESETEAR FORMULARIO
+
+                           Dejamos visible el folio.
+                        =================================== */
+
+                        form.reset();
 
 
-                        /*
-                           updateRequestType limpia la respuesta,
-                           así que la restauramos.
-                        */
-
-                        setFormResponse(
-                            successMessage,
-                            "success"
+                        setRequestMode(
+                            ""
                         );
 
 
+                        setDefaultInterface();
+
+
                         /*
-                           Cerramos después de unos segundos
-                           para que el folio sea visible.
+                           Si el pedido salió del catálogo,
+                           limpiamos también sus cantidades.
                         */
 
-                        window.setTimeout(
-                            () => {
+                        if (
+                            mode === "CATALOG"
+                        ) {
 
-                                closeModal();
+                            window.dispatchEvent(
+                                new CustomEvent(
+                                    "sarita:reset-catalog"
+                                )
+                            );
 
-                                clearFormResponse();
-
-                            },
-                            3500
-                        );
+                        }
 
 
                         return;
@@ -1027,322 +2084,89 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
 
-                    /* -------------------------------------
+                    /* ======================================
                        ERRORES DEL BACKEND
-                    ------------------------------------- */
+                    ======================================= */
 
-                    const errorMessages = {
+                    const errors = {
 
-                        ERROR_TOKEN:
-                            "No fue posible validar la solicitud.",
+                        "ERROR_TIPO":
+                            "Selecciona un tipo de solicitud válido.",
 
-                        ERROR_DATOS:
-                            "Faltan datos necesarios para procesar la solicitud.",
-
-                        ERROR_SPAM:
-                            "La solicitud no pudo ser procesada.",
-
-                        ERROR_TIPO:
-                            "Selecciona Pedido o Colaboración.",
-
-                        ERROR_NOMBRE:
+                        "ERROR_NOMBRE":
                             "Revisa el nombre ingresado.",
 
-                        ERROR_EMAIL:
-                            "Ingresa un correo electrónico válido.",
+                        "ERROR_EMAIL":
+                            "Revisa el correo electrónico.",
 
-                        ERROR_TELEFONO:
-                            "Revisa el teléfono o WhatsApp ingresado.",
+                        "ERROR_TELEFONO":
+                            "Revisa el teléfono o WhatsApp.",
 
-                        ERROR_PRODUCTO:
-                            tipo === "PEDIDO"
-                                ? "Describe qué chocolates o presentación necesitas."
-                                : "Indica el nombre de tu proyecto, marca, evento o producción.",
+                        "ERROR_PRODUCTO":
+                            "Revisa la información del producto, diseño o proyecto.",
 
-                        ERROR_CANTIDAD:
-                            "Indica una cantidad aproximada válida.",
+                        "ERROR_CANTIDAD":
+                            "Revisa la cantidad indicada.",
 
-                        ERROR_DESCRIPCION:
-                            "La descripción es demasiado extensa.",
+                        "ERROR_FECHA":
+                            "Revisa la fecha seleccionada.",
 
-                        ERROR_CONTENIDO:
-                            "La solicitud contiene información que no pudo ser procesada.",
+                        "ERROR_DESCRIPCION":
+                            "Revisa la descripción de la solicitud.",
 
-                        ERROR_LIMITE:
-                            "Se han realizado varios intentos. Espera unos minutos antes de volver a enviar.",
+                        "ERROR_LIMITE":
+                            "Se alcanzó temporalmente el límite de solicitudes. Espera unos minutos antes de intentarlo nuevamente.",
 
-                        ERROR_REPETIDO:
-                            "Esta solicitud parece haberse enviado recientemente. Revisa tu correo o espera un momento antes de intentarlo nuevamente.",
+                        "ERROR_REPETIDO":
+                            "Esta solicitud parece haberse enviado recientemente. No es necesario enviarla otra vez.",
 
-                        ERROR_OCUPADO:
-                            "El sistema está procesando otra solicitud. Inténtalo nuevamente en unos segundos.",
+                        "ERROR_OCUPADO":
+                            "El sistema está procesando otra solicitud. Inténtalo nuevamente en unos momentos.",
 
-                        ERROR:
-                            "No pudimos registrar la solicitud en este momento."
+                        "ERROR_CONTENIDO":
+                            "No pudimos procesar parte del contenido. Revisa la información e inténtalo nuevamente.",
+
+                        "ERROR_SPAM":
+                            "No pudimos procesar la solicitud. Inténtalo nuevamente."
 
                     };
 
 
-                    const message =
-                        errorMessages[result] ||
-                        "No pudimos procesar la solicitud. Inténtalo nuevamente o contáctanos por WhatsApp.";
-
-
                     setFormResponse(
-                        message,
+                        errors[result] ||
+                        "No fue posible registrar la solicitud. Inténtalo nuevamente.",
                         "error"
                     );
 
+                }
 
-                    showToast(
-                        "No pudimos enviar la solicitud",
-                        message,
-                        true
-                    );
-
-
-                } catch (error) {
+                catch (error) {
 
                     console.error(
-                        "Error al enviar solicitud Sarita:",
+                        "Chocolate Artístico Sarita:",
                         error
                     );
 
 
-                    const message =
-                        "No pudimos comunicarnos con el sistema. Inténtalo nuevamente o contáctanos directamente por WhatsApp.";
-
-
                     setFormResponse(
-                        message,
+                        "No fue posible conectar con el sistema. Verifica tu conexión e inténtalo nuevamente.",
                         "error"
                     );
 
-
-                    showToast(
-                        "Error de conexión",
-                        message,
-                        true
-                    );
-
-
-                } finally {
-
-                    if (submitBtn) {
-
-                        submitBtn.disabled =
-                            false;
-
-
-                        /*
-                           Si el formulario fue reiniciado,
-                           el botón vuelve al texto general.
-                        */
-
-                        if (
-                            !getSelectedType()
-                        ) {
-
-                            submitBtn.textContent =
-                                "Enviar solicitud";
-
-                        } else {
-
-                            submitBtn.textContent =
-                                originalText;
-
-                        }
-
-                    }
-
                 }
 
-            }
-        );
+                finally {
 
-    }
+                    if (submitSolicitud) {
 
+                        submitSolicitud.disabled =
+                            false;
 
-    /* =====================================================
-       ESTADO INICIAL DEL FORMULARIO
-    ===================================================== */
+                        submitSolicitud.textContent =
+                            submitSolicitud.dataset.originalText ||
+                            "Enviar solicitud";
 
-    updateRequestType();
-
-
-    /* =====================================================
-       TOAST
-    ===================================================== */
-
-    function showToast(
-        title,
-        message,
-        isError = false
-    ) {
-
-        const existingToast =
-            document.querySelector(
-                ".sarita-toast"
-            );
-
-
-        if (existingToast) {
-
-            existingToast.remove();
-
-        }
-
-
-        const toast =
-            document.createElement(
-                "div"
-            );
-
-
-        toast.className =
-            "sarita-toast" +
-            (
-                isError
-                    ? " error"
-                    : ""
-            );
-
-
-        const toastTitle =
-            document.createElement(
-                "strong"
-            );
-
-        toastTitle.textContent =
-            title;
-
-
-        const toastMessage =
-            document.createElement(
-                "span"
-            );
-
-        toastMessage.textContent =
-            message;
-
-
-        toast.append(
-            toastTitle,
-            toastMessage
-        );
-
-
-        document.body.appendChild(
-            toast
-        );
-
-
-        requestAnimationFrame(
-            () => {
-
-                toast.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-
-        window.setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "active"
-                );
-
-
-                window.setTimeout(
-                    () => {
-
-                        toast.remove();
-
-                    },
-                    300
-                );
-
-            },
-            5000
-        );
-
-    }
-
-
-    /* =====================================================
-       WHATSAPP
-    ===================================================== */
-
-    const whatsappToggle =
-        document.getElementById(
-            "toggleWhatsapp"
-        );
-
-    const whatsappBot =
-        document.getElementById(
-            "whatsappBot"
-        );
-
-
-    if (
-        whatsappToggle &&
-        whatsappBot
-    ) {
-
-        whatsappToggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-
-        whatsappToggle.addEventListener(
-            "click",
-            () => {
-
-                whatsappBot.classList.toggle(
-                    "active"
-                );
-
-
-                const isOpen =
-                    whatsappBot.classList.contains(
-                        "active"
-                    );
-
-
-                whatsappToggle.setAttribute(
-                    "aria-expanded",
-                    String(isOpen)
-                );
-
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            (event) => {
-
-                if (
-                    !whatsappBot.contains(
-                        event.target
-                    ) &&
-                    !whatsappToggle.contains(
-                        event.target
-                    )
-                ) {
-
-                    whatsappBot.classList.remove(
-                        "active"
-                    );
-
-                    whatsappToggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+                    }
 
                 }
 
@@ -1354,7 +2178,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        POPUP PROMOCIONAL
-       SE MUESTRA EN CADA CARGA
     ===================================================== */
 
     const promoPopup =
@@ -1373,12 +2196,30 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    let promoTimer = null;
+    function hidePromo() {
+
+        if (!promoPopup) {
+            return;
+        }
 
 
-    function openPromoPopup() {
+        promoPopup.classList.add(
+            "hidden"
+        );
 
-        if (!promoPopup) return;
+        promoPopup.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    function showPromo() {
+
+        if (!promoPopup) {
+            return;
+        }
 
 
         promoPopup.classList.remove(
@@ -1390,66 +2231,15 @@ document.addEventListener("DOMContentLoaded", () => {
             "false"
         );
 
-        document.body.classList.add(
-            "promo-open"
-        );
-
     }
 
-
-    function closePromoPopup() {
-
-        if (!promoPopup) return;
-
-
-        promoPopup.classList.add(
-            "hidden"
-        );
-
-        promoPopup.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.classList.remove(
-            "promo-open"
-        );
-
-    }
-
-
-    /*
-       El popup aparece un segundo después
-       de cada carga.
-
-       No utilizamos almacenamiento para
-       ocultarlo permanentemente.
-    */
 
     if (promoPopup) {
 
-        promoPopup.classList.add(
-            "hidden"
+        window.setTimeout(
+            showPromo,
+            1800
         );
-
-        promoPopup.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-
-        promoTimer =
-            window.setTimeout(
-                () => {
-
-                    openPromoPopup();
-
-                    promoTimer =
-                        null;
-
-                },
-                1000
-            );
 
     }
 
@@ -1458,23 +2248,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         closePromo.addEventListener(
             "click",
-            () => {
-
-                if (promoTimer) {
-
-                    window.clearTimeout(
-                        promoTimer
-                    );
-
-                    promoTimer =
-                        null;
-
-                }
-
-
-                closePromoPopup();
-
-            }
+            hidePromo
         );
 
     }
@@ -1484,23 +2258,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         continuePromo.addEventListener(
             "click",
-            () => {
-
-                if (promoTimer) {
-
-                    window.clearTimeout(
-                        promoTimer
-                    );
-
-                    promoTimer =
-                        null;
-
-                }
-
-
-                closePromoPopup();
-
-            }
+            hidePromo
         );
 
     }
@@ -1510,26 +2268,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         promoPopup.addEventListener(
             "click",
-            (event) => {
+            event => {
 
                 if (
                     event.target ===
                     promoPopup
                 ) {
 
-                    if (promoTimer) {
-
-                        window.clearTimeout(
-                            promoTimer
-                        );
-
-                        promoTimer =
-                            null;
-
-                    }
-
-
-                    closePromoPopup();
+                    hidePromo();
 
                 }
 
@@ -1539,690 +2285,134 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    document.addEventListener(
-        "keydown",
-        (event) => {
+    /* =====================================================
+       WHATSAPP
+    ===================================================== */
 
-            if (
-                event.key === "Escape" &&
-                promoPopup &&
-                !promoPopup.classList.contains(
-                    "hidden"
-                )
-            ) {
+    const whatsappBot =
+        document.getElementById(
+            "whatsappBot"
+        );
 
-                if (promoTimer) {
+    const whatsappToggle =
+        document.getElementById(
+            "whatsappToggle"
+        );
 
-                    window.clearTimeout(
-                        promoTimer
-                    );
-
-                    promoTimer =
-                        null;
-
-                }
+    const whatsappClose =
+        document.getElementById(
+            "whatsappClose"
+        );
 
 
-                closePromoPopup();
+    function openWhatsAppBot() {
 
-            }
-
+        if (!whatsappBot) {
+            return;
         }
-    );
+
+
+        whatsappBot.classList.add(
+            "active"
+        );
+
+    }
+
+
+    function closeWhatsAppBot() {
+
+        if (!whatsappBot) {
+            return;
+        }
+
+
+        whatsappBot.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    if (whatsappToggle) {
+
+        whatsappToggle.addEventListener(
+            "click",
+            openWhatsAppBot
+        );
+
+    }
+
+
+    if (whatsappClose) {
+
+        whatsappClose.addEventListener(
+            "click",
+            closeWhatsAppBot
+        );
+
+    }
 
 
     /* =====================================================
-       CARRUSEL
+       MENÚ MÓVIL
     ===================================================== */
 
-    const carousel =
-        document.querySelector(
-            ".carousel-container"
+    const menuToggle =
+        document.getElementById(
+            "menuToggle"
         );
 
-    const track =
-        document.querySelector(
-            ".carousel-track"
-        );
-
-    const prevBtn =
-        document.querySelector(
-            ".carousel-btn.prev"
-        );
-
-    const nextBtn =
-        document.querySelector(
-            ".carousel-btn.next"
+    const mainNav =
+        document.getElementById(
+            "mainNav"
         );
 
 
     if (
-        carousel &&
-        track &&
-        prevBtn &&
-        nextBtn
+        menuToggle &&
+        mainNav
     ) {
 
-        const slides =
-            Array.from(
-                track.children
-            );
-
-
-        let currentIndex =
-            0;
-
-
-        function getVisibleSlides() {
-
-            if (
-                window.matchMedia(
-                    "(max-width: 760px)"
-                ).matches
-            ) {
-
-                return 1;
-
-            }
-
-
-            return 3;
-
-        }
-
-
-        function getMaxIndex() {
-
-            return Math.max(
-                0,
-                slides.length -
-                getVisibleSlides()
-            );
-
-        }
-
-
-        function updateCarousel() {
-
-            if (!slides.length) {
-
-                return;
-
-            }
-
-
-            const targetSlide =
-                slides[currentIndex];
-
-
-            if (!targetSlide) {
-
-                return;
-
-            }
-
-
-            const offset =
-                targetSlide.offsetLeft;
-
-
-            track.style.transform =
-                `translateX(-${offset}px)`;
-
-
-            prevBtn.disabled =
-                currentIndex === 0;
-
-
-            nextBtn.disabled =
-                currentIndex >=
-                getMaxIndex();
-
-        }
-
-
-        prevBtn.addEventListener(
+        menuToggle.addEventListener(
             "click",
             () => {
 
-                currentIndex =
-                    Math.max(
-                        0,
-                        currentIndex - 1
+                const open =
+                    mainNav.classList.toggle(
+                        "active"
                     );
 
 
-                updateCarousel();
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    String(open)
+                );
 
             }
         );
 
 
-        nextBtn.addEventListener(
+        mainNav.addEventListener(
             "click",
-            () => {
+            event => {
 
-                currentIndex =
-                    Math.min(
-                        getMaxIndex(),
-                        currentIndex + 1
+                if (
+                    event.target.closest(
+                        "a"
+                    )
+                ) {
+
+                    mainNav.classList.remove(
+                        "active"
                     );
 
-
-                updateCarousel();
-
-            }
-        );
-
-
-        let touchStartX =
-            0;
-
-        let touchEndX =
-            0;
-
-
-        track.addEventListener(
-            "touchstart",
-            (event) => {
-
-                touchStartX =
-                    event
-                        .changedTouches[0]
-                        .screenX;
-
-            },
-            {
-                passive:
-                    true
-            }
-        );
-
-
-        track.addEventListener(
-            "touchend",
-            (event) => {
-
-                touchEndX =
-                    event
-                        .changedTouches[0]
-                        .screenX;
-
-
-                const distance =
-                    touchStartX -
-                    touchEndX;
-
-
-                if (
-                    Math.abs(
-                        distance
-                    ) < 45
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    distance > 0
-                ) {
-
-                    currentIndex =
-                        Math.min(
-                            getMaxIndex(),
-                            currentIndex + 1
-                        );
-
-                } else {
-
-                    currentIndex =
-                        Math.max(
-                            0,
-                            currentIndex - 1
-                        );
-
-                }
-
-
-                updateCarousel();
-
-            },
-            {
-                passive:
-                    true
-            }
-        );
-
-
-        let resizeTimer;
-
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                clearTimeout(
-                    resizeTimer
-                );
-
-
-                resizeTimer =
-                    window.setTimeout(
-                        () => {
-
-                            currentIndex =
-                                Math.min(
-                                    currentIndex,
-                                    getMaxIndex()
-                                );
-
-
-                            updateCarousel();
-
-                        },
-                        100
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
                     );
 
-            }
-        );
-
-
-        updateCarousel();
-
-    }
-
-
-    /* =====================================================
-       PRIVACIDAD Y GOOGLE ANALYTICS
-    ===================================================== */
-
-    const cookieBar =
-        document.getElementById(
-            "cookieBar"
-        );
-
-    const acceptCookies =
-        document.getElementById(
-            "acceptCookies"
-        );
-
-    const rejectCookies =
-        document.getElementById(
-            "rejectCookies"
-        );
-
-
-    let analyticsLoaded =
-        false;
-
-
-    /* =====================================================
-       MOSTRAR / OCULTAR CONSENTIMIENTO
-    ===================================================== */
-
-    function hideCookieBar() {
-
-        if (!cookieBar) {
-
-            return;
-
-        }
-
-
-        cookieBar.classList.remove(
-            "active"
-        );
-
-        cookieBar.classList.add(
-            "hidden"
-        );
-
-
-        cookieBar.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-    }
-
-
-    function showCookieBar() {
-
-        if (!cookieBar) {
-
-            return;
-
-        }
-
-
-        cookieBar.classList.remove(
-            "hidden"
-        );
-
-        cookieBar.classList.add(
-            "active"
-        );
-
-
-        cookieBar.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-    }
-
-
-    /* =====================================================
-       LEER CONSENTIMIENTO
-    ===================================================== */
-
-    function readConsent() {
-
-        try {
-
-            return localStorage.getItem(
-                CONSENT_KEY
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "No se pudo leer la preferencia de Analytics:",
-                error
-            );
-
-
-            return null;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       GUARDAR CONSENTIMIENTO
-    ===================================================== */
-
-    function saveConsent(value) {
-
-        try {
-
-            localStorage.setItem(
-                CONSENT_KEY,
-                value
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "No se pudo guardar la preferencia de Analytics:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CONSENTIMIENTO GOOGLE
-    ===================================================== */
-
-    function setGoogleConsent(value) {
-
-        window.dataLayer =
-            window.dataLayer || [];
-
-
-        window.gtag =
-            window.gtag ||
-            function () {
-
-                window.dataLayer.push(
-                    arguments
-                );
-
-            };
-
-
-        window.gtag(
-            "consent",
-            "update",
-            {
-
-                analytics_storage:
-                    value,
-
-                ad_storage:
-                    "denied",
-
-                ad_user_data:
-                    "denied",
-
-                ad_personalization:
-                    "denied"
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       CARGAR GOOGLE ANALYTICS
-    ===================================================== */
-
-    function loadGoogleAnalytics() {
-
-        if (
-            readConsent() !==
-            "accepted"
-        ) {
-
-            return;
-
-        }
-
-
-        if (analyticsLoaded) {
-
-            return;
-
-        }
-
-
-        if (
-            document.querySelector(
-                'script[data-ga18-analytics="true"]'
-            )
-        ) {
-
-            analyticsLoaded =
-                true;
-
-            return;
-
-        }
-
-
-        analyticsLoaded =
-            true;
-
-
-        window.dataLayer =
-            window.dataLayer || [];
-
-
-        window.gtag =
-            window.gtag ||
-            function () {
-
-                window.dataLayer.push(
-                    arguments
-                );
-
-            };
-
-
-        setGoogleConsent(
-            "granted"
-        );
-
-
-        window.gtag(
-            "js",
-            new Date()
-        );
-
-
-        window.gtag(
-            "config",
-            GA_MEASUREMENT_ID,
-            {
-
-                anonymize_ip:
-                    true,
-
-                allow_google_signals:
-                    false,
-
-                allow_ad_personalization_signals:
-                    false
-
-            }
-        );
-
-
-        const analyticsScript =
-            document.createElement(
-                "script"
-            );
-
-
-        analyticsScript.async =
-            true;
-
-
-        analyticsScript.src =
-            "https://www.googletagmanager.com/gtag/js?id=" +
-            encodeURIComponent(
-                GA_MEASUREMENT_ID
-            );
-
-
-        analyticsScript.dataset.ga18Analytics =
-            "true";
-
-
-        document.head.appendChild(
-            analyticsScript
-        );
-
-    }
-
-
-    /* =====================================================
-       ESTADO INICIAL DEL CONSENTIMIENTO
-    ===================================================== */
-
-    const savedConsent =
-        readConsent();
-
-
-    if (
-        savedConsent ===
-        "accepted"
-    ) {
-
-        hideCookieBar();
-
-
-        setGoogleConsent(
-            "granted"
-        );
-
-
-        window.setTimeout(
-            loadGoogleAnalytics,
-            1200
-        );
-
-    }
-
-
-    else if (
-        savedConsent ===
-        "rejected"
-    ) {
-
-        hideCookieBar();
-
-
-        setGoogleConsent(
-            "denied"
-        );
-
-    }
-
-
-    else {
-
-        setGoogleConsent(
-            "denied"
-        );
-
-
-        window.setTimeout(
-            () => {
-
-                if (
-                    readConsent() ===
-                    null
-                ) {
-
-                    showCookieBar();
-
                 }
 
-            },
-            700
-        );
-
-    }
-
-
-    /* =====================================================
-       ACEPTAR ANALYTICS
-    ===================================================== */
-
-    if (acceptCookies) {
-
-        acceptCookies.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                event.stopPropagation();
-
-
-                saveConsent(
-                    "accepted"
-                );
-
-
-                hideCookieBar();
-
-
-                setGoogleConsent(
-                    "granted"
-                );
-
-
-                loadGoogleAnalytics();
-
             }
         );
 
@@ -2230,40 +2420,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RECHAZAR ANALYTICS
-    ===================================================== */
-
-    if (rejectCookies) {
-
-        rejectCookies.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                event.stopPropagation();
-
-
-                saveConsent(
-                    "rejected"
-                );
-
-
-                hideCookieBar();
-
-
-                setGoogleConsent(
-                    "denied"
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       SMOOTH SCROLL
+       SCROLL SUAVE
     ===================================================== */
 
     document
@@ -2271,11 +2428,11 @@ document.addEventListener("DOMContentLoaded", () => {
             'a[href^="#"]'
         )
         .forEach(
-            (link) => {
+            link => {
 
                 link.addEventListener(
                     "click",
-                    (event) => {
+                    event => {
 
                         const href =
                             link.getAttribute(
@@ -2300,9 +2457,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                         if (!target) {
-
                             return;
-
                         }
 
 
@@ -2310,13 +2465,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                         target.scrollIntoView({
-
-                            behavior:
-                                "smooth",
-
-                            block:
-                                "start"
-
+                            behavior: "smooth",
+                            block: "start"
                         });
 
                     }
@@ -2325,5 +2475,315 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
+
+    /* =====================================================
+       GOOGLE CONSENT MODE
+    ===================================================== */
+
+    window.dataLayer =
+        window.dataLayer || [];
+
+
+    window.gtag =
+        window.gtag ||
+        function () {
+
+            window.dataLayer.push(
+                arguments
+            );
+
+        };
+
+
+    window.gtag(
+        "consent",
+        "default",
+        {
+            analytics_storage:
+                "denied",
+
+            ad_storage:
+                "denied",
+
+            ad_user_data:
+                "denied",
+
+            ad_personalization:
+                "denied"
+        }
+    );
+
+
+    /* =====================================================
+       GOOGLE ANALYTICS
+    ===================================================== */
+
+    function loadAnalytics() {
+
+        if (
+            window.__SARITA_GA_LOADED
+        ) {
+
+            return;
+
+        }
+
+
+        window.__SARITA_GA_LOADED =
+            true;
+
+
+        window.gtag(
+            "consent",
+            "update",
+            {
+                analytics_storage:
+                    "granted",
+
+                ad_storage:
+                    "denied",
+
+                ad_user_data:
+                    "denied",
+
+                ad_personalization:
+                    "denied"
+            }
+        );
+
+
+        window.gtag(
+            "js",
+            new Date()
+        );
+
+
+        window.gtag(
+            "config",
+            GA_MEASUREMENT_ID,
+            {
+                anonymize_ip:
+                    true,
+
+                allow_google_signals:
+                    false,
+
+                allow_ad_personalization_signals:
+                    false
+            }
+        );
+
+
+        const script =
+            document.createElement(
+                "script"
+            );
+
+
+        script.async =
+            true;
+
+
+        script.src =
+            "https://www.googletagmanager.com/gtag/js?id=" +
+            encodeURIComponent(
+                GA_MEASUREMENT_ID
+            );
+
+
+        document.head.appendChild(
+            script
+        );
+
+    }
+
+
+    /* =====================================================
+       COOKIES
+    ===================================================== */
+
+    const cookieBar =
+        document.getElementById(
+            "cookieBar"
+        );
+
+    const acceptCookies =
+        document.getElementById(
+            "acceptCookies"
+        );
+
+    const rejectCookies =
+        document.getElementById(
+            "rejectCookies"
+        );
+
+
+    function hideCookieBar() {
+
+        if (!cookieBar) {
+            return;
+        }
+
+
+        cookieBar.classList.remove(
+            "active"
+        );
+
+        cookieBar.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    function showCookieBar() {
+
+        if (!cookieBar) {
+            return;
+        }
+
+
+        cookieBar.classList.add(
+            "active"
+        );
+
+        cookieBar.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    let consentValue =
+        null;
+
+
+    try {
+
+        consentValue =
+            localStorage.getItem(
+                CONSENT_KEY
+            );
+
+    } catch (error) {
+
+        console.warn(
+            "Chocolate Artístico Sarita: almacenamiento local no disponible."
+        );
+
+    }
+
+
+    if (
+        consentValue ===
+        "accepted"
+    ) {
+
+        hideCookieBar();
+
+        loadAnalytics();
+
+    } else if (
+        consentValue ===
+        "rejected"
+    ) {
+
+        hideCookieBar();
+
+    } else {
+
+        showCookieBar();
+
+    }
+
+
+    if (acceptCookies) {
+
+        acceptCookies.addEventListener(
+            "click",
+            () => {
+
+                try {
+
+                    localStorage.setItem(
+                        CONSENT_KEY,
+                        "accepted"
+                    );
+
+                } catch (error) {
+
+                    console.warn(
+                        "Chocolate Artístico Sarita: no se pudo guardar el consentimiento."
+                    );
+
+                }
+
+
+                hideCookieBar();
+
+                loadAnalytics();
+
+            }
+        );
+
+    }
+
+
+    if (rejectCookies) {
+
+        rejectCookies.addEventListener(
+            "click",
+            () => {
+
+                try {
+
+                    localStorage.setItem(
+                        CONSENT_KEY,
+                        "rejected"
+                    );
+
+                } catch (error) {
+
+                    console.warn(
+                        "Chocolate Artístico Sarita: no se pudo guardar el rechazo."
+                    );
+
+                }
+
+
+                hideCookieBar();
+
+
+                window.gtag(
+                    "consent",
+                    "update",
+                    {
+                        analytics_storage:
+                            "denied",
+
+                        ad_storage:
+                            "denied",
+
+                        ad_user_data:
+                            "denied",
+
+                        ad_personalization:
+                            "denied"
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ESTADO INICIAL
+    ===================================================== */
+
+    setDefaultInterface();
 
 });
