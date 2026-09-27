@@ -227,17 +227,6 @@
   >
 
 
-  <!-- ==================================================
-       RECAPTCHA v3
-       Protección anti-bots para suscripción y códigos.
-  ================================================== -->
-
-  <script
-    src="https://www.google.com/recaptcha/api.js?render=6Ld2XtItAAAAAKAn8AjaTb-ek1ew69xMfGVVtuEt"
-    async
-    defer
-  ></script>
-
 
   <!-- ==================================================
        CONSENT MODE
@@ -264,6 +253,26 @@
     );
 
   </script>
+
+
+  <style>
+    .footer-cookie-link {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer-cookie-link:hover,
+    .footer-cookie-link:focus-visible {
+      text-decoration: underline;
+    }
+  </style>
 
 </head>
 
@@ -521,7 +530,7 @@
 
             <p class="legal-text">
 
-              Al continuar aceptas nuestro
+              Al continuar confirmas que has leído nuestro
 
               <a href="../avisodeprivacidad/">
                 Aviso de Privacidad
@@ -641,6 +650,17 @@
 
         </button>
 
+        <p class="legal-text">
+          Al continuar confirmas que has leído nuestro
+          <a href="../avisodeprivacidad/">
+            Aviso de Privacidad
+          </a>
+          y aceptas los
+          <a href="../terminos-y-condiciones.html">
+            Términos y Condiciones
+          </a>.
+        </p>
+
       </form>
 
 
@@ -725,6 +745,13 @@
       <a href="../avisodeprivacidad/">Privacidad</a>
       <a href="../terminos-y-condiciones.html">Términos</a>
       <a href="../preguntas-frecuentes/">FAQ</a>
+      <button
+        type="button"
+        id="cookiePreferences"
+        class="footer-cookie-link"
+      >
+        Preferencias de cookies
+      </button>
     </nav>
 
   </div>
@@ -921,59 +948,132 @@ const GA_ID =
 
 /* ==================================================
    RECAPTCHA v3
+   CARGA BAJO DEMANDA
 ================================================== */
 
-function getRecaptchaToken(action) {
-
-  return new Promise(function (resolve, reject) {
-
-    if (
-      typeof grecaptcha === "undefined"
-    ) {
-
-      reject(
-        new Error("RECAPTCHA_NOT_LOADED")
-      );
-
-      return;
-    }
+let recaptchaLoaderPromise = null;
 
 
-    grecaptcha.ready(function () {
+function loadRecaptcha() {
 
-      grecaptcha
-        .execute(
-          RECAPTCHA_SITE_KEY,
-          {
-            action: action
-          }
-        )
-        .then(function (token) {
+  if (typeof grecaptcha !== "undefined") {
+    return Promise.resolve();
+  }
 
-          if (!token) {
+
+  if (recaptchaLoaderPromise) {
+    return recaptchaLoaderPromise;
+  }
+
+
+  recaptchaLoaderPromise =
+    new Promise(function (resolve, reject) {
+
+      const script =
+        document.createElement("script");
+
+
+      script.src =
+        "https://www.google.com/recaptcha/api.js?render=" +
+        encodeURIComponent(RECAPTCHA_SITE_KEY);
+
+
+      script.async = true;
+      script.defer = true;
+
+
+      script.onload =
+        function () {
+
+          if (typeof grecaptcha === "undefined") {
+
+            recaptchaLoaderPromise = null;
 
             reject(
-              new Error("RECAPTCHA_EMPTY_TOKEN")
+              new Error("RECAPTCHA_NOT_AVAILABLE")
             );
 
             return;
           }
 
-          resolve(token);
 
-        })
-        .catch(function (error) {
+          grecaptcha.ready(function () {
+            resolve();
+          });
 
-          reject(error);
+        };
 
-        });
+
+      script.onerror =
+        function () {
+
+          recaptchaLoaderPromise = null;
+
+          reject(
+            new Error("RECAPTCHA_LOAD_ERROR")
+          );
+
+        };
+
+
+      document.head.appendChild(script);
 
     });
 
-  });
+
+  return recaptchaLoaderPromise;
 
 }
-  
+
+
+function getRecaptchaToken(action) {
+
+  return loadRecaptcha()
+
+    .then(function () {
+
+      return new Promise(function (resolve, reject) {
+
+        grecaptcha.ready(function () {
+
+          grecaptcha
+            .execute(
+              RECAPTCHA_SITE_KEY,
+              {
+                action: action
+              }
+            )
+
+            .then(function (token) {
+
+              if (!token) {
+
+                reject(
+                  new Error("RECAPTCHA_EMPTY_TOKEN")
+                );
+
+                return;
+              }
+
+
+              resolve(token);
+
+            })
+
+            .catch(function (error) {
+
+              reject(error);
+
+            });
+
+        });
+
+      });
+
+    });
+
+}
+
 
 /* ==================================================
    SUSCRIPCIÓN
@@ -1628,6 +1728,11 @@ document.getElementById(
   "rejectCookies"
 );
 
+const cookiePreferences =
+document.getElementById(
+  "cookiePreferences"
+);
+
 
 let analyticsLoaded =
 false;
@@ -1877,6 +1982,27 @@ hideCookieBanner();
 }
 
 
+if (
+  cookiePreferences &&
+  cookieBanner
+) {
+
+  cookiePreferences.addEventListener(
+    "click",
+    function () {
+
+      showCookieBanner();
+
+      if (acceptCookies) {
+        acceptCookies.focus();
+      }
+
+    }
+  );
+
+}
+
+
 })();
 
 </script>
@@ -1884,4 +2010,3 @@ hideCookieBanner();
 
 </body>
 </html>
-
