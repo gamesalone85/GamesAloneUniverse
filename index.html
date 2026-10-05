@@ -2312,6 +2312,706 @@
 
 </script>
 
+ <script>
+(() => {
+
+  "use strict";
+
+
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbw-wkJ3dP0lV8KCpr7m-VwBrE81lOHwVxplcNi_seHWKp6SDW-aWGz90t17oMxBlYE/exec";
+
+
+  const TIME_ZONE =
+    "America/Mexico_City";
+
+
+  const grid =
+    document.getElementById(
+      "homeAgendaGrid"
+    );
+
+
+  const loading =
+    document.getElementById(
+      "homeAgendaLoading"
+    );
+
+
+  const empty =
+    document.getElementById(
+      "homeAgendaEmpty"
+    );
+
+
+  if (
+    !grid ||
+    !loading ||
+    !empty
+  ) {
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     FECHA ACTUAL CDMX
+  ===================================================== */
+
+  function getTodayISO() {
+
+    const formatter =
+      new Intl.DateTimeFormat(
+        "en-CA",
+        {
+          timeZone:
+            TIME_ZONE,
+
+          year:
+            "numeric",
+
+          month:
+            "2-digit",
+
+          day:
+            "2-digit"
+        }
+      );
+
+
+    const parts =
+      formatter.formatToParts(
+        new Date()
+      );
+
+
+    const values =
+      {};
+
+
+    parts.forEach(
+      part => {
+
+        if (
+          part.type !==
+          "literal"
+        ) {
+
+          values[
+            part.type
+          ] =
+            part.value;
+
+        }
+
+      }
+    );
+
+
+    return (
+      `${values.year}-` +
+      `${values.month}-` +
+      `${values.day}`
+    );
+
+  }
+
+
+  /* =====================================================
+     MESES
+  ===================================================== */
+
+  function shortMonth(
+    month
+  ) {
+
+    const months =
+      [
+        "ENE",
+        "FEB",
+        "MAR",
+        "ABR",
+        "MAY",
+        "JUN",
+        "JUL",
+        "AGO",
+        "SEP",
+        "OCT",
+        "NOV",
+        "DIC"
+      ];
+
+
+    return (
+      months[
+        month - 1
+      ] || ""
+    );
+
+  }
+
+
+  /* =====================================================
+     ELEMENTO SEGURO
+  ===================================================== */
+
+  function element(
+    tag,
+    className,
+    text
+  ) {
+
+    const node =
+      document.createElement(
+        tag
+      );
+
+
+    if (className) {
+
+      node.className =
+        className;
+
+    }
+
+
+    if (
+      text !== undefined &&
+      text !== null
+    ) {
+
+      node.textContent =
+        text;
+
+    }
+
+
+    return node;
+
+  }
+
+
+  /* =====================================================
+     URL SEGURA
+  ===================================================== */
+
+  function safeURL(
+    value
+  ) {
+
+    if (!value) {
+      return null;
+    }
+
+
+    try {
+
+      const url =
+        new URL(
+          value,
+          window.location.origin
+        );
+
+
+      if (
+        url.protocol !== "http:" &&
+        url.protocol !== "https:"
+      ) {
+
+        return null;
+
+      }
+
+
+      return url;
+
+    }
+
+    catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+
+  /* =====================================================
+     DETALLE
+  ===================================================== */
+
+  function addDetail(
+    container,
+    text
+  ) {
+
+    if (!text) {
+      return;
+    }
+
+
+    container.appendChild(
+      element(
+        "span",
+        "home-agenda-detail",
+        text
+      )
+    );
+
+  }
+
+
+  /* =====================================================
+     CREAR TARJETA
+  ===================================================== */
+
+  function createCard(
+    event,
+    today
+  ) {
+
+    const [
+      year,
+      month,
+      day
+    ] =
+      event.fecha
+        .split("-")
+        .map(Number);
+
+
+    const card =
+      element(
+        "article",
+        "home-agenda-card"
+      );
+
+
+    /* CABECERA */
+
+    const top =
+      element(
+        "div",
+        "home-agenda-card-top"
+      );
+
+
+    const date =
+      element(
+        "div",
+        "home-agenda-date"
+      );
+
+
+    date.appendChild(
+      element(
+        "span",
+        "home-agenda-day",
+        String(day)
+          .padStart(2, "0")
+      )
+    );
+
+
+    const dateMeta =
+      element(
+        "span",
+        "home-agenda-date-meta"
+      );
+
+
+    dateMeta.appendChild(
+      element(
+        "span",
+        "home-agenda-month",
+        shortMonth(month)
+      )
+    );
+
+
+    dateMeta.appendChild(
+      element(
+        "span",
+        "home-agenda-year",
+        String(year)
+      )
+    );
+
+
+    date.appendChild(
+      dateMeta
+    );
+
+
+    top.appendChild(
+      date
+    );
+
+
+    if (event.tipo) {
+
+      top.appendChild(
+        element(
+          "span",
+          "home-agenda-type",
+          event.tipo
+        )
+      );
+
+    }
+
+
+    card.appendChild(
+      top
+    );
+
+
+    /* CUERPO */
+
+    const body =
+      element(
+        "div",
+        "home-agenda-card-body"
+      );
+
+
+    const isToday =
+      event.fecha ===
+      today;
+
+
+    const status =
+      element(
+        "span",
+        "home-agenda-status",
+        isToday
+          ? "HOY"
+          : (
+              event.estado ||
+              "PRÓXIMAMENTE"
+            )
+      );
+
+
+    if (isToday) {
+
+      status.classList.add(
+        "is-today"
+      );
+
+    }
+
+
+    body.appendChild(
+      status
+    );
+
+
+    body.appendChild(
+      element(
+        "h3",
+        "home-agenda-title",
+        event.titulo ||
+        "Actividad GamesAlone18"
+      )
+    );
+
+
+    if (
+      event.descripcion
+    ) {
+
+      body.appendChild(
+        element(
+          "p",
+          "home-agenda-description",
+          event.descripcion
+        )
+      );
+
+    }
+
+
+    const details =
+      element(
+        "div",
+        "home-agenda-details"
+      );
+
+
+    if (event.hora) {
+
+      addDetail(
+        details,
+        `${event.hora} hrs`
+      );
+
+    }
+
+
+    addDetail(
+      details,
+      event.lugar
+    );
+
+
+    addDetail(
+      details,
+      event.modalidad
+    );
+
+
+    if (
+      details.children.length
+    ) {
+
+      body.appendChild(
+        details
+      );
+
+    }
+
+
+    /* ENLACE */
+
+    const url =
+      safeURL(
+        event.enlace
+      );
+
+
+    if (url) {
+
+      const link =
+        element(
+          "a",
+          "home-agenda-event-link"
+        );
+
+
+      link.href =
+        url.href;
+
+
+      link.appendChild(
+        document.createTextNode(
+          event.texto_boton ||
+          "Ver más"
+        )
+      );
+
+
+      link.appendChild(
+        element(
+          "span",
+          "",
+          "→"
+        )
+      );
+
+
+      if (
+        url.origin !==
+        window.location.origin
+      ) {
+
+        link.target =
+          "_blank";
+
+        link.rel =
+          "noopener noreferrer";
+
+      }
+
+
+      body.appendChild(
+        link
+      );
+
+    }
+
+
+    card.appendChild(
+      body
+    );
+
+
+    return card;
+
+  }
+
+
+  /* =====================================================
+     CARGAR
+  ===================================================== */
+
+  async function loadHomeAgenda() {
+
+    try {
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method:
+              "GET",
+
+            cache:
+              "no-store",
+
+            redirect:
+              "follow",
+
+            headers:
+              {
+                "Accept":
+                  "application/json"
+              }
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          `HTTP ${response.status}`
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        !data ||
+        data.ok !== true ||
+        !Array.isArray(
+          data.eventos
+        )
+      ) {
+
+        throw new Error(
+          "Respuesta inválida."
+        );
+
+      }
+
+
+      const today =
+        getTodayISO();
+
+
+      const events =
+        data.eventos
+
+          .filter(
+            event =>
+              event &&
+              /^\d{4}-\d{2}-\d{2}$/.test(
+                String(
+                  event.fecha || ""
+                )
+              ) &&
+              String(
+                event.fecha
+              ) >= today &&
+              String(
+                event.estado || ""
+              ).toUpperCase() !==
+                "CANCELADO"
+          )
+
+          .sort(
+            (a, b) => {
+
+              const aValue =
+                `${a.fecha} ${a.hora || ""}`;
+
+
+              const bValue =
+                `${b.fecha} ${b.hora || ""}`;
+
+
+              return aValue.localeCompare(
+                bValue
+              );
+
+            }
+          )
+
+          .slice(
+            0,
+            3
+          );
+
+
+      loading.style.display =
+        "none";
+
+
+      grid.replaceChildren();
+
+
+      if (
+        events.length === 0
+      ) {
+
+        empty.hidden =
+          false;
+
+        return;
+
+      }
+
+
+      empty.hidden =
+        true;
+
+
+      events.forEach(
+        event => {
+
+          grid.appendChild(
+            createCard(
+              event,
+              today
+            )
+          );
+
+        }
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "GamesAlone18 Home Agenda:",
+        error
+      );
+
+
+      loading.style.display =
+        "none";
+
+
+      empty.hidden =
+        false;
+
+    }
+
+  }
+
+
+  loadHomeAgenda();
+
+
+})();
+</script>
+
 
 </body>
 
