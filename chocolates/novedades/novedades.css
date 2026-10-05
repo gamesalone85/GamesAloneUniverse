@@ -2701,3 +2701,243 @@ main{
     }
 
 }
+
+/* =========================================================
+   AJUSTE DE LEGIBILIDAD - DESKTOP
+   Chocolate Artístico Sarita / Novedades
+========================================================= */
+
+@media (min-width: 901px){
+
+    /* NAVEGACIÓN */
+    .main-nav{
+        font-size:.92rem;
+    }
+
+    .brand-copy strong{
+        font-size:1.3rem;
+    }
+
+    .brand-copy small{
+        font-size:.68rem;
+    }
+
+
+    /* ETIQUETAS GENERALES */
+    .eyebrow,
+    .section-kicker{
+        font-size:.78rem;
+        line-height:1.5;
+    }
+
+
+    /* HERO */
+    .hero-description{
+        font-size:1.12rem;
+        line-height:1.75;
+    }
+
+    .hero-secondary{
+        font-size:.98rem;
+        line-height:1.75;
+    }
+
+    .hero-button{
+        font-size:.88rem;
+    }
+
+
+    /* CABECERA CAMPAÑA */
+    .campaign-heading-meta span{
+        font-size:.68rem;
+    }
+
+
+    /* PRESENTACIÓN BUSCA AL IMPOSTOR */
+    .campaign-label{
+        font-size:.74rem;
+    }
+
+    .campaign-lead{
+        font-size:1rem;
+        line-height:1.8;
+    }
+
+    .campaign-phrase strong{
+        font-size:.92rem;
+    }
+
+    .campaign-phrase p{
+        font-size:.84rem;
+        line-height:1.6;
+    }
+
+    .campaign-intro-meta span{
+        font-size:.64rem;
+    }
+
+    .campaign-intro-meta strong{
+        font-size:.84rem;
+    }
+
+    .campaign-badge{
+        font-size:.69rem;
+    }
+
+
+    /* MECÁNICA */
+    .mechanics-intro > p:not(.section-kicker){
+        font-size:1rem;
+        line-height:1.8;
+    }
+
+    .reward-status{
+        font-size:.65rem;
+    }
+
+    .reward-count span{
+        font-size:.76rem;
+    }
+
+    .reward-result > span{
+        font-size:.65rem;
+    }
+
+    .reward-result p{
+        font-size:.88rem;
+    }
+
+
+    /* CÓMO PARTICIPAR */
+    .subsection-heading > p:not(.section-kicker){
+        font-size:1rem;
+        line-height:1.8;
+    }
+
+    .step-number{
+        font-size:.9rem;
+    }
+
+    .step-card h4{
+        font-size:1.5rem;
+    }
+
+    .step-card p{
+        font-size:.9rem;
+        line-height:1.7;
+    }
+
+
+    /* PREMIO */
+    .prize-copy > p:not(.section-kicker){
+        font-size:.98rem;
+        line-height:1.8;
+    }
+
+    .prize-product div > span{
+        font-size:.64rem;
+    }
+
+    .prize-product strong{
+        font-size:1.4rem;
+    }
+
+    .prize-product p{
+        font-size:.82rem;
+    }
+
+    .availability-label{
+        font-size:.64rem;
+    }
+
+    .availability-unit{
+        font-size:.74rem;
+    }
+
+    .prize-availability p{
+        max-width:180px;
+        font-size:.7rem;
+        line-height:1.6;
+    }
+
+
+    /* CONDICIONES */
+    .conditions-grid article > span{
+        font-size:.92rem;
+    }
+
+    .conditions-grid h4{
+        font-size:1.45rem;
+    }
+
+    .conditions-grid p{
+        font-size:.88rem;
+        line-height:1.7;
+    }
+
+    .development-note p{
+        font-size:.84rem;
+        line-height:1.65;
+    }
+
+
+    /* INSTAGRAM */
+    .follow-section > div > p:not(.section-kicker){
+        font-size:.96rem;
+        line-height:1.75;
+    }
+
+    .instagram-button{
+        font-size:.87rem;
+    }
+
+
+    /* FUTURAS NOVEDADES */
+    .future-heading > p:not(.section-kicker){
+        font-size:.98rem;
+        line-height:1.75;
+    }
+
+    .future-card div > span{
+        font-size:.65rem;
+    }
+
+    .future-card h3{
+        font-size:1.55rem;
+    }
+
+    .future-card p{
+        font-size:.86rem;
+        line-height:1.6;
+    }
+
+
+    /* CIERRE */
+    .closing-card > div > p:not(.section-kicker){
+        font-size:.98rem;
+        line-height:1.75;
+    }
+
+    .closing-button{
+        font-size:.87rem;
+    }
+
+
+    /* FOOTER */
+    .footer-brand-block strong{
+        font-size:1.18rem;
+    }
+
+    .footer-brand-block p{
+        font-size:.86rem;
+    }
+
+    .footer-links{
+        font-size:.82rem;
+    }
+
+    .footer-bottom{
+        font-size:.77rem;
+    }
+
+}
