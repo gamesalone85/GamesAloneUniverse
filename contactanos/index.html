@@ -1018,6 +1018,7 @@ const messageField = document.getElementById("mensaje");
 const messageCount = document.getElementById("messageCount");
 let currentStep = 1;
 let sending = false;
+let redirectingAfterSuccess = false;
 
 const REQUESTS = {
   gaming: {
@@ -1145,9 +1146,34 @@ if(contactForm && responseBox && submitButton){
         err.userMessage=messages[code]||"No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";
         throw err;
       }
-      responseBox.textContent="✓ Solicitud recibida. Gracias por contactar a GamesAlone18 Universe."; contactForm.reset(); requestTypeField.value=""; dynamicFields.innerHTML=""; document.querySelectorAll(".request-type-card").forEach(c=>c.classList.remove("is-selected")); if(formStartedField) formStartedField.value=String(Date.now()); if(messageCount) messageCount.textContent="0";
+      const folio = result.folio ? " · Folio " + result.folio : "";
+      responseBox.textContent = "✓ Solicitud recibida correctamente" + folio + ". Enviamos una confirmación a tu correo. Regresando a Contacto...";
+
+      // Evita un segundo envío mientras mostramos la confirmación.
+      redirectingAfterSuccess = true;
+      sending = true;
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<span aria-hidden="true">✓</span> Solicitud enviada';
+
+      // Limpiamos el formulario y el estado interno del wizard.
+      contactForm.reset();
+      requestTypeField.value = "";
+      dynamicFields.innerHTML = "";
+      document.querySelectorAll(".request-type-card").forEach(c => c.classList.remove("is-selected"));
+      if (formStartedField) formStartedField.value = String(Date.now());
+      if (messageCount) messageCount.textContent = "0";
+
+      // Dejamos visible la confirmación unos segundos y regresamos a /contactanos/.
+      await new Promise(resolve => setTimeout(resolve, 2600));
+      window.location.replace(window.location.pathname);
     }catch(error){console.error("Error al enviar solicitud:",error); responseBox.textContent="⚠ "+(error.userMessage||"No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.");}
-    finally{sending=false;submitButton.disabled=false;submitButton.innerHTML='<span aria-hidden="true">➤</span> Enviar solicitud';}
+    finally{
+      if(!redirectingAfterSuccess){
+        sending=false;
+        submitButton.disabled=false;
+        submitButton.innerHTML='<span aria-hidden="true">➤</span> Enviar solicitud';
+      }
+    }
   });
 }
 
