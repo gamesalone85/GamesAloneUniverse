@@ -1026,7 +1026,7 @@ const REQUESTS = {
     intro: "Información para evaluar demos, lanzamientos, gameplays, reviews o entrevistas.",
     fields: [
       ["projectName","Nombre del videojuego","text",true,"Ej. Pelota"],
-      ["projectUrl","Página oficial / Steam / itch.io / web","url",true,"https://..."],
+      ["projectUrl","Página oficial / Steam / itch.io / web (opcional)","url",false,"https://..."],
       ["platform","Plataforma","select",true,["Web / navegador","PC / Steam","PlayStation","Xbox","Nintendo Switch","Android / iOS","Multiplataforma","Otra"]],
       ["releaseStatus","Estado del juego","select",true,["Demo","Early Access","Lanzado","Próximamente","En desarrollo"]],
       ["releaseDate","Fecha de lanzamiento","date",false,""],
@@ -1129,9 +1129,24 @@ if(contactForm && responseBox && submitButton){
         mensaje:requestData.mensaje,
         website,formStarted,token:CONTACT_TOKEN
       })});
-      if(!response.ok) throw new Error("HTTP "+response.status); const result=await response.json(); if(!result||result.ok!==true) throw new Error("Solicitud rechazada");
+      if(!response.ok) throw new Error("HTTP "+response.status);
+      const result=await response.json();
+      if(!result||result.ok!==true){
+        const code=result?.code||"UNKNOWN_ERROR";
+        const messages={
+          INVALID_REQUEST:"La solicitud no superó la validación de seguridad. Recarga la página e inténtalo nuevamente.",
+          INVALID_DATA:"Uno de los datos enviados no tiene un formato válido. Revisa la información e inténtalo nuevamente.",
+          RATE_LIMIT:"Se alcanzó temporalmente el límite de solicitudes para este correo. Intenta nuevamente más tarde.",
+          DUPLICATE:"Esta misma solicitud ya fue recibida recientemente.",
+          BUSY:"El sistema está procesando otras solicitudes. Intenta nuevamente en unos momentos.",
+          SERVER_ERROR:"Ocurrió un problema interno al registrar la solicitud. Intenta nuevamente más tarde."
+        };
+        const err=new Error(code);
+        err.userMessage=messages[code]||"No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";
+        throw err;
+      }
       responseBox.textContent="✓ Solicitud recibida. Gracias por contactar a GamesAlone18 Universe."; contactForm.reset(); requestTypeField.value=""; dynamicFields.innerHTML=""; document.querySelectorAll(".request-type-card").forEach(c=>c.classList.remove("is-selected")); if(formStartedField) formStartedField.value=String(Date.now()); if(messageCount) messageCount.textContent="0";
-    }catch(error){console.error("Error al enviar solicitud:",error); responseBox.textContent="⚠ No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";}
+    }catch(error){console.error("Error al enviar solicitud:",error); responseBox.textContent="⚠ "+(error.userMessage||"No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.");}
     finally{sending=false;submitButton.disabled=false;submitButton.innerHTML='<span aria-hidden="true">➤</span> Enviar solicitud';}
   });
 }
