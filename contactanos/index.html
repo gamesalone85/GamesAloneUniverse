@@ -484,212 +484,84 @@
 
 
 <!-- ==================================================
-     CONTACT FORM
+     CENTRO DE SOLICITUDES
 ================================================== -->
-
-<section class="section contact-section">
-
+<section class="section contact-section request-center-section" id="solicitudes">
   <div class="container">
-
-    <div class="feature-grid contact-grid">
-
-
-      <div class="glass-card contact-card-main">
-
-        <span class="section-label">
-          CONTACTO DIRECTO
-        </span>
-
-
-        <h2 class="section-title">
-          Cuéntanos tu proyecto
-        </h2>
-
-
-        <p class="text-content">
-
-          Si tienes una propuesta comercial,
-          quieres colaborar con GamesAlone18
-          Universe o necesitas cobertura para
-          un evento, envíanos los detalles.
-
-        </p>
-
-
-        <form
-          id="contactForm"
-          class="contact-form"
-        >
-
-          <!-- Protección anti-bot: honeypot invisible -->
-          <div class="contact-honeypot" aria-hidden="true">
-            <label for="website">No llenar este campo</label>
-            <input
-              type="text"
-              id="website"
-              name="website"
-              tabindex="-1"
-              autocomplete="off"
-            >
-          </div>
-
-          <!-- Tiempo de inicio del formulario -->
-          <input
-            type="hidden"
-            id="formStarted"
-            name="formStarted"
-            value=""
-          >
-
-
-          <div class="form-group">
-
-            <label for="nombre">
-              Nombre completo
-            </label>
-
-            <input
-              type="text"
-              id="nombre"
-              name="nombre"
-              placeholder="Tu nombre"
-              autocomplete="name"
-              minlength="3"
-              maxlength="100"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="emailContacto">
-              Correo electrónico
-            </label>
-
-            <input
-              type="email"
-              id="emailContacto"
-              name="email"
-              placeholder="tu@email.com"
-              autocomplete="email"
-              inputmode="email"
-              maxlength="150"
-              required
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="telefono">
-
-              Teléfono
-
-              <span class="optional">
-                (opcional)
-              </span>
-
-            </label>
-
-            <input
-              type="tel"
-              id="telefono"
-              name="telefono"
-              placeholder="55 0000 0000"
-              autocomplete="tel"
-              inputmode="tel"
-              maxlength="30"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="mensaje">
-              Cuéntanos sobre tu proyecto
-            </label>
-
-            <textarea
-              id="mensaje"
-              name="mensaje"
-              rows="6"
-              minlength="10"
-              maxlength="2000"
-              placeholder="Cuéntanos qué necesitas, qué tipo de evento o proyecto tienes y cómo podemos colaborar."
-              required
-            ></textarea>
-
-          </div>
-
-
-          <button
-            class="btn-primary"
-            type="submit"
-            id="contactSubmit"
-          >
-
-            <span aria-hidden="true">
-              ➤
-            </span>
-
-            Enviar mensaje
-
-          </button>
-
-
-          <p class="legal-text">
-
-            Al enviar este formulario
-            aceptas nuestro
-
-            <a href="../avisodeprivacidad/">
-              Aviso de Privacidad
-            </a>
-
-            y los
-
-            <a href="../terminos-y-condiciones.html">
-              Términos y Condiciones
-            </a>.
-
-          </p>
-
-
-          <p
-            id="respuestaContacto"
-            class="form-response"
-            aria-live="polite"
-            role="status"
-          ></p>
-
-        </form>
-
+    <div class="request-center glass-card">
+      <div class="request-center-head">
+        <span class="section-label">CENTRO DE SOLICITUDES</span>
+        <h2 class="section-title">¿Qué quieres hacer con GamesAlone18?</h2>
+        <p class="text-content">Selecciona el tipo de solicitud. Te mostraremos únicamente la información necesaria para tu caso.</p>
       </div>
 
+      <form id="contactForm" class="request-form" novalidate>
+        <div class="contact-honeypot" aria-hidden="true">
+          <label for="website">No llenar este campo</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <input type="hidden" id="formStarted" name="formStarted" value="">
+        <input type="hidden" id="requestType" name="requestType" value="">
 
-      <div class="feature-image contact-image">
+        <div class="request-progress" aria-label="Progreso de la solicitud">
+          <div class="request-progress-item is-active" data-progress="1"><span>01</span><b>Solicitud</b></div>
+          <div class="request-progress-line"></div>
+          <div class="request-progress-item" data-progress="2"><span>02</span><b>Datos</b></div>
+          <div class="request-progress-line"></div>
+          <div class="request-progress-item" data-progress="3"><span>03</span><b>Detalles</b></div>
+          <div class="request-progress-line"></div>
+          <div class="request-progress-item" data-progress="4"><span>04</span><b>Confirmar</b></div>
+        </div>
 
-        <img
-          src="../img/contacto/escuchamos.jpg"
-          loading="lazy"
-          decoding="async"
-          alt="Contacto con GamesAlone18 Universe"
-          width="800"
-          height="800"
-        >
+        <section class="request-step is-active" data-step="1">
+          <div class="request-step-heading">
+            <span class="request-kicker">PASO 1 DE 4</span>
+            <h3>Elige el tipo de solicitud</h3>
+            <p>Esto nos permite dirigir tu propuesta al área correcta desde el primer momento.</p>
+          </div>
+          <div class="request-type-grid">
+            <button class="request-type-card" type="button" data-type="gaming"><span class="request-icon">🎮</span><strong>Gaming</strong><small>Videojuegos, demos, keys, reviews, gameplays y entrevistas.</small></button>
+            <button class="request-type-card" type="button" data-type="prensa"><span class="request-icon">🎙</span><strong>Prensa / Entrevista</strong><small>Entrevistas, press kits, voceros, artistas y proyectos.</small></button>
+            <button class="request-type-card" type="button" data-type="colaboracion"><span class="request-icon">🤝</span><strong>Colaboración</strong><small>Alianzas con marcas, creadores, espacios y proyectos.</small></button>
+            <button class="request-type-card" type="button" data-type="cobertura"><span class="request-icon">▣</span><strong>Cobertura de evento</strong><small>Teatro, festivales, expos, lanzamientos y experiencias.</small></button>
+            <button class="request-type-card" type="button" data-type="publicidad"><span class="request-icon">📣</span><strong>Publicidad / Patrocinio</strong><small>Integraciones, campañas, menciones y patrocinios.</small></button>
+            <button class="request-type-card" type="button" data-type="servicios"><span class="request-icon">◆</span><strong>Paquetes / Servicios</strong><small>Contenido, producción, redes y soluciones audiovisuales.</small></button>
+            <button class="request-type-card" type="button" data-type="terror"><span class="request-icon">👻</span><strong>Terror / Podcast</strong><small>Relatos, lugares, invitados y Cuentos de Terror.</small></button>
+            <button class="request-type-card" type="button" data-type="general"><span class="request-icon">✉</span><strong>Otro / General</strong><small>Consultas que no correspondan a las categorías anteriores.</small></button>
+          </div>
+          <p class="request-inline-error" id="typeError" role="alert"></p>
+          <div class="request-actions request-actions-end"><button type="button" class="request-next btn-primary" data-next="2">Continuar <span aria-hidden="true">→</span></button></div>
+        </section>
 
-      </div>
+        <section class="request-step" data-step="2" hidden>
+          <div class="request-step-heading"><span class="request-kicker">PASO 2 DE 4</span><h3>¿Con quién hablamos?</h3><p>Estos datos se usarán únicamente para atender tu solicitud.</p></div>
+          <div class="request-fields-grid">
+            <div class="form-group"><label for="nombre">Nombre completo *</label><input type="text" id="nombre" name="nombre" autocomplete="name" minlength="3" maxlength="100" required placeholder="Tu nombre"></div>
+            <div class="form-group"><label for="organizacion">Empresa, estudio o proyecto <span class="optional">(opcional)</span></label><input type="text" id="organizacion" name="organizacion" maxlength="140" placeholder="Nombre de la organización"></div>
+            <div class="form-group"><label for="emailContacto">Correo electrónico *</label><input type="email" id="emailContacto" name="email" autocomplete="email" maxlength="150" required placeholder="tu@email.com"></div>
+            <div class="form-group"><label for="telefono">Teléfono / WhatsApp <span class="optional">(opcional)</span></label><input type="tel" id="telefono" name="telefono" autocomplete="tel" maxlength="30" placeholder="55 0000 0000"></div>
+          </div>
+          <div class="request-actions"><button type="button" class="request-back" data-back="1">← Anterior</button><button type="button" class="request-next btn-primary" data-next="3">Continuar →</button></div>
+        </section>
 
+        <section class="request-step" data-step="3" hidden>
+          <div class="request-step-heading"><span class="request-kicker">PASO 3 DE 4</span><h3 id="detailTitle">Cuéntanos los detalles</h3><p id="detailIntro">Completa la información principal de tu solicitud.</p></div>
+          <div id="dynamicFields" class="request-fields-grid"></div>
+          <div class="form-group request-message-group"><label for="mensaje">Información adicional *</label><textarea id="mensaje" name="mensaje" rows="6" minlength="10" maxlength="2000" required placeholder="Cuéntanos qué necesitas y cualquier detalle que debamos considerar."></textarea><small class="request-counter"><span id="messageCount">0</span>/2000</small></div>
+          <div class="request-actions"><button type="button" class="request-back" data-back="2">← Anterior</button><button type="button" class="request-next btn-primary" data-next="4">Revisar solicitud →</button></div>
+        </section>
+
+        <section class="request-step" data-step="4" hidden>
+          <div class="request-step-heading"><span class="request-kicker">PASO 4 DE 4</span><h3>Revisa antes de enviar</h3><p>Confirma que los datos sean correctos. Podrás regresar y modificarlos.</p></div>
+          <div class="request-summary" id="requestSummary"></div>
+          <label class="request-consent"><input type="checkbox" id="requestConsent" required><span>He leído y acepto el <a href="../avisodeprivacidad/" target="_blank" rel="noopener noreferrer">Aviso de Privacidad</a> y los <a href="../terminos-y-condiciones.html" target="_blank" rel="noopener noreferrer">Términos y Condiciones</a>.</span></label>
+          <p id="respuestaContacto" class="form-response" aria-live="polite" role="status"></p>
+          <div class="request-actions"><button type="button" class="request-back" data-back="3">← Anterior</button><button class="btn-primary request-submit" type="submit" id="contactSubmit"><span aria-hidden="true">➤</span> Enviar solicitud</button></div>
+        </section>
+      </form>
     </div>
-
   </div>
-
 </section>
-
 
 
 <!-- ==================================================
@@ -1132,222 +1004,108 @@ const GA_ID =
 
 
 /* ==================================================
-   FORMULARIO
+   CENTRO DE SOLICITUDES
 ================================================== */
-
-const contactForm =
-document.getElementById(
-  "contactForm"
-);
-
-
-const responseBox =
-document.getElementById(
-  "respuestaContacto"
-);
-
-
-const submitButton =
-document.getElementById(
-  "contactSubmit"
-);
-
-
-const websiteField =
-document.getElementById(
-  "website"
-);
-
-
-const formStartedField =
-document.getElementById(
-  "formStarted"
-);
-
-
-if (formStartedField) {
-  formStartedField.value = String(Date.now());
-}
-
-
-if (
-  contactForm &&
-  responseBox &&
-  submitButton
-) {
-
-
+const contactForm = document.getElementById("contactForm");
+const responseBox = document.getElementById("respuestaContacto");
+const submitButton = document.getElementById("contactSubmit");
+const websiteField = document.getElementById("website");
+const formStartedField = document.getElementById("formStarted");
+const requestTypeField = document.getElementById("requestType");
+const dynamicFields = document.getElementById("dynamicFields");
+const requestSummary = document.getElementById("requestSummary");
+const messageField = document.getElementById("mensaje");
+const messageCount = document.getElementById("messageCount");
+let currentStep = 1;
 let sending = false;
 
+const REQUESTS = {
+  gaming: {
+    label: "Gaming / Videojuego",
+    title: "Háblanos de tu videojuego",
+    intro: "Información para evaluar demos, lanzamientos, gameplays, reviews o entrevistas.",
+    fields: [
+      ["projectName","Nombre del videojuego","text",true,"Ej. Pelota"],
+      ["projectUrl","Página oficial / Steam / itch.io / web","url",true,"https://..."],
+      ["platform","Plataforma","select",true,["Web / navegador","PC / Steam","PlayStation","Xbox","Nintendo Switch","Android / iOS","Multiplataforma","Otra"]],
+      ["releaseStatus","Estado del juego","select",true,["Demo","Early Access","Lanzado","Próximamente","En desarrollo"]],
+      ["releaseDate","Fecha de lanzamiento","date",false,""],
+      ["accessType","Acceso","select",true,["Gratis","Key proporcionada","Demo pública","Juego de pago","Por definir"]],
+      ["languages","Idiomas","text",false,"Ej. Español, inglés"],
+      ["interest","¿Qué te gustaría que hiciéramos?","select",true,["Gameplay","Review / reseña","Mención en Live","Short / Reel","Entrevista con desarrollador","Cobertura de lanzamiento","Varias opciones","Otro"]]
+    ]
+  },
+  prensa: {label:"Prensa / Entrevista",title:"Cuéntanos qué quieres presentar",intro:"Para entrevistas, voceros, press kits, acreditaciones y proyectos editoriales.",fields:[
+    ["projectName","Persona, obra o proyecto","text",true,"Nombre del proyecto"],["projectType","Tipo de proyecto","select",true,["Música","Teatro","Cine","Gaming","Cultura","Evento","Marca / organización","Otro"]],["interest","Solicitud","select",true,["Entrevista","Acreditación de prensa","Publicación / difusión","Recepción de press kit","Invitación","Otro"]],["eventDate","Fecha relevante","date",false,""],["location","Ciudad / sede","text",false,"Ej. CDMX"],["projectUrl","Sitio o press kit","url",false,"https://..."]]},
+  colaboracion: {label:"Colaboración",title:"Construyamos una colaboración",intro:"Describe la alianza y qué aportaría cada parte.",fields:[
+    ["projectName","Nombre del proyecto / colaboración","text",true,"Nombre de la propuesta"],["collabType","Tipo de colaboración","select",true,["Contenido conjunto","Intercambio / cortesías","Activación","Alianza cultural","Cross-promotion","Producto / experiencia","Otro"]],["projectUrl","Enlace del proyecto","url",false,"https://..."],["targetDate","Fecha estimada","date",false,""]]},
+  cobertura: {label:"Cobertura de evento",title:"Datos del evento",intro:"Con esta información podemos valorar cobertura, agenda y necesidades de producción.",fields:[
+    ["projectName","Nombre del evento","text",true,"Nombre oficial"],["eventType","Tipo de evento","select",true,["Teatro","Festival","Exposición","Convención","Lanzamiento","Concierto","Evento de marca","Otro"]],["eventDate","Fecha del evento","date",true,""],["eventTime","Horario","time",false,""],["location","Sede / ubicación","text",true,"Recinto y ciudad"],["interest","Tipo de cobertura","select",true,["Video / recap","Entrevistas","Fotografía","Reels / Shorts","Live / transmisión","Cobertura integral","Otro"]],["projectUrl","Página del evento","url",false,"https://..."]]},
+  publicidad: {label:"Publicidad / Patrocinio",title:"Objetivo de campaña",intro:"Información inicial para entender la marca, el objetivo y el alcance deseado.",fields:[
+    ["projectName","Marca / producto / campaña","text",true,"Nombre"],["campaignGoal","Objetivo","select",true,["Promocionar marca","Promocionar producto","Patrocinar contenido","Integración en Live","Campaña en redes","Activación especial","Otro"]],["channels","Plataformas deseadas","text",false,"Ej. YouTube, Instagram, TikTok"],["targetDate","Fecha o periodo","text",false,"Ej. noviembre 2026"],["budget","Presupuesto estimado","select",false,["Por definir","Menos de $5,000 MXN","$5,000–$10,000 MXN","$10,000–$25,000 MXN","Más de $25,000 MXN"]],["projectUrl","Sitio de la marca","url",false,"https://..."]]},
+  servicios: {label:"Paquetes / Servicios",title:"¿Qué servicio necesitas?",intro:"Selecciona la necesidad principal para preparar una propuesta adecuada.",fields:[
+    ["projectName","Proyecto / empresa","text",true,"Nombre"],["serviceType","Servicio","select",true,["Cobertura audiovisual","Contenido para redes","Producción de video","Entrevistas","Activación digital","Paquete para evento","Consultoría / estrategia","Otro"]],["targetDate","Fecha estimada","date",false,""],["location","Ubicación","text",false,"Ciudad / sede"],["budget","Presupuesto estimado","select",false,["Por definir","Menos de $5,000 MXN","$5,000–$10,000 MXN","$10,000–$25,000 MXN","Más de $25,000 MXN"]]]},
+  terror: {label:"Terror / Podcast",title:"Cuentos de Terror con NotAlone18",intro:"Relatos, lugares, invitados, investigaciones o propuestas relacionadas con el podcast.",fields:[
+    ["projectName","Título / tema","text",true,"Nombre del relato, lugar o propuesta"],["terrorType","Tipo de solicitud","select",true,["Compartir un relato","Proponer un lugar","Invitado / entrevista","Investigación / documentación","Colaboración","Evento relacionado","Otro"]],["location","Lugar relacionado","text",false,"Ciudad / estado"],["projectUrl","Enlace de referencia","url",false,"https://..."]]},
+  general: {label:"Contacto general",title:"Cuéntanos qué necesitas",intro:"Utiliza esta opción cuando tu solicitud no corresponda a otra categoría.",fields:[
+    ["projectName","Asunto","text",true,"Motivo de contacto"],["projectUrl","Enlace relacionado","url",false,"https://..."] ]}
+};
 
-contactForm.addEventListener(
-"submit",
-async function (event) {
-
-
-event.preventDefault();
-
-
-if (sending) {
-  return;
+function esc(value) { return String(value || "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c])); }
+function setStep(step) {
+  currentStep = step;
+  document.querySelectorAll(".request-step").forEach(el => { const active = Number(el.dataset.step) === step; el.hidden = !active; el.classList.toggle("is-active", active); });
+  document.querySelectorAll("[data-progress]").forEach(el => { const n=Number(el.dataset.progress); el.classList.toggle("is-active",n===step); el.classList.toggle("is-complete",n<step); });
+  document.querySelector("#solicitudes .request-center")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderDynamicFields(type) {
+  const cfg=REQUESTS[type]; if(!cfg) return;
+  document.getElementById("detailTitle").textContent=cfg.title;
+  document.getElementById("detailIntro").textContent=cfg.intro;
+  dynamicFields.innerHTML=cfg.fields.map(f=>{
+    const [id,label,typeInput,required,extra]=f; const req=required?" required":""; const star=required?" *":"";
+    if(typeInput==="select") return `<div class="form-group"><label for="${id}">${esc(label)}${star}</label><select id="${id}" name="${id}"${req}><option value="">Selecciona una opción</option>${extra.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join("")}</select></div>`;
+    return `<div class="form-group"><label for="${id}">${esc(label)}${star}</label><input type="${typeInput}" id="${id}" name="${id}" maxlength="300" placeholder="${esc(extra)}"${req}></div>`;
+  }).join("");
+}
+function validateStep(step) {
+  if(step===1 && !requestTypeField.value){ document.getElementById("typeError").textContent="Selecciona un tipo de solicitud para continuar."; return false; }
+  const section=document.querySelector(`.request-step[data-step="${step}"]`); const fields=section?section.querySelectorAll("input,select,textarea"):[];
+  for(const field of fields){ if(!field.checkValidity()){ field.reportValidity(); return false; } }
+  return true;
+}
+function labelFor(name){ const el=document.querySelector(`label[for="${CSS.escape(name)}"]`); return el?el.textContent.replace("*","").trim():name; }
+function buildSummary(){
+  const type=requestTypeField.value; const rows=[["Tipo de solicitud",REQUESTS[type]?.label||type],["Nombre",document.getElementById("nombre").value],["Organización",document.getElementById("organizacion").value],["Correo",document.getElementById("emailContacto").value],["Teléfono",document.getElementById("telefono").value]];
+  dynamicFields.querySelectorAll("input,select,textarea").forEach(el=>{if(el.value) rows.push([labelFor(el.name),el.value]);}); rows.push(["Información adicional",messageField.value]);
+  requestSummary.innerHTML=rows.filter(r=>r[1]).map(r=>`<div class="request-summary-row"><span>${esc(r[0])}</span><strong>${esc(r[1])}</strong></div>`).join("");
+}
+function structuredMessage(){
+  const type=requestTypeField.value; const parts=[`TIPO DE SOLICITUD: ${REQUESTS[type]?.label||type}`]; const org=document.getElementById("organizacion").value.trim(); if(org) parts.push(`ORGANIZACIÓN: ${org}`);
+  dynamicFields.querySelectorAll("input,select,textarea").forEach(el=>{ if(el.value.trim()) parts.push(`${labelFor(el.name).toUpperCase()}: ${el.value.trim()}`); });
+  parts.push("", "MENSAJE:", messageField.value.trim()); return parts.join("\n");
 }
 
+if(formStartedField) formStartedField.value=String(Date.now());
+document.querySelectorAll(".request-type-card").forEach(card=>card.addEventListener("click",()=>{ document.querySelectorAll(".request-type-card").forEach(c=>c.classList.remove("is-selected")); card.classList.add("is-selected"); requestTypeField.value=card.dataset.type; document.getElementById("typeError").textContent=""; renderDynamicFields(card.dataset.type); }));
+document.querySelectorAll(".request-next").forEach(btn=>btn.addEventListener("click",()=>{ if(!validateStep(currentStep)) return; const next=Number(btn.dataset.next); if(next===4) buildSummary(); setStep(next); }));
+document.querySelectorAll(".request-back").forEach(btn=>btn.addEventListener("click",()=>setStep(Number(btn.dataset.back))));
+if(messageField && messageCount) messageField.addEventListener("input",()=>messageCount.textContent=String(messageField.value.length));
 
-if (!contactForm.checkValidity()) {
-  contactForm.reportValidity();
-  return;
-}
-
-
-const nombre =
-document.getElementById(
-  "nombre"
-).value.trim();
-
-
-const email =
-document.getElementById(
-  "emailContacto"
-).value.trim();
-
-
-const telefono =
-document.getElementById(
-  "telefono"
-).value.trim();
-
-
-const mensaje =
-document.getElementById(
-  "mensaje"
-).value.trim();
-
-
-const website =
-websiteField
-  ? websiteField.value.trim()
-  : "";
-
-
-const formStarted =
-formStartedField
-  ? formStartedField.value
-  : String(Date.now());
-
-
-if (nombre.length < 3) {
-  responseBox.textContent =
-  "⚠ Ingresa un nombre válido.";
-  return;
-}
-
-
-if (mensaje.length < 10) {
-  responseBox.textContent =
-  "⚠ El mensaje debe contener al menos 10 caracteres.";
-  return;
-}
-
-
-/*
- * Si el honeypot fue llenado, no enviamos nada.
- * Para no dar pistas a bots, mostramos una respuesta genérica.
- */
-if (website !== "") {
-  responseBox.textContent =
-  "⚠ No fue posible procesar la solicitud.";
-  return;
-}
-
-
-sending = true;
-submitButton.disabled = true;
-
-
-submitButton.innerHTML =
-"<span aria-hidden=\"true\">◌</span> Enviando...";
-
-
-responseBox.textContent =
-"Enviando mensaje...";
-
-
-try {
-
-  const response = await fetch(
-    CONTACT_ENDPOINT,
-    {
-      method: "POST",
-      body: new URLSearchParams({
-        nombre: nombre,
-        email: email,
-        telefono: telefono,
-        mensaje: mensaje,
-        website: website,
-        formStarted: formStarted,
-        token: CONTACT_TOKEN
-      })
-    }
-  );
-
-
-  if (!response.ok) {
-    throw new Error(
-      "HTTP " + response.status
-    );
-  }
-
-
-  const result = await response.json();
-
-
-  if (!result || result.ok !== true) {
-    throw new Error(
-      "Solicitud rechazada"
-    );
-  }
-
-
-  responseBox.textContent =
-  "✓ Gracias por contactarnos. Recibimos tu mensaje y te responderemos pronto.";
-
-
-  contactForm.reset();
-
-
-  if (formStartedField) {
-    formStartedField.value = String(Date.now());
-  }
-
-
-}
-catch (error) {
-
-  console.error(
-    "Error al enviar contacto:",
-    error
-  );
-
-
-  responseBox.textContent =
-  "⚠ No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";
-
-}
-finally {
-
-  sending = false;
-  submitButton.disabled = false;
-
-
-  submitButton.innerHTML =
-  "<span aria-hidden=\"true\">➤</span> Enviar mensaje";
-
-}
-
-
-}
-);
-
+if(contactForm && responseBox && submitButton){
+  contactForm.addEventListener("submit",async event=>{
+    event.preventDefault(); if(sending) return; if(!validateStep(4)) return;
+    const nombre=document.getElementById("nombre").value.trim(), email=document.getElementById("emailContacto").value.trim(), telefono=document.getElementById("telefono").value.trim();
+    const website=websiteField?websiteField.value.trim():""; const formStarted=formStartedField?formStartedField.value:String(Date.now());
+    if(nombre.length<3){responseBox.textContent="⚠ Ingresa un nombre válido.";return;} if(messageField.value.trim().length<10){responseBox.textContent="⚠ Agrega más información a tu solicitud.";return;} if(website!==""){responseBox.textContent="⚠ No fue posible procesar la solicitud.";return;}
+    sending=true; submitButton.disabled=true; submitButton.innerHTML='<span aria-hidden="true">◌</span> Enviando...'; responseBox.textContent="Enviando solicitud...";
+    try{
+      const response=await fetch(CONTACT_ENDPOINT,{method:"POST",body:new URLSearchParams({nombre,email,telefono,mensaje:structuredMessage(),website,formStarted,token:CONTACT_TOKEN})});
+      if(!response.ok) throw new Error("HTTP "+response.status); const result=await response.json(); if(!result||result.ok!==true) throw new Error("Solicitud rechazada");
+      responseBox.textContent="✓ Solicitud recibida. Gracias por contactar a GamesAlone18 Universe."; contactForm.reset(); requestTypeField.value=""; dynamicFields.innerHTML=""; document.querySelectorAll(".request-type-card").forEach(c=>c.classList.remove("is-selected")); if(formStartedField) formStartedField.value=String(Date.now()); if(messageCount) messageCount.textContent="0";
+    }catch(error){console.error("Error al enviar solicitud:",error); responseBox.textContent="⚠ No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";}
+    finally{sending=false;submitButton.disabled=false;submitButton.innerHTML='<span aria-hidden="true">➤</span> Enviar solicitud';}
+  });
 }
 
 
