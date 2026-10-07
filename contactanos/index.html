@@ -1080,10 +1080,26 @@ function buildSummary(){
   dynamicFields.querySelectorAll("input,select,textarea").forEach(el=>{if(el.value) rows.push([labelFor(el.name),el.value]);}); rows.push(["Información adicional",messageField.value]);
   requestSummary.innerHTML=rows.filter(r=>r[1]).map(r=>`<div class="request-summary-row"><span>${esc(r[0])}</span><strong>${esc(r[1])}</strong></div>`).join("");
 }
-function structuredMessage(){
-  const type=requestTypeField.value; const parts=[`TIPO DE SOLICITUD: ${REQUESTS[type]?.label||type}`]; const org=document.getElementById("organizacion").value.trim(); if(org) parts.push(`ORGANIZACIÓN: ${org}`);
-  dynamicFields.querySelectorAll("input,select,textarea").forEach(el=>{ if(el.value.trim()) parts.push(`${labelFor(el.name).toUpperCase()}: ${el.value.trim()}`); });
-  parts.push("", "MENSAJE:", messageField.value.trim()); return parts.join("\n");
+function collectRequestData(){
+  const type=requestTypeField.value;
+  const details={};
+  dynamicFields.querySelectorAll("input,select,textarea").forEach(el=>{
+    const value=String(el.value||"").trim();
+    if(value) details[el.name]={label:labelFor(el.name),value:value};
+  });
+  const subtypeKeys=["interest","collabType","eventType","campaignGoal","serviceType","terrorType","projectType"];
+  let subtype="";
+  for(const key of subtypeKeys){ if(details[key]?.value){ subtype=details[key].value; break; } }
+  return {
+    tipoSolicitud:type,
+    subtipo:subtype,
+    organizacion:document.getElementById("organizacion").value.trim(),
+    proyecto:details.projectName?.value||"",
+    urlProyecto:details.projectUrl?.value||"",
+    plataforma:details.platform?.value||details.channels?.value||"",
+    detalles:JSON.stringify(details),
+    mensaje:messageField.value.trim()
+  };
 }
 
 if(formStartedField) formStartedField.value=String(Date.now());
@@ -1100,7 +1116,19 @@ if(contactForm && responseBox && submitButton){
     if(nombre.length<3){responseBox.textContent="⚠ Ingresa un nombre válido.";return;} if(messageField.value.trim().length<10){responseBox.textContent="⚠ Agrega más información a tu solicitud.";return;} if(website!==""){responseBox.textContent="⚠ No fue posible procesar la solicitud.";return;}
     sending=true; submitButton.disabled=true; submitButton.innerHTML='<span aria-hidden="true">◌</span> Enviando...'; responseBox.textContent="Enviando solicitud...";
     try{
-      const response=await fetch(CONTACT_ENDPOINT,{method:"POST",body:new URLSearchParams({nombre,email,telefono,mensaje:structuredMessage(),website,formStarted,token:CONTACT_TOKEN})});
+      const requestData=collectRequestData();
+      const response=await fetch(CONTACT_ENDPOINT,{method:"POST",body:new URLSearchParams({
+        nombre,email,telefono,
+        organizacion:requestData.organizacion,
+        tipoSolicitud:requestData.tipoSolicitud,
+        subtipo:requestData.subtipo,
+        proyecto:requestData.proyecto,
+        urlProyecto:requestData.urlProyecto,
+        plataforma:requestData.plataforma,
+        detalles:requestData.detalles,
+        mensaje:requestData.mensaje,
+        website,formStarted,token:CONTACT_TOKEN
+      })});
       if(!response.ok) throw new Error("HTTP "+response.status); const result=await response.json(); if(!result||result.ok!==true) throw new Error("Solicitud rechazada");
       responseBox.textContent="✓ Solicitud recibida. Gracias por contactar a GamesAlone18 Universe."; contactForm.reset(); requestTypeField.value=""; dynamicFields.innerHTML=""; document.querySelectorAll(".request-type-card").forEach(c=>c.classList.remove("is-selected")); if(formStartedField) formStartedField.value=String(Date.now()); if(messageCount) messageCount.textContent="0";
     }catch(error){console.error("Error al enviar solicitud:",error); responseBox.textContent="⚠ No fue posible procesar la solicitud. Intenta nuevamente más tarde o contáctanos por WhatsApp.";}
