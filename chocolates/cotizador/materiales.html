@@ -238,6 +238,43 @@
       .contenido { padding: 24px 14px; }
       .btn { width: 100%; }
     }
+
+    .acciones-encabezado {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-historial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--vino);
+  border: 1px solid var(--vino);
+  text-decoration: none;
+}
+
+.btn-historial:hover {
+  background: #f5e9ec;
+}
+
+.btn-historial:focus-visible {
+  outline: 3px solid #c99cab;
+  outline-offset: 3px;
+}
+
+@media (max-width: 650px) {
+  .acciones-encabezado {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .acciones-encabezado .btn {
+    width: 100%;
+  }
+}
   </style>
 </head>
 
@@ -270,9 +307,15 @@
           </p>
         </div>
 
+        <div class="acciones-encabezado">
+            <a href="./historial-costos.html" class="btn btn-historial">
+              Ver historial de costos
+            </a>
+
         <button class="btn" id="nuevoMaterial" type="button">
-          + Nuevo material
+            + Nuevo material
         </button>
+      </div>
       </div>
 
       <section class="panel" id="formularioPanel" hidden>
