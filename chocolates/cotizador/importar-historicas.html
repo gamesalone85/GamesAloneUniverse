@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Importar cotizaciones históricas | Chocolate Artístico Sarita</title>
+<style>
+:root{--vino:#642c3d;--oscuro:#47202d;--fondo:#faf6f2;--borde:#e8deda;--texto:#30282b;--gris:#756b6d}*{box-sizing:border-box}body{margin:0;background:var(--fondo);font:15px/1.6 'Segoe UI',Arial,sans-serif;color:var(--texto)}[hidden]{display:none!important}.cabecera{background:var(--oscuro);color:#fff;padding:20px}.cabecera>div{max-width:950px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.marca{font:700 24px Georgia,serif;margin:0}.sub{font-size:12px;opacity:.85;margin:4px 0 0}a{color:var(--vino)}.cabecera a{color:white;text-decoration:none;border:1px solid #ffffff70;border-radius:8px;padding:8px 13px}main{max-width:950px;margin:auto;padding:32px 20px 60px}h1{font-size:29px;color:var(--oscuro);margin:0 0 10px}h2{font-size:19px;color:var(--vino)}.panel{background:#fff;border:1px solid var(--borde);border-radius:15px;padding:24px;margin:20px 0;box-shadow:0 8px 28px #3c1e2308}.aviso{border-left:4px solid var(--vino);background:#fbf0ed;padding:12px 16px;border-radius:7px}.tabla{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:580px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--borde);font-size:13px}th{background:#faf4f1;color:var(--oscuro)}td:last-child,th:last-child{text-align:right}.muted{color:var(--gris);font-size:13px}.boton{border:0;background:var(--vino);color:#fff;border-radius:9px;padding:13px 19px;font-weight:700;cursor:pointer}.boton:disabled{opacity:.45;cursor:not-allowed}.estado{font-weight:600;white-space:pre-wrap;overflow-wrap:anywhere}.error{color:#a32440}.exito{color:#167447}label{display:flex;align-items:flex-start;gap:9px;margin:18px 0}input[type=checkbox]{margin-top:5px}.cargando{padding:45px;text-align:center;color:var(--vino)}@media(max-width:600px){main{padding:22px 13px}.panel{padding:17px}}
+</style>
+</head>
+<body>
+<header class="cabecera"><div><div><p class="marca">Chocolate Artístico Sarita</p><p class="sub">Importación histórica controlada · Solo administradores</p></div><a href="./panel.html">← Volver al panel</a></div></header>
+<main>
+<div id="cargando" class="cargando" role="status">Verificando acceso y registros existentes…</div>
+<div id="app" hidden>
+<h1>Importar cotizaciones 001 a 004</h1>
+<p>Esta herramienta registra las cuatro cotizaciones originales de 2026 y, en la misma operación, establece el último consecutivo en <strong>4</strong>. La próxima emisión ordinaria corresponderá al folio <strong>SAR-2026-0005</strong>.</p>
+<div class="aviso"><strong>Importante:</strong> los documentos originales muestran <strong>cantidad 1 como referencia de precio unitario</strong>, pero no confirman cantidades de un pedido real. Los importaremos como <strong>referencias históricas</strong>, no como ventas ni pedidos confirmados. Los importes son sumas de referencia, no montos de una contratación.</div>
+<section class="panel"><h2>Vista previa de los documentos</h2><div class="tabla"><table><thead><tr><th>Folio</th><th>Fecha original</th><th>Productos</th><th>Vigencia indicada</th><th>Total de referencia*</th></tr></thead><tbody id="vista"></tbody></table></div><p class="muted">* Suma aritmética de los precios unitarios con cantidad de referencia 1. El PDF original no establece un importe total de pedido. No se asigna cliente ficticio ni se modifican los precios históricos.</p></section>
+<section class="panel"><h2>Comprobaciones previas</h2><p id="comprobacion" class="estado">Comprobando…</p><label><input id="confirmar" type="checkbox" disabled><span>Confirmo que estas son las cuatro cotizaciones originales y autorizo incorporarlas al historial, reservando los folios 001–004.</span></label><button id="importar" class="boton" type="button" disabled>Importar las 4 cotizaciones y actualizar contador</button><p id="resultado" class="estado" role="status" aria-live="polite"></p></section>
+</div>
+</main>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
+import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
+import{getFirestore,doc,getDoc,collection,getDocs,runTransaction,Timestamp,serverTimestamp}from'https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js';
+const firebaseConfig={apiKey:'AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4',authDomain:'sarita-cotizador.firebaseapp.com',projectId:'sarita-cotizador',storageBucket:'sarita-cotizador.firebasestorage.app',messagingSenderId:'798881105496',appId:'1:798881105496:web:c42f8cd5655e9585d02c2d'};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),$=id=>document.getElementById(id);
+const historicas=[
+{n:1,fecha:'2026-05-10',vigencia:'Septiembre 2026',referencia:'Productos adecuados para tu negocio',items:[['Chocolate blanco redondo 3,5 cm diámetro con logotipo 10 gr',5.00,''],['Barra de chocolate semiamargo o leche 2 x 3 cm 6 gr',1.90,''],['Barra de chocolate semiamargo o leche 2,5 x 3,5 cm 4 gr',1.50,'']]},
+{n:2,fecha:'2026-05-10',vigencia:'Septiembre 2026',referencia:'Temática Toy Story, realizadas con chocolate blanco en presentación de paleta',items:[['Buzz Ligthyear 37 gr',22.20,''],['Woody 31 gr',18.60,''],['Tiro al blanco (caballo) 18 gr',10.80,''],['Jessy (vaquerita) 17 gr',10.20,''],['Marciano 19 gr',11.40,'']]},
+{n:3,fecha:'2026-05-10',vigencia:'Septiembre 2026',referencia:'Productos adecuados para tu evento',items:[['Cruz con cenefa 9 gr',6.00,''],['Cruz con flor pequeña 5 gr',3.00,''],['Cruz con flores 7 gr',4.20,''],['Cruz redonda 7 gr',4.20,'']]},
+{n:4,fecha:'2026-09-05',vigencia:'Octubre 2026',referencia:'Productos adecuados para tu evento',items:[['Mini Calavera adornada 8 gr',3.00,'H147'],['Mini Pan de Muerto',4.00,'H157']]}
+];
+const money=n=>Number(n).toLocaleString('es-MX',{style:'currency',currency:'MXN'});
+for(const h of historicas){const tr=document.createElement('tr'),total=h.items.reduce((s,i)=>s+i[1],0);for(const value of [`SAR-2026-${String(h.n).padStart(4,'0')}`,h.fecha,h.items.length,h.vigencia,money(total)]){const td=document.createElement('td');td.textContent=value;tr.append(td)}$('vista').append(tr)}
+const counterRef=doc(db,'configuracion','folios_2026');const refs=historicas.map(h=>doc(db,'cotizaciones',`historica_2026_${String(h.n).padStart(4,'0')}`));
+let habilitado=false,ocupado=false;
+function bloqueo(mensaje,error=false){habilitado=false;$('confirmar').checked=false;$('confirmar').disabled=true;$('importar').disabled=true;$('comprobacion').textContent=mensaje;$('comprobacion').className='estado'+(error?' error':'')}
+async function verificar(){bloqueo('Comprobando permisos, contador y cotizaciones existentes…');const [c,lista]=await Promise.all([getDoc(counterRef),getDocs(collection(db,'cotizaciones'))]);if(!c.exists())throw Error('No existe configuracion/folios_2026. No se realizó ningún cambio.');if(c.data().anio!==2026||c.data().ultimo!==1)throw Error(`El contador no está en el estado esperado (año 2026, último 1). Valor actual: ${JSON.stringify({anio:c.data().anio,ultimo:c.data().ultimo})}. No se realizó ningún cambio.`);if(!lista.empty)throw Error(`La colección cotizaciones contiene ${lista.size} documento(s). No se importará nada hasta revisar posibles duplicados.`);habilitado=true;$('comprobacion').textContent='Verificación correcta: colección vacía, contador en 1 y permisos disponibles. Puedes autorizar la importación.';$('comprobacion').className='estado exito';$('confirmar').disabled=false;$('importar').disabled=!$('confirmar').checked}
+$('confirmar').addEventListener('change',()=>{$('importar').disabled=!habilitado||!$('confirmar').checked});
+$('importar').addEventListener('click',async()=>{if(!habilitado||!$('confirmar').checked||ocupado)return;ocupado=true;$('importar').disabled=true;$('confirmar').disabled=true;$('resultado').textContent='Guardando cuatro documentos y actualizando el contador en una transacción…';$('resultado').className='estado';try{
+await runTransaction(db,async tx=>{
+const [contador,...existentes]=await Promise.all([tx.get(counterRef),...refs.map(r=>tx.get(r))]);
+if(!contador.exists()||contador.data().anio!==2026||contador.data().ultimo!==1)throw Error('El contador cambió. Importación cancelada sin guardar datos.');
+if(existentes.some(s=>s.exists()))throw Error('Ya existe una cotización histórica con uno de estos identificadores. Importación cancelada.');
+for(let j=0;j<historicas.length;j++){
+const h=historicas[j],items=h.items.map(([nombre,precio,sku])=>({productoId:'',sku,nombre,descripcion:'Precio unitario tomado de la cotización original; cantidad 1 de referencia.',cantidad:1,precioUnitario:precio,importe:precio,metodoPrecio:'historico',costoUnitarioReferencia:null}));
+const total=Math.round(items.reduce((s,i)=>s+i.importe,0)*100)/100;
+const d={anio:2026,consecutivo:h.n,folio:`SAR-2026-${String(h.n).padStart(4,'0')}`,cliente:{nombre:'No indicado en documento original',contacto:''},emitidoEn:Timestamp.fromDate(new Date(`${h.fecha}T12:00:00-06:00`)),emitidoPor:'importacion_historica',emitidoPorCorreo:'',estado:'historica',origen:'PDF original de cotizaciones GamesAlone18',fechaOriginal:h.fecha,referencia:h.referencia,notas:`COTIZACIÓN HISTÓRICA DE REFERENCIA. Precios unitarios originales, no pedido confirmado. El PDF no identifica al cliente ni un total contratado. Vigencia original: ${h.vigencia}. La hora 12:00 es técnica para conservar la fecha, no hora real de emisión.`,vigenciaHasta:null,vigenciaTextoOriginal:h.vigencia,impuestos:{modo:'sin_desglose',tasaPorcentaje:null},descuentoPorcentaje:0,items,moneda:'MXN',totales:{base:total,descuentoMonto:0,iva:0,importe:total,total},totalEsReferencia:true,versionEsquema:1};
+tx.set(refs[j],d);
+}
+tx.update(counterRef,{ultimo:4,anio:2026,actualizadoEn:serverTimestamp(),actualizadoPor:auth.currentUser.uid});
+});
+$('resultado').textContent='Importación completada. Se registraron las cotizaciones 001–004 y el contador quedó en 4. La siguiente cotización nueva será SAR-2026-0005. Puedes comprobarlo en el historial.';$('resultado').className='estado exito';habilitado=false;$('comprobacion').textContent='Importación terminada; este botón queda deshabilitado para evitar duplicados.';$('confirmar').checked=false;
+}catch(e){console.error('Error en importación',e);$('resultado').textContent=`No se completó la importación: ${e.message||e}. No vuelvas a pulsar hasta revisar el estado en Firebase.`;$('resultado').className='estado error';try{await verificar()}catch(v){bloqueo(v.message,true)}}finally{ocupado=false;if(habilitado){$('confirmar').disabled=false;$('importar').disabled=!$('confirmar').checked}}});
+onAuthStateChanged(auth,async user=>{if(!user){location.replace('./index.html');return}try{await getDoc(doc(db,'configuracion','acceso'));$('app').hidden=false;$('cargando').hidden=true;await verificar()}catch(e){console.error(e);$('app').hidden=false;$('cargando').hidden=true;bloqueo(e.message||'No se pudo verificar el acceso.',true);if(e.code==='permission-denied'){try{await signOut(auth)}catch(_){}location.replace('./index.html')}}});
+</script>
+</body></html>
