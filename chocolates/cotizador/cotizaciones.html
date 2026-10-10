@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Cotizaciones emitidas | Chocolate Artístico Sarita</title>
+  <style>
+    :root{--vino:#642c3d;--oscuro:#47202d;--fondo:#faf6f2;--borde:#e8deda;--texto:#30282b;--gris:#71676b;--blanco:#fff}
+    *{box-sizing:border-box}body{margin:0;background:var(--fondo);color:var(--texto);font-family:"Segoe UI",Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}[hidden]{display:none!important}
+    .cargando{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;color:var(--vino)}
+    .cabecera{background:var(--oscuro);color:#fff;padding:20px 24px}.cabecera-interior{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.marca{margin:0;font:bold 23px Georgia,serif}.submarca{margin:6px 0 0;font-size:12px;opacity:.8}
+    .volver{display:inline-block;color:white;text-decoration:none;border:1px solid #ffffff70;border-radius:9px;padding:10px 14px}.volver:hover{background:#ffffff17}
+    .contenido{max-width:1180px;margin:auto;padding:32px 22px 60px}h1{margin:0 0 9px;color:var(--oscuro);font-size:clamp(25px,4vw,33px)}.descripcion{color:var(--gris);line-height:1.6;margin:0 0 26px}
+    .resumen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:22px}.indicador,.panel{background:#fff;border:1px solid var(--borde);border-radius:16px}.indicador{padding:20px}.indicador span{display:block;font-size:12px;color:var(--gris);margin-bottom:8px}.indicador strong{font-size:25px;color:var(--oscuro);overflow-wrap:anywhere}
+    .panel{padding:24px;margin-bottom:22px}.panel h2{margin:0 0 18px;color:var(--vino);font-size:20px}.filtros{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(120px,1fr));gap:12px;margin-bottom:20px}.campo label{display:block;font-size:12px;font-weight:700;margin-bottom:7px;color:var(--gris)}.campo input,.campo select{width:100%;padding:11px 12px;border:1px solid #d8cccf;border-radius:9px;background:#fff;color:var(--texto)}.campo input:focus,.campo select:focus{outline:2px solid #d8b7c0;border-color:var(--vino)}
+    .tabla-contenedor{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:780px}th,td{padding:13px 12px;text-align:left;border-bottom:1px solid #eee7e3;font-size:13px;vertical-align:top}th{background:#faf5f2;color:var(--oscuro)}.importe{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.folio{font-weight:700;color:var(--vino)}.etiqueta{display:inline-block;padding:5px 9px;border-radius:20px;background:#f3eae7;font-size:12px}.boton{border:0;border-radius:9px;background:var(--vino);color:#fff;padding:10px 14px;font-weight:700}.boton:hover{background:var(--oscuro)}.boton-secundario{background:#f3eae7;color:var(--oscuro)}.boton-secundario:hover{background:#e9dbd6}.acciones{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}.ayuda,.error{font-size:13px;color:var(--gris);line-height:1.5}.error{color:#a42d42}
+    .detalle-cabecera{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}.detalle-cabecera h2{margin-bottom:7px}.detalle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 22px}.dato{background:#faf7f5;border:1px solid #eee5e1;border-radius:11px;padding:13px;min-width:0}.dato span{display:block;color:var(--gris);font-size:12px;margin-bottom:5px}.dato strong{font-size:14px;overflow-wrap:anywhere;white-space:pre-wrap}.totales{margin:18px 0 0 auto;max-width:340px}.totales .linea{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:14px}.totales .final{border-top:2px solid var(--borde);margin-top:7px;padding-top:13px;font-weight:800;color:var(--oscuro);font-size:19px}.nota{font-size:12px;color:var(--gris);line-height:1.6}
+    @media(max-width:900px){.filtros{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.contenido{padding:24px 14px}.panel{padding:17px}.resumen{grid-template-columns:1fr}.filtros{grid-template-columns:1fr}.detalle-grid{grid-template-columns:1fr}.cabecera{padding:18px}}
+  </style>
+</head>
+<body>
+  <div id="cargando" class="cargando">Verificando acceso a las cotizaciones...</div>
+  <div id="aplicacion" hidden>
+    <header class="cabecera"><div class="cabecera-interior"><div><p class="marca">Chocolate Artístico Sarita</p><p class="submarca">Sistema privado de cotizaciones</p></div><a class="volver" href="./panel.html">← Volver al panel</a></div></header>
+    <main class="contenido">
+      <h1>Cotizaciones emitidas</h1>
+      <p class="descripcion">Consulta los documentos comerciales emitidos por los administradores. Los importes se muestran tal como quedaron registrados al emitir cada cotización.</p>
+      <section class="resumen" aria-label="Resumen de cotizaciones">
+        <div class="indicador"><span>Cotizaciones encontradas</span><strong id="totalCotizaciones">0</strong></div>
+        <div class="indicador"><span>Importe total encontrado</span><strong id="totalImporte">$0.00</strong></div>
+        <div class="indicador"><span>Última cotización</span><strong id="ultimoFolio" style="font-size:19px">—</strong></div>
+      </section>
+      <section class="panel">
+        <div class="acciones"><h2 style="margin:0">Historial</h2><button type="button" class="boton boton-secundario" id="recargar">Actualizar lista</button></div>
+        <div class="filtros">
+          <div class="campo"><label for="buscar">Folio o cliente</label><input id="buscar" type="search" placeholder="Ej. SAR-2026-0001"></div>
+          <div class="campo"><label for="estado">Estado</label><select id="estado"><option value="">Todos</option><option value="emitida">Emitida</option><option value="cancelada">Cancelada</option><option value="borrador">Borrador</option></select></div>
+          <div class="campo"><label for="desde">Desde</label><input id="desde" type="date"></div>
+          <div class="campo"><label for="hasta">Hasta</label><input id="hasta" type="date"></div>
+        </div>
+        <div class="tabla-contenedor"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Estado</th><th>Administrador</th><th class="importe">Total</th><th>Acción</th></tr></thead><tbody id="tablaCotizaciones"><tr><td colspan="7">Cargando...</td></tr></tbody></table></div>
+        <p class="ayuda" id="resultadoConteo" role="status"></p><p class="error" id="errorLista" role="alert"></p>
+      </section>
+      <section class="panel" id="detallePanel" hidden>
+        <div class="detalle-cabecera"><div><h2>Detalle de <span id="detalleFolio"></span></h2><p class="ayuda" style="margin:0">Copia de los datos almacenados al momento de emisión.</p></div><button type="button" class="boton boton-secundario" id="cerrarDetalle">Cerrar detalle</button></div>
+        <div class="detalle-grid" id="detalleDatos"></div>
+        <h2>Productos cotizados</h2>
+        <div class="tabla-contenedor"><table><thead><tr><th>Producto</th><th>Descripción / SKU</th><th class="importe">Cantidad</th><th class="importe">Precio unitario</th><th class="importe">Importe</th></tr></thead><tbody id="detalleItems"></tbody></table></div>
+        <div class="totales" id="detalleTotales"></div>
+        <p class="nota">Este módulo es de consulta. La generación de PDF y los controles de cancelación se desarrollarán por separado.</p>
+      </section>
+    </main>
+  </div>
+  <script type="module">
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import {getFirestore,collection,getDocs,doc,getDoc} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig={
+      apiKey:"AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain:"sarita-cotizador.firebaseapp.com",
+      projectId:"sarita-cotizador",
+      storageBucket:"sarita-cotizador.firebasestorage.app",
+      messagingSenderId:"798881105496",
+      appId:"1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+    const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+    const $=id=>document.getElementById(id);
+    const dinero=n=>Number(n??0).toLocaleString("es-MX",{style:"currency",currency:"MXN"});
+    const texto=v=>v==null||v===""?"—":String(v);
+    const fechaDe=v=>v&&typeof v.toDate==="function"?v.toDate():null;
+    const fechaTexto=v=>{const f=fechaDe(v);return f?f.toLocaleString("es-MX",{dateStyle:"medium",timeStyle:"short"}):"Sin fecha"};
+    const fechaISO=v=>{const f=fechaDe(v);if(!f)return "";const partes=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Mexico_City",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(f);const p=Object.fromEntries(partes.map(x=>[x.type,x.value]));return `${p.year}-${p.month}-${p.day}`};
+    let cotizaciones=[];
+    function celda(fila,valor,clase=""){const td=document.createElement("td");td.textContent=texto(valor);if(clase)td.className=clase;fila.appendChild(td);return td}
+    function dato(contenedor,etiqueta,valor){const div=document.createElement("div");div.className="dato";const a=document.createElement("span");a.textContent=etiqueta;const b=document.createElement("strong");b.textContent=texto(valor);div.append(a,b);contenedor.appendChild(div)}
+    function linea(contenedor,etiqueta,valor,final=false){const d=document.createElement("div");d.className="linea"+(final?" final":"");const a=document.createElement("span"),b=document.createElement("span");a.textContent=etiqueta;b.textContent=valor;d.append(a,b);contenedor.appendChild(d)}
+    function filtradas(){const q=$("buscar").value.trim().toLocaleLowerCase("es-MX"),estado=$("estado").value,desde=$("desde").value,hasta=$("hasta").value;return cotizaciones.filter(c=>{const nombre=c.cliente?.nombre||"";const coincide=`${c.folio||""} ${nombre}`.toLocaleLowerCase("es-MX").includes(q);const f=fechaISO(c.emitidoEn);return coincide&&(!estado||c.estado===estado)&&(!desde||(f&&f>=desde))&&(!hasta||(f&&f<=hasta))})}
+    function renderizar(){const datos=filtradas(),tbody=$("tablaCotizaciones");tbody.replaceChildren();$("totalCotizaciones").textContent=datos.length;$("totalImporte").textContent=dinero(datos.reduce((s,c)=>s+Number(c.totales?.total||0),0));$("ultimoFolio").textContent=datos[0]?.folio||"—";$("resultadoConteo").textContent=`${datos.length} cotización(es) encontrada(s).`;
+      if(!datos.length){const tr=document.createElement("tr");celda(tr,"No hay cotizaciones que coincidan con los filtros.").colSpan=7;tbody.appendChild(tr);return}
+      for(const c of datos){const tr=document.createElement("tr");celda(tr,c.folio||c.id,"folio");celda(tr,fechaTexto(c.emitidoEn));celda(tr,c.cliente?.nombre);const estado=celda(tr,c.estado||"Sin estado");estado.className="etiqueta";celda(tr,c.emitidoPorCorreo||c.emitidoPor||"—");celda(tr,dinero(c.totales?.total),"importe");const td=document.createElement("td"),btn=document.createElement("button");btn.type="button";btn.className="boton boton-secundario";btn.textContent="Ver detalle";btn.addEventListener("click",()=>mostrarDetalle(c));td.appendChild(btn);tr.appendChild(td);tbody.appendChild(tr)}
+    }
+    function mostrarDetalle(c){$("detallePanel").hidden=false;$("detalleFolio").textContent=c.folio||c.id;const datos=$("detalleDatos");datos.replaceChildren();dato(datos,"Cliente",c.cliente?.nombre);dato(datos,"Contacto",c.cliente?.contacto);dato(datos,"Fecha de emisión",fechaTexto(c.emitidoEn));dato(datos,"Estado",c.estado);dato(datos,"Administrador",c.emitidoPorCorreo||c.emitidoPor);dato(datos,"Referencia",c.referencia);dato(datos,"Vigencia hasta",c.vigenciaHasta?fechaTexto(c.vigenciaHasta):"No especificada");dato(datos,"Moneda",c.moneda||"MXN");dato(datos,"Notas",c.notas);
+      const tbody=$("detalleItems");tbody.replaceChildren();const items=Array.isArray(c.items)?c.items:[];if(!items.length){const tr=document.createElement("tr");celda(tr,"Sin productos registrados.").colSpan=5;tbody.appendChild(tr)}else for(const i of items){const tr=document.createElement("tr");celda(tr,i.nombre);celda(tr,[i.descripcion,i.sku?`SKU: ${i.sku}`:""].filter(Boolean).join(" · ")||"—");celda(tr,i.cantidad,"importe");celda(tr,dinero(i.precioUnitario),"importe");celda(tr,dinero(i.importe),"importe");tbody.appendChild(tr)}
+      const t=$("detalleTotales");t.replaceChildren();linea(t,"Base",dinero(c.totales?.base));linea(t,`Descuento (${Number(c.descuentoPorcentaje||0)}%)`,"− "+dinero(c.totales?.descuentoMonto));const modo=c.impuestos?.modo;const etiquetas={sin_desglose:"Sin IVA desglosado",incluido:"IVA incluido",adicional:"IVA adicional"};linea(t,"Modalidad de IVA",etiquetas[modo]||texto(modo));if(modo!=="sin_desglose")linea(t,`IVA (${c.impuestos?.tasaPorcentaje??"—"}%)`,dinero(c.totales?.iva));linea(t,"Total",dinero(c.totales?.total),true);$("detallePanel").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    async function cargar(){ $("errorLista").textContent="";$("recargar").disabled=true;try{const snapshot=await getDocs(collection(db,"cotizaciones"));cotizaciones=snapshot.docs.map(d=>({id:d.id,...d.data()}));cotizaciones.sort((a,b)=>(fechaDe(b.emitidoEn)?.getTime()||0)-(fechaDe(a.emitidoEn)?.getTime()||0)||(Number(b.consecutivo||0)-Number(a.consecutivo||0)));renderizar()}catch(e){console.error("Error al consultar cotizaciones",e);$("errorLista").textContent="No fue posible consultar las cotizaciones. Revisa tu conexión y permisos.";cotizaciones=[];renderizar()}finally{$("recargar").disabled=false}}
+    for(const id of ["buscar","estado","desde","hasta"])$(id).addEventListener(id==="buscar"?"input":"change",renderizar);
+    $("recargar").addEventListener("click",cargar);$("cerrarDetalle").addEventListener("click",()=>{$("detallePanel").hidden=true});
+    onAuthStateChanged(auth,async user=>{$("aplicacion").hidden=true;$("cargando").hidden=false;if(!user){location.replace("./index.html");return}try{await getDoc(doc(db,"configuracion","acceso"));$("aplicacion").hidden=false;$("cargando").hidden=true;await cargar()}catch(e){console.error("Error de acceso",e);if(e.code==="permission-denied"){await signOut(auth);location.replace("./index.html")}else{$("cargando").textContent="No fue posible verificar el acceso. Revisa tu conexión y actualiza."}}});
+  </script>
+</body>
+</html>
