@@ -6,3 +6,6 @@
 @media(max-width:700px){.tarjetas{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.contenido{padding:23px 13px}.panel{padding:17px}.ancho{grid-column:auto}}
 /* Producción: planificación y detalle */
 .resumen{background:#faf6f2;border:1px solid #e8deda;border-radius:12px;padding:16px;margin:18px 0;line-height:1.55}.resumen ul{margin:10px 0;padding-left:22px}.resumen p{color:#756b6d;margin-bottom:0}.tabla button{white-space:nowrap}
+
+/* Etapa 4B */
+.cantidad-consumo{width:110px;max-width:100%;padding:9px;border:1px solid #e8deda;border-radius:8px}#fabricacion{scroll-margin-top:20px}#fabricacion h3{color:#642c3d;margin:18px 0 10px}.tabla{overflow-x:auto}.tabla table{min-width:740px}
