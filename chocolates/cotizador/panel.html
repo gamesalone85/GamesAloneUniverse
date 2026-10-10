@@ -1,13 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Panel administrativo | Chocolate Artístico Sarita</title>
-
   <style>
     :root {
       --vino: #642c3d;
@@ -15,285 +13,111 @@
       --fondo: #faf6f2;
       --borde: #e8deda;
       --texto: #30282b;
+      --secundario: #756b6d;
     }
-
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: var(--fondo);
-      color: var(--texto);
-    }
-
+    body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: var(--fondo); color: var(--texto); }
     [hidden] { display: none !important; }
-
-    .cargando {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      text-align: center;
-      color: var(--vino);
-    }
-
-    .cabecera {
-      background: var(--oscuro);
-      color: #fff;
-      padding: 20px 28px;
-    }
-
-    .cabecera-interior {
-      max-width: 1150px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .marca {
-      margin: 0;
-      font-family: Georgia, serif;
-      font-size: 23px;
-    }
-
-    .submarca {
-      margin: 6px 0 0;
-      font-size: 12px;
-      opacity: .8;
-    }
-
-    .salir {
-      padding: 11px 16px;
-      border: 1px solid rgba(255,255,255,.5);
-      border-radius: 9px;
-      background: transparent;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .salir:hover {
-      background: rgba(255,255,255,.12);
-    }
-
-    .contenido {
-      max-width: 1150px;
-      margin: 0 auto;
-      padding: 38px 24px;
-    }
-
-    .bienvenida h1 {
-      margin: 0 0 8px;
-      color: var(--oscuro);
-      font-size: clamp(25px, 4vw, 34px);
-    }
-
-    .bienvenida p {
-      color: #76696d;
-      line-height: 1.6;
-    }
-
-    .usuario {
-      margin-top: 14px;
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .tarjetas {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-      margin-top: 32px;
-    }
-
-    .tarjeta {
-      min-height: 180px;
-      padding: 26px;
-      background: #fff;
-      border: 1px solid var(--borde);
-      border-radius: 17px;
-      box-shadow: 0 8px 28px rgba(60,30,35,.04);
-    }
-
-    .tarjeta h2 {
-      margin: 0 0 12px;
-      color: var(--vino);
-      font-size: 21px;
-    }
-
-    .tarjeta p {
-      margin: 0;
-      color: #756b6d;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .estado {
-      display: inline-block;
-      margin-top: 22px;
-      padding: 7px 11px;
-      border-radius: 7px;
-      background: #f4eee9;
-      color: #756267;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .pie {
-      margin-top: 42px;
-      text-align: center;
-      font-size: 12px;
-      color: #8a7c80;
-    }
-
+    .cargando { min-height: 100vh; display: grid; place-items: center; padding: 24px; text-align: center; color: var(--vino); }
+    .cabecera { background: var(--oscuro); color: #fff; padding: 20px 28px; }
+    .cabecera-interior { max-width: 1150px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .marca { margin: 0; font-family: Georgia, serif; font-size: 23px; }
+    .submarca { margin: 6px 0 0; font-size: 12px; opacity: .8; }
+    .salir { padding: 11px 16px; border: 1px solid rgba(255,255,255,.5); border-radius: 9px; background: transparent; color: #fff; cursor: pointer; font-weight: 600; }
+    .salir:hover { background: rgba(255,255,255,.12); }
+    .salir:disabled { opacity: .6; cursor: wait; }
+    .contenido { max-width: 1150px; margin: 0 auto; padding: 38px 24px 55px; }
+    .bienvenida h1 { margin: 0 0 8px; color: var(--oscuro); font-size: clamp(25px, 4vw, 34px); }
+    .bienvenida p { color: #76696d; line-height: 1.6; }
+    .usuario { margin-top: 14px; font-size: 13px; overflow-wrap: anywhere; }
+    .seccion-titulo { margin: 35px 0 0; font-size: 19px; color: var(--oscuro); }
+    .tarjetas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 17px; }
+    .tarjeta { display: flex; flex-direction: column; align-items: flex-start; min-height: 190px; padding: 26px; background: #fff; border: 1px solid var(--borde); border-radius: 17px; box-shadow: 0 8px 28px rgba(60,30,35,.04); }
+    .tarjeta h3 { margin: 0 0 12px; color: var(--vino); font-size: 21px; }
+    .tarjeta p { margin: 0; color: var(--secundario); line-height: 1.6; font-size: 14px; }
+    .enlace-modulo { display: inline-flex; align-items: center; justify-content: center; margin-top: auto; padding: 11px 16px; background: var(--vino); color: #fff; border-radius: 9px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background .2s ease; }
+    .enlace-modulo:hover { background: var(--oscuro); }
+    .enlace-modulo:focus-visible, .salir:focus-visible { outline: 3px solid #c99cab; outline-offset: 3px; }
+    .tarjeta p + .enlace-modulo { margin-top: 22px; }
+    .estado { display: inline-block; margin-top: 22px; padding: 7px 11px; border-radius: 7px; background: #f4eee9; color: #756267; font-size: 12px; font-weight: 600; }
+    .pie { margin-top: 42px; text-align: center; font-size: 12px; color: #8a7c80; }
     @media (max-width: 650px) {
-      .tarjetas {
-        grid-template-columns: 1fr;
-      }
-
-      .cabecera {
-        padding: 20px;
-      }
-
-      .contenido {
-        padding: 28px 18px;
-      }
+      .tarjetas { grid-template-columns: 1fr; }
+      .cabecera { padding: 20px; }
+      .contenido { padding: 28px 18px 45px; }
+      .tarjeta { min-height: 170px; padding: 22px; }
     }
-
-    .enlace-modulo {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 22px;
-  padding: 11px 16px;
-  background: var(--vino);
-  color: #fff;
-  border-radius: 9px;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background .2s ease;
-}
-
-.enlace-modulo:hover {
-  background: var(--oscuro);
-}
-
-.enlace-modulo:focus-visible {
-  outline: 3px solid #c99cab;
-  outline-offset: 3px;
-}
   </style>
 </head>
-
 <body>
-
-  <div class="cargando" id="cargando">
-    Verificando acceso administrativo...
-  </div>
+  <div class="cargando" id="cargando" role="status">Verificando acceso administrativo...</div>
 
   <div id="panel" hidden>
-
     <header class="cabecera">
       <div class="cabecera-interior">
         <div>
-          <h1 class="marca">Chocolate Artístico Sarita</h1>
+          <p class="marca">Chocolate Artístico Sarita</p>
           <p class="submarca">Sistema privado de cotizaciones</p>
         </div>
-
-        <button class="salir" id="cerrarSesion" type="button">
-          Cerrar sesión
-        </button>
+        <button class="salir" id="cerrarSesion" type="button">Cerrar sesión</button>
       </div>
     </header>
 
     <main class="contenido">
-
-      <section class="bienvenida">
-        <h1>Panel administrativo</h1>
-
-        <p>
-          Bienvenido al centro de gestión de cotizaciones,
-          productos y costos de Chocolate Artístico Sarita.
-        </p>
-
-        <p class="usuario">
-          Sesión iniciada como:
-          <strong id="correoUsuario"></strong>
-        </p>
+      <section class="bienvenida" aria-labelledby="tituloPanel">
+        <h1 id="tituloPanel">Panel administrativo</h1>
+        <p>Centro de gestión de productos, materiales y costos de Chocolate Artístico Sarita.</p>
+        <p class="usuario">Sesión iniciada como: <strong id="correoUsuario"></strong></p>
       </section>
 
-      <section class="tarjetas" aria-label="Módulos del sistema">
+      <section aria-labelledby="tituloModulos">
+        <h2 class="seccion-titulo" id="tituloModulos">Módulos disponibles</h2>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <h3>Materiales y costos</h3>
+            <p>Administra chocolates, ingredientes, empaques, proveedores y precios de compra.</p>
+            <a href="./materiales.html" class="enlace-modulo">Administrar materiales →</a>
+          </article>
 
-        <article class="tarjeta">
-          <h2>Materiales y costos</h2>
+          <article class="tarjeta">
+            <h3>Historial de costos</h3>
+            <p>Consulta movimientos de precios, cantidades, presentaciones y costos unitarios anteriores.</p>
+            <a href="./historial-costos.html" class="enlace-modulo">Consultar historial →</a>
+          </article>
 
-            <p>
-                Administra chocolates, ingredientes, empaques,
-                proveedores y precios de compra.
-            </p>
-
-            <a href="./materiales.html" class="enlace-modulo">
-                Administrar materiales →
-            </a>
-        </article>
-
-        <article class="tarjeta">
-          <h2>Cotizador</h2>
-          <p>
-            Cálculo de precios, cantidades, empaques,
-            mano de obra y margen de utilidad.
-          </p>
-          <span class="estado">Próximamente</span>
-        </article>
-
-        <article class="tarjeta">
-          <h2>Cotizaciones</h2>
-          <p>
-            Elaboración de propuestas comerciales
-            y generación de documentos PDF.
-          </p>
-          <span class="estado">Próximamente</span>
-        </article>
-
-        <article class="tarjeta">
-          <h2>Historial</h2>
-          <p>
-            Consulta de cotizaciones realizadas
-            por cualquiera de los dos administradores.
-          </p>
-          <span class="estado">Próximamente</span>
-        </article>
-
+          <article class="tarjeta">
+            <h3>Catálogo de productos</h3>
+            <p>Crea productos con sus materiales, empaques y gastos. Define precios fijos o calculados por margen.</p>
+            <a href="./productos.html" class="enlace-modulo">Administrar productos →</a>
+          </article>
+        </div>
       </section>
 
-      <footer class="pie">
-        Acceso exclusivo para administradores
-        — Chocolate Artístico Sarita
-      </footer>
+      <section aria-labelledby="tituloProximos">
+        <h2 class="seccion-titulo" id="tituloProximos">Próximamente</h2>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <h3>Cotizador comercial</h3>
+            <p>Prepara cotizaciones para clientes con productos, cantidades, precios y folios consecutivos.</p>
+            <span class="estado">En desarrollo</span>
+          </article>
 
+          <article class="tarjeta">
+            <h3>Cotizaciones e historial</h3>
+            <p>Consulta cotizaciones emitidas por ambos administradores y descarga sus documentos PDF.</p>
+            <span class="estado">En desarrollo</span>
+          </article>
+        </div>
+      </section>
+
+      <footer class="pie">Acceso exclusivo para administradores — Chocolate Artístico Sarita</footer>
     </main>
   </div>
 
   <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from
-      "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from
-      "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
@@ -307,13 +131,12 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-
     const cargando = document.getElementById("cargando");
     const panel = document.getElementById("panel");
     const correoUsuario = document.getElementById("correoUsuario");
     const cerrarSesion = document.getElementById("cerrarSesion");
 
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, async user => {
       panel.hidden = true;
       cargando.hidden = false;
 
@@ -323,39 +146,34 @@
       }
 
       try {
-        // Firestore permite esta lectura únicamente
-        // a los dos UID administrativos autorizados.
+        // Las reglas de Firestore autorizan esta lectura solo para los UID permitidos.
         await getDoc(doc(db, "configuracion", "acceso"));
-
-        // Mostrar el panel solo después de validar.
         correoUsuario.textContent = user.email || "Administrador";
         panel.hidden = false;
         cargando.hidden = true;
-
       } catch (error) {
-        console.error("Error de autorización:", error.code);
-
-        try {
-          await signOut(auth);
-        } catch (_) {}
-
-        window.location.replace("./index.html");
+        console.error("No fue posible validar el acceso:", error.code || error);
+        if (error.code === "permission-denied") {
+          try { await signOut(auth); } catch (_) {}
+          window.location.replace("./index.html");
+          return;
+        }
+        cargando.textContent = "No se pudo verificar el acceso. Revisa tu conexión y actualiza la página.";
       }
     });
 
     cerrarSesion.addEventListener("click", async () => {
       cerrarSesion.disabled = true;
-
       try {
         await signOut(auth);
         window.location.replace("./index.html");
       } catch (error) {
-        console.error("Error al cerrar sesión:", error.code);
+        console.error("Error al cerrar sesión:", error.code || error);
         cerrarSesion.disabled = false;
         alert("No fue posible cerrar sesión. Inténtalo nuevamente.");
       }
     });
   </script>
-
 </body>
 </html>
+
