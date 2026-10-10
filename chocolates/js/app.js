@@ -2294,10 +2294,10 @@ document.addEventListener("DOMContentLoaded", () => {
             "whatsappBot"
         );
 
-    const whatsappToggle =
-        document.getElementById(
-            "whatsappToggle"
-        );
+   const whatsappToggle =
+    document.getElementById(
+        "toggleWhatsapp"
+    );
 
     const whatsappClose =
         document.getElementById(
