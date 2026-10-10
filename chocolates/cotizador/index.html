@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>Acceso privado | Chocolate Artístico Sarita</title>
+
+  <style>
+    :root {
+      --vino: #642c3d;
+      --vino-oscuro: #47202d;
+      --crema: #faf5ee;
+      --texto: #30282b;
+      --borde: #e8ded8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, #ead7cb, transparent 45%),
+        linear-gradient(135deg, #fffaf4, #eee0d9);
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--texto);
+    }
+
+    .login {
+      width: 100%;
+      max-width: 430px;
+      padding: 40px 34px;
+      background: #fff;
+      border: 1px solid var(--borde);
+      border-radius: 22px;
+      box-shadow: 0 20px 65px rgba(60, 30, 35, .12);
+    }
+
+    .marca {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .marca-icono {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: var(--crema);
+      color: var(--vino);
+      font-family: Georgia, serif;
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-family: Georgia, serif;
+      font-size: 27px;
+      color: var(--vino-oscuro);
+    }
+
+    .subtitulo {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #75676d;
+    }
+
+    .campo {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid #d9cdd0;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--texto);
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--vino);
+      box-shadow: 0 0 0 3px rgba(100, 44, 61, .12);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--vino);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--vino-oscuro);
+    }
+
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .mensaje {
+      min-height: 22px;
+      margin: 16px 0 0;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #a42d42;
+    }
+
+    .pie {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--borde);
+      text-align: center;
+      color: #85777d;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+      .login {
+        padding: 32px 22px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="login">
+
+    <div class="marca">
+      <div class="marca-icono" aria-hidden="true">S</div>
+
+      <h1>Chocolate Artístico Sarita</h1>
+
+      <p class="subtitulo">
+        Sistema privado de cotizaciones<br>
+        Acceso exclusivo para administradores
+      </p>
+    </div>
+
+    <form id="loginForm">
+
+      <div class="campo">
+        <label for="correo">Correo electrónico</label>
+
+        <input
+          type="email"
+          id="correo"
+          name="correo"
+          autocomplete="username"
+          placeholder="correo@ejemplo.com"
+          required
+        >
+      </div>
+
+      <div class="campo">
+        <label for="password">Contraseña</label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          placeholder="Ingresa tu contraseña"
+          required
+        >
+      </div>
+
+      <button type="submit" id="btnLogin">
+        Iniciar sesión
+      </button>
+
+      <p
+        class="mensaje"
+        id="mensaje"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+    </form>
+
+    <div class="pie">
+      Panel administrativo privado<br>
+      Chocolate Artístico Sarita
+    </div>
+
+  </main>
+
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqY0gJ4",
+      authDomain: "sarita-cotizador.firebaseapp.com",
+      projectId: "sarita-cotizador",
+      storageBucket: "sarita-cotizador.firebasestorage.app",
+      messagingSenderId: "798881105496",
+      appId: "1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("loginForm");
+    const boton = document.getElementById("btnLogin");
+    const mensaje = document.getElementById("mensaje");
+
+    async function verificarAdministrador(user) {
+      // Esta lectura está protegida por las reglas de Firestore.
+      // Solo los dos UID autorizados pueden realizarla.
+      await getDoc(doc(db, "configuracion", "acceso"));
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+
+      try {
+        await verificarAdministrador(user);
+
+        // Activaremos esta redirección cuando exista panel.html.
+        // window.location.replace("./panel.html");
+      } catch (error) {
+        await signOut(auth);
+        mensaje.textContent = "Esta cuenta no tiene acceso al cotizador.";
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      mensaje.textContent = "";
+      boton.disabled = true;
+      boton.textContent = "Verificando acceso...";
+
+      const correo = document.getElementById("correo").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const credenciales = await signInWithEmailAndPassword(
+          auth,
+          correo,
+          password
+        );
+
+        await verificarAdministrador(credenciales.user);
+
+        mensaje.style.color = "#26734d";
+        mensaje.textContent = "Acceso autorizado correctamente.";
+
+      } catch (error) {
+        if (auth.currentUser) {
+          await signOut(auth);
+        }
+
+        mensaje.style.color = "#a42d42";
+
+        if (error.code === "permission-denied") {
+          mensaje.textContent = "Esta cuenta no está autorizada.";
+        } else {
+          mensaje.textContent =
+            "No fue posible iniciar sesión. Verifica tus datos e inténtalo nuevamente.";
+        }
+
+      } finally {
+        boton.disabled = false;
+        boton.textContent = "Iniciar sesión";
+      }
+    });
+  </script>
+
+</body>
+</html>
