@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Productos terminados | Chocolate Artístico Sarita</title>
+  <style>
+    :root{--vino:#642c3d;--oscuro:#47202d;--fondo:#faf6f2;--borde:#e8deda;--texto:#30282b;--gris:#71676b;--verde:#26734d;--rojo:#a42d42}
+    *{box-sizing:border-box}body{margin:0;background:var(--fondo);color:var(--texto);font-family:Segoe UI,Arial,sans-serif}[hidden]{display:none!important}button,input,select,textarea{font:inherit}button{cursor:pointer}
+    .cargando{min-height:100vh;display:grid;place-items:center;text-align:center;padding:24px;color:var(--vino)}
+    .cabecera{background:var(--oscuro);color:#fff;padding:20px 24px}.cabecera-interior{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.marca{margin:0;font:bold 23px Georgia,serif}.submarca{margin:6px 0 0;font-size:12px;opacity:.8}.volver{color:white;text-decoration:none;padding:10px 14px;border:1px solid #ffffff70;border-radius:9px}
+    main{max-width:1200px;margin:auto;padding:32px 22px 60px}.encabezado{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}h1{margin:0 0 8px;font-size:clamp(25px,4vw,32px);color:var(--oscuro)}.descripcion{margin:0;color:var(--gris);line-height:1.6}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:9px;padding:11px 16px;background:var(--vino);color:white;font-weight:700;text-decoration:none}.btn:hover{background:var(--oscuro)}.btn:disabled{opacity:.5;cursor:wait}.btn-sec{background:#f3eae7;color:var(--oscuro)}.btn-sec:hover{background:#e9dbd6}.btn-borde{background:white;color:var(--vino);border-color:var(--vino)}.btn-borde:hover{background:#f8eff2}.btn:focus-visible,.editar:focus-visible{outline:3px solid #c99cab;outline-offset:3px}
+    .panel{background:#fff;border:1px solid var(--borde);border-radius:17px;padding:24px;margin-bottom:24px}.panel h2{margin:0 0 18px;font-size:20px;color:var(--vino)}.panel h3{font-size:16px;color:var(--oscuro);margin:25px 0 12px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.campo label{display:block;margin-bottom:7px;font-size:13px;font-weight:700}.campo input,.campo select,.campo textarea,.buscador{width:100%;padding:12px;border:1px solid #d8cccf;border-radius:9px;background:#fff;color:var(--texto)}.campo textarea{resize:vertical;min-height:74px}.campo input:focus,.campo select:focus,.campo textarea:focus{outline:2px solid #d8b7c0;border-color:var(--vino)}.campo small,.nota{display:block;font-size:12px;color:var(--gris);line-height:1.6;margin-top:7px}.ancho{grid-column:1/-1}.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.mensaje{min-height:20px;margin:14px 0 0;font-size:14px}
+    .ingredientes{display:grid;gap:10px}.ingrediente{display:grid;grid-template-columns:minmax(0,2fr) minmax(110px,1fr) minmax(90px,1fr) auto;gap:10px;align-items:end;padding:12px;background:#faf7f5;border:1px solid var(--borde);border-radius:10px}.ingrediente label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.ingrediente select,.ingrediente input{width:100%;padding:10px;border:1px solid #d8cccf;border-radius:8px;background:#fff}.ingrediente .costo{font-size:12px;color:var(--gris);padding:10px 0}.quitar{border:1px solid #e2b9c1;border-radius:8px;background:#fff;color:var(--rojo);padding:10px 12px}.vacío{font-size:13px;color:var(--gris);padding:14px;background:#faf7f5;border-radius:9px}
+    .resumen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}.metrica{border:1px solid var(--borde);border-radius:12px;padding:16px;background:#fdfaf8}.metrica span{display:block;color:var(--gris);font-size:12px;margin-bottom:8px}.metrica strong{font-size:20px;color:var(--oscuro)}.alerta{color:var(--rojo)!important}.ok{color:var(--verde)!important}.nota-importante{padding:12px 14px;background:#fff8e9;border:1px solid #efdfb6;border-radius:10px;font-size:12px;line-height:1.6;color:#695528;margin-top:16px}
+    .tabla-contenedor{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:830px}th,td{padding:13px 11px;border-bottom:1px solid #eee7e3;text-align:left;font-size:13px}th{background:#faf5f2;color:var(--oscuro)}.editar{border:1px solid #dbcbd0;background:#fff;color:var(--vino);border-radius:8px;padding:8px 12px;font-weight:700}.editar:hover{background:#f8f0f2}.etiqueta{display:inline-block;padding:5px 9px;border-radius:20px;background:#f4eee9;font-size:12px}.fila-filtros{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}.fila-filtros input{flex:1;min-width:180px}.fila-filtros select{padding:11px;border:1px solid var(--borde);border-radius:9px;background:#fff}
+    @media(max-width:760px){.form-grid,.resumen{grid-template-columns:1fr 1fr}.ingrediente{grid-template-columns:1fr 1fr}.ingrediente>div:first-child{grid-column:1/-1}.ingrediente .quitar{width:100%}}@media(max-width:520px){main{padding:24px 14px}.panel{padding:18px}.form-grid,.resumen{grid-template-columns:1fr}.encabezado>.btn{width:100%}.acciones .btn{width:100%}}
+  </style>
+</head>
+<body>
+  <div id="cargando" class="cargando">Verificando acceso al catálogo de productos...</div>
+  <div id="aplicacion" hidden>
+    <header class="cabecera"><div class="cabecera-interior"><div><p class="marca">Chocolate Artístico Sarita</p><p class="submarca">Productos terminados · Costos y precios de venta</p></div><a class="volver" href="./panel.html">← Volver al panel</a></div></header>
+    <main>
+      <div class="encabezado"><div><h1>Catálogo de productos</h1><p class="descripcion">Combina materias primas, empaques y costos adicionales para establecer el precio de venta.</p></div><button id="nuevo" class="btn" type="button">+ Nuevo producto</button></div>
+      <section class="panel" id="panelFormulario" hidden>
+        <h2 id="tituloFormulario">Nuevo producto</h2>
+        <form id="formProducto">
+          <div class="form-grid">
+            <div class="campo"><label for="nombre">Nombre del producto *</label><input id="nombre" maxlength="120" required placeholder="Ej. Bolsa de 12 calaveritas"></div>
+            <div class="campo"><label for="sku">Clave interna (opcional)</label><input id="sku" maxlength="40" placeholder="Ej. CAL-012"></div>
+            <div class="campo ancho"><label for="descripcion">Descripción (opcional)</label><textarea id="descripcion" maxlength="500" placeholder="Presentación, decoración o detalles"></textarea></div>
+          </div>
+          <h3>Materiales utilizados por unidad de producto</h3>
+          <div id="ingredientes" class="ingredientes"></div>
+          <div class="acciones"><button id="agregarIngrediente" class="btn btn-borde" type="button">+ Agregar material o empaque</button><a href="./materiales.html" class="btn btn-sec">Administrar materiales</a></div>
+          <p class="nota">Las cantidades se expresan en gramos para chocolates e ingredientes, y en piezas para empaques. Los costos se consultan del inventario vigente.</p>
+          <h3>Costos adicionales por producto</h3>
+          <div class="form-grid">
+            <div class="campo"><label for="manoObra">Mano de obra (MXN)</label><input id="manoObra" type="number" min="0" step="0.01" value="0" required></div>
+            <div class="campo"><label for="otrosCostos">Otros costos (MXN)</label><input id="otrosCostos" type="number" min="0" step="0.01" value="0" required><small>Decoración, etiquetas, transporte u otros costos por unidad.</small></div>
+          </div>
+          <h3>Precio de venta</h3>
+          <div class="form-grid">
+            <div class="campo"><label for="metodo">Método de precio *</label><select id="metodo"><option value="fijo">Precio fijo</option><option value="calculado">Calculado por margen de utilidad</option></select></div>
+            <div class="campo" id="campoPrecioFijo"><label for="precioFijo">Precio de venta fijo (MXN)</label><input id="precioFijo" type="number" min="0" step="0.01" value="0"></div>
+            <div class="campo" id="campoMargen" hidden><label for="margen">Margen de utilidad deseado (%)</label><input id="margen" type="number" min="0" max="99.99" step="0.01" value="30"><small>Margen sobre precio de venta, no recargo sobre costo.</small></div>
+          </div>
+          <div class="resumen" aria-live="polite">
+            <div class="metrica"><span>Materiales y empaques</span><strong id="resMateriales">$0.00</strong></div>
+            <div class="metrica"><span>Costo total unitario</span><strong id="resCosto">$0.00</strong></div>
+            <div class="metrica"><span>Precio de venta</span><strong id="resVenta">$0.00</strong></div>
+            <div class="metrica"><span>Utilidad / margen real</span><strong id="resUtilidad">$0.00 / 0%</strong></div>
+          </div>
+          <div class="nota-importante">El precio calculado usa <strong>costo ÷ (1 − margen/100)</strong>. El precio fijo permanece igual aunque cambien los costos. El precio calculado se actualizará al consultar el catálogo con los costos vigentes. Al guardar, también se almacena una referencia de costos y precios de ese momento. Las futuras cotizaciones deberán guardar una copia independiente al emitirse.</div>
+          <div class="acciones"><button id="guardar" class="btn" type="submit">Guardar producto</button><button id="cancelar" class="btn btn-sec" type="button">Cancelar</button></div>
+          <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="panel"><h2>Productos registrados</h2><div class="fila-filtros"><input class="buscador" id="buscar" type="search" placeholder="Buscar producto o clave..." aria-label="Buscar producto"><select id="filtrarMetodo" aria-label="Filtrar método"><option value="">Todos los precios</option><option value="fijo">Precio fijo</option><option value="calculado">Calculado</option></select></div><div class="tabla-contenedor"><table><thead><tr><th>Producto</th><th>Clave</th><th>Método</th><th>Costo vigente</th><th>Precio vigente</th><th>Utilidad estimada</th><th>Acción</th></tr></thead><tbody id="tabla"><tr><td colspan="7">Cargando productos...</td></tr></tbody></table></div><p class="nota">Las cifras del catálogo son estimaciones actuales. No sustituyen el historial de costos ni los importes congelados de una cotización emitida.</p></section>
+    </main>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain: "sarita-cotizador.firebaseapp.com",
+      projectId: "sarita-cotizador",
+      storageBucket: "sarita-cotizador.firebasestorage.app",
+      messagingSenderId: "798881105496",
+      appId: "1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const $ = id => document.getElementById(id);
+    const moneda = n => Number(n).toLocaleString("es-MX",{style:"currency",currency:"MXN"});
+    const numero = n => Number(n).toLocaleString("es-MX",{maximumFractionDigits:4});
+    const redondear = n => Math.round((n + Number.EPSILON)*100)/100;
+    const categorias = ["materias_primas","empaques"];
+    let materiales = [], productos = [], editando = null, usuarioActual = null, guardando = false;
+
+    function baseMaterial(m){return m.unidad === "kg" ? Number(m.cantidad)*1000 : Number(m.cantidad);}
+    function unidadBase(m){return m.unidad === "pieza" ? "pieza" : "g";}
+    function costoBase(m){const base=baseMaterial(m);return base>0 ? Number(m.precio)/base : NaN;}
+    function clave(m){return `${m.coleccion}/${m.id}`;}
+    function materialPorClave(id){return materiales.find(m=>clave(m)===id);}
+    function mensaje(texto,error=false){$("mensaje").style.color=error?"var(--rojo)":"var(--gris)";$("mensaje").textContent=texto;}
+    function celda(fila,valor){const td=document.createElement("td");td.textContent=String(valor??"");fila.appendChild(td);return td;}
+    function numeroNoNegativo(id){const v=Number($(id).value);return $(id).value.trim()!=="" && Number.isFinite(v) && v>=0 ? v : NaN;}
+    function ingredienteFilas(){return [...$("ingredientes").querySelectorAll(".ingrediente")];}
+
+    function agregarFila(valor="",cantidad=""){
+      const fila=document.createElement("div");fila.className="ingrediente";
+      const campoMaterial=document.createElement("div");const etiqueta=document.createElement("label");etiqueta.textContent="Material / empaque";
+      const selector=document.createElement("select");selector.required=true;selector.setAttribute("aria-label","Material o empaque");
+      const inicial=document.createElement("option");inicial.value="";inicial.textContent="Selecciona un material";selector.appendChild(inicial);
+      for(const m of [...materiales].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es"))){
+        const opcion=document.createElement("option");opcion.value=clave(m);opcion.textContent=`${m.nombre} · ${moneda(m.precio)} / ${numero(m.cantidad)} ${m.unidad}`;selector.appendChild(opcion);
+      }
+      selector.value=valor;campoMaterial.append(etiqueta,selector);
+      const campoCantidad=document.createElement("div");const etCantidad=document.createElement("label");etCantidad.textContent="Cantidad utilizada";
+      const input=document.createElement("input");input.type="number";input.min="0.000001";input.step="any";input.required=true;input.value=cantidad;input.setAttribute("aria-label","Cantidad utilizada");campoCantidad.append(etCantidad,input);
+      const costo=document.createElement("div");costo.className="costo";costo.textContent="Selecciona material";
+      const quitar=document.createElement("button");quitar.type="button";quitar.className="quitar";quitar.textContent="Quitar";quitar.addEventListener("click",()=>{fila.remove();actualizarResumen();});
+      selector.addEventListener("change",actualizarResumen);input.addEventListener("input",actualizarResumen);
+      fila.append(campoMaterial,campoCantidad,costo,quitar);$("ingredientes").appendChild(fila);actualizarResumen();
+    }
+    function leerIngredientes(){
+      const vistos=new Set(),resultado=[];
+      for(const fila of ingredienteFilas()){
+        const selector=fila.querySelector("select");const entrada=fila.querySelector("input");
+        const id=selector.value;const m=materialPorClave(id);const cantidad=Number(entrada.value);
+        if(!m)throw new Error("Selecciona un material válido en cada fila.");
+        if(entrada.value.trim()==="" || !Number.isFinite(cantidad) || cantidad<=0)throw new Error("La cantidad utilizada debe ser mayor a cero.");
+        if(vistos.has(id))throw new Error(`El material «${m.nombre}» está repetido. Agrupa su cantidad en una sola fila.`);
+        vistos.add(id);
+        const unitario=costoBase(m);
+        if(!Number.isFinite(unitario))throw new Error(`Revisa el precio o la presentación de «${m.nombre}».`);
+        resultado.push({materialId:m.id,coleccion:m.coleccion,nombre:m.nombre,cantidad,unidad:unidadBase(m),costoUnitario:unitario,costoTotal:cantidad*unitario});
+      }
+      return resultado;
+    }
+    function calcularPrecio(costo,metodo,fijo,margen){return metodo==="fijo"?fijo:costo/(1-margen/100);}
+    function calcularProducto(ingredientes,manoObra,otrosCostos,metodo,fijo,margen){
+      const materialesTotal=ingredientes.reduce((s,i)=>s+i.costoTotal,0);
+      const costo=materialesTotal+manoObra+otrosCostos;
+      const precio=calcularPrecio(costo,metodo,fijo,margen);
+      const utilidad=precio-costo;
+      return {materialesTotal,costo,precio,utilidad,margenReal:precio>0?utilidad/precio*100:0};
+    }
+    function actualizarMetodo(){const calculado=$("metodo").value==="calculado";$("campoPrecioFijo").hidden=calculado;$("campoMargen").hidden=!calculado;actualizarResumen();}
+    function actualizarResumen(){
+      const filas=ingredienteFilas();let total=0,valido=true;
+      for(const fila of filas){
+        const m=materialPorClave(fila.querySelector("select").value);
+        const input=fila.querySelector("input");const cantidad=Number(input.value);
+        const costo=fila.querySelector(".costo");
+        if(!m){costo.textContent="Selecciona material";valido=false;continue;}
+        const u=unidadBase(m);
+        if(input.value.trim()===""||!Number.isFinite(cantidad)||cantidad<=0){costo.textContent=`Cantidad en ${u}`;valido=false;continue;}
+        const importe=costoBase(m)*cantidad;
+        costo.textContent=`${numero(cantidad)} ${u} · ${moneda(importe)}`;
+        if(!Number.isFinite(importe)){valido=false;continue;}
+        total+=importe;
+      }
+      const mano=numeroNoNegativo("manoObra"),otros=numeroNoNegativo("otrosCostos"),fijo=numeroNoNegativo("precioFijo"),margen=numeroNoNegativo("margen");
+      const metodo=$("metodo").value;
+      const datosValidos=valido&&Number.isFinite(mano)&&Number.isFinite(otros)&&(metodo==="fijo"?Number.isFinite(fijo):Number.isFinite(margen)&&margen<100);
+      $("resMateriales").textContent=moneda(total);
+      if(!datosValidos){$("resCosto").textContent="Revisar datos";$("resVenta").textContent="—";$("resUtilidad").textContent="—";return;}
+      const r=calcularProducto([{costoTotal:total}],mano,otros,metodo,fijo,margen);
+      $("resCosto").textContent=moneda(r.costo);$("resVenta").textContent=moneda(r.precio);
+      $("resUtilidad").textContent=`${moneda(r.utilidad)} / ${numero(r.margenReal)}%`;
+      $("resUtilidad").className=r.utilidad<0?"alerta":"ok";
+    }
+    function limpiar(){
+      $("formProducto").reset();$("ingredientes").replaceChildren();$("manoObra").value="0";$("otrosCostos").value="0";$("precioFijo").value="0";$("margen").value="30";
+      editando=null;$("tituloFormulario").textContent="Nuevo producto";$("guardar").textContent="Guardar producto";mensaje("");actualizarMetodo();
+    }
+    function abrir(){$("panelFormulario").hidden=false;$("nombre").focus();$("panelFormulario").scrollIntoView({behavior:"smooth",block:"start"});}
+    function calcularVigente(producto){
+      let total=0,completo=true;
+      for(const i of producto.ingredientes||[]){
+        const m=materiales.find(x=>x.id===i.materialId&&x.coleccion===i.coleccion);
+        if(!m||!Number.isFinite(costoBase(m))){completo=false;break;}
+        total+=costoBase(m)*Number(i.cantidad);
+      }
+      if(!completo)return null;
+      return calcularProducto([{costoTotal:total}],Number(producto.manoObra||0),Number(producto.otrosCostos||0),producto.metodo,Number(producto.precioFijo||0),Number(producto.margen||0));
+    }
+    function renderizar(){
+      const buscar=$("buscar").value.trim().toLocaleLowerCase("es"),metodo=$("filtrarMetodo").value;
+      const lista=productos.filter(p=>`${p.nombre||""} ${p.sku||""}`.toLocaleLowerCase("es").includes(buscar)&&(!metodo||p.metodo===metodo)).sort((a,b)=>(a.nombre||"").localeCompare(b.nombre||"","es"));
+      const tbody=$("tabla");tbody.replaceChildren();
+      if(!lista.length){const tr=document.createElement("tr");celda(tr,"No hay productos para mostrar.").colSpan=7;tbody.appendChild(tr);return;}
+      for(const p of lista){
+        const tr=document.createElement("tr"),r=calcularVigente(p);
+        celda(tr,p.nombre);celda(tr,p.sku||"—");celda(tr,p.metodo==="fijo"?"Fijo":"Calculado");
+        celda(tr,r?moneda(r.costo):"Material no disponible");celda(tr,r?moneda(r.precio):"—");
+        const utilidad=celda(tr,r?`${moneda(r.utilidad)} (${numero(r.margenReal)}%)`:"—");if(r)utilidad.style.color=r.utilidad<0?"var(--rojo)":"var(--verde)";
+        const td=document.createElement("td"),boton=document.createElement("button");boton.type="button";boton.className="editar";boton.textContent="Editar";boton.addEventListener("click",()=>editar(p));td.appendChild(boton);tr.appendChild(td);tbody.appendChild(tr);
+      }
+    }
+    function editar(p){
+      if(guardando)return;
+      limpiar();editando=p.id;$("nombre").value=p.nombre||"";$("sku").value=p.sku||"";$("descripcion").value=p.descripcion||"";
+      $("manoObra").value=p.manoObra??0;$("otrosCostos").value=p.otrosCostos??0;$("metodo").value=p.metodo||"fijo";$("precioFijo").value=p.precioFijo??0;$("margen").value=p.margen??30;
+      for(const i of p.ingredientes||[])agregarFila(`${i.coleccion}/${i.materialId}`,i.cantidad);
+      $("tituloFormulario").textContent="Editar producto";$("guardar").textContent="Guardar cambios";actualizarMetodo();abrir();
+    }
+    async function cargar(){
+      const [primas,empaques,prods]=await Promise.all([getDocs(collection(db,"materias_primas")),getDocs(collection(db,"empaques")),getDocs(collection(db,"productos"))]);
+      materiales=[...primas.docs.map(d=>({...d.data(),id:d.id,coleccion:"materias_primas"})),...empaques.docs.map(d=>({...d.data(),id:d.id,coleccion:"empaques"}))];
+      productos=prods.docs.map(d=>({...d.data(),id:d.id}));renderizar();
+    }
+    $("nuevo").addEventListener("click",()=>{if(guardando)return;limpiar();abrir();});
+    $("cancelar").addEventListener("click",()=>{if(guardando)return;limpiar();$("panelFormulario").hidden=true;});
+    $("agregarIngrediente").addEventListener("click",()=>{if(!guardando)agregarFila();});
+    $("metodo").addEventListener("change",actualizarMetodo);
+    for(const id of ["manoObra","otrosCostos","precioFijo","margen"])$(id).addEventListener("input",actualizarResumen);
+    $("buscar").addEventListener("input",renderizar);$("filtrarMetodo").addEventListener("change",renderizar);
+    $("formProducto").addEventListener("submit",async e=>{
+      e.preventDefault();if(!usuarioActual||guardando)return;
+      try{
+        const nombre=$("nombre").value.trim(),sku=$("sku").value.trim(),descripcion=$("descripcion").value.trim();
+        if(!nombre)throw new Error("Indica el nombre del producto.");
+        const ingredientes=leerIngredientes();if(!ingredientes.length)throw new Error("Agrega al menos un material o empaque.");
+        const manoObra=numeroNoNegativo("manoObra"),otrosCostos=numeroNoNegativo("otrosCostos"),precioFijo=numeroNoNegativo("precioFijo"),margen=numeroNoNegativo("margen"),metodo=$("metodo").value;
+        if(!Number.isFinite(manoObra)||!Number.isFinite(otrosCostos))throw new Error("Revisa los costos adicionales.");
+        if(!["fijo","calculado"].includes(metodo))throw new Error("Selecciona el método de precio.");
+        if(metodo==="fijo"&&!Number.isFinite(precioFijo))throw new Error("Indica un precio fijo válido.");
+        if(metodo==="calculado"&&(!Number.isFinite(margen)||margen>=100))throw new Error("El margen debe estar entre 0 y menos de 100%.");
+        const r=calcularProducto(ingredientes,manoObra,otrosCostos,metodo,Number.isFinite(precioFijo)?precioFijo:0,Number.isFinite(margen)?margen:0);
+        if(!Number.isFinite(r.precio)||r.precio<0)throw new Error("No se pudo calcular el precio.");
+        const referencia=editando?doc(db,"productos",editando):doc(collection(db,"productos"));
+        guardando=true;$("guardar").disabled=true;$("cancelar").disabled=true;$("nuevo").disabled=true;mensaje("Guardando producto...");
+        // La transacción lee cada material en Firestore para evitar guardar costos obsoletos.
+        await runTransaction(db,async tx=>{
+          const lecturas=[];
+          for(const i of ingredientes){
+            const ref=doc(db,i.coleccion,i.materialId);
+            const snap=await tx.get(ref);
+            if(!snap.exists())throw new Error(`El material «${i.nombre}» ya no existe.`);
+            const m=snap.data(),unitario=costoBase(m);
+            if(!Number.isFinite(unitario))throw new Error(`El material «${i.nombre}» tiene un costo inválido.`);
+            if(unidadBase(m)!==i.unidad)throw new Error(`La unidad de «${i.nombre}» cambió. Recarga el catálogo.`);
+            lecturas.push({...i,nombre:m.nombre,costoUnitario:unitario,costoTotal:i.cantidad*unitario});
+          }
+          if(editando){const existente=await tx.get(referencia);if(!existente.exists())throw new Error("El producto ya no existe.");}
+          const actual=calcularProducto(lecturas,manoObra,otrosCostos,metodo,Number.isFinite(precioFijo)?precioFijo:0,Number.isFinite(margen)?margen:0);
+          tx.set(referencia,{
+            nombre,sku,descripcion,ingredientes:lecturas.map(({materialId,coleccion,nombre,cantidad,unidad})=>({materialId,coleccion,nombre,cantidad,unidad})),
+            manoObra,otrosCostos,metodo,precioFijo:metodo==="fijo"?precioFijo:null,margen:metodo==="calculado"?margen:null,
+            referenciaCostos:{ingredientes:lecturas,costoMateriales:redondear(actual.materialesTotal),costoTotal:redondear(actual.costo),precioVenta:redondear(actual.precio),utilidad:redondear(actual.utilidad)},
+            actualizadoPor:usuarioActual.uid,actualizadoEn:serverTimestamp(),...(!editando?{creadoPor:usuarioActual.uid,creadoEn:serverTimestamp()}:{})
+          },{merge:true});
+        });
+        limpiar();$("panelFormulario").hidden=true;await cargar();
+      }catch(error){console.error("Error guardando producto:",error);mensaje(error.message||"No se pudo guardar el producto.",true);}
+      finally{guardando=false;$("guardar").disabled=false;$("cancelar").disabled=false;$("nuevo").disabled=false;}
+    });
+    onAuthStateChanged(auth,async user=>{
+      $("aplicacion").hidden=true;$("cargando").hidden=false;
+      if(!user){window.location.replace("./index.html");return;}
+      try{await getDoc(doc(db,"configuracion","acceso"));usuarioActual=user;await cargar();$("aplicacion").hidden=false;$("cargando").hidden=true;}
+      catch(error){console.error("Error de acceso:",error);if(error.code==="permission-denied"){await signOut(auth);window.location.replace("./index.html");}else{$("cargando").textContent="No se pudo cargar el catálogo. Revisa la conexión y actualiza.";}}
+    });
+  </script>
+</body>
+</html>
