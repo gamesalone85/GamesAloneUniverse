@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Historial de costos | Chocolate Artístico Sarita</title>
+
+  <style>
+    :root {
+      --vino: #642c3d;
+      --oscuro: #47202d;
+      --fondo: #faf6f2;
+      --borde: #e8deda;
+      --texto: #30282b;
+      --gris: #71676b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    [hidden] { display: none !important; }
+
+    .cargando {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      color: var(--vino);
+    }
+
+    .cabecera {
+      background: var(--oscuro);
+      color: white;
+      padding: 20px 24px;
+    }
+
+    .cabecera-interior {
+      max-width: 1180px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .marca {
+      margin: 0;
+      font: bold 23px Georgia, serif;
+    }
+
+    .submarca {
+      margin: 6px 0 0;
+      font-size: 12px;
+      opacity: .8;
+    }
+
+    .volver {
+      color: white;
+      text-decoration: none;
+      padding: 10px 14px;
+      border: 1px solid #ffffff70;
+      border-radius: 9px;
+    }
+
+    .contenido {
+      max-width: 1180px;
+      margin: auto;
+      padding: 32px 22px 60px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: var(--oscuro);
+      font-size: clamp(25px, 4vw, 32px);
+    }
+
+    .descripcion {
+      color: var(--gris);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--borde);
+      border-radius: 17px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .panel h2 {
+      margin: 0 0 20px;
+      color: var(--vino);
+      font-size: 20px;
+    }
+
+    .resumen {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .indicador {
+      background: white;
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .indicador span {
+      display: block;
+      color: var(--gris);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .indicador strong {
+      font-size: 27px;
+      color: var(--oscuro);
+    }
+
+    .filtros {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .filtros input,
+    .filtros select {
+      padding: 12px;
+      border: 1px solid var(--borde);
+      border-radius: 9px;
+      background: white;
+      font: inherit;
+    }
+
+    .filtros input {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .tabla-contenedor { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eee7e3;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      background: #faf5f2;
+      color: var(--oscuro);
+    }
+
+    .positivo { color: #a42d42; font-weight: 700; }
+    .negativo { color: #26734d; font-weight: 700; }
+
+    .nota {
+      color: var(--gris);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
+      .resumen { grid-template-columns: 1fr; }
+      .panel { padding: 17px; }
+      .contenido { padding: 24px 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="cargando" class="cargando">
+    Verificando acceso al historial...
+  </div>
+
+  <div id="aplicacion" hidden>
+
+    <header class="cabecera">
+      <div class="cabecera-interior">
+        <div>
+          <p class="marca">Chocolate Artístico Sarita</p>
+          <p class="submarca">Historial de costos de producción</p>
+        </div>
+
+        <a href="./materiales.html" class="volver">
+          ← Volver a materiales
+        </a>
+      </div>
+    </header>
+
+    <main class="contenido">
+
+      <h1>Historial de costos</h1>
+
+      <p class="descripcion">
+        Consulta los precios registrados y sus modificaciones.
+        Los registros permiten conocer la evolución de los
+        costos de compra.
+      </p>
+
+      <section class="resumen">
+        <div class="indicador">
+          <span>Movimientos registrados</span>
+          <strong id="totalMovimientos">0</strong>
+        </div>
+
+        <div class="indicador">
+          <span>Altas de materiales</span>
+          <strong id="totalAltas">0</strong>
+        </div>
+
+        <div class="indicador">
+          <span>Actualizaciones de precio</span>
+          <strong id="totalCambios">0</strong>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Registro de movimientos</h2>
+
+        <div class="filtros">
+          <input id="buscar" type="search"
+                 placeholder="Buscar material...">
+
+          <select id="tipoMovimiento">
+            <option value="">Todos los movimientos</option>
+            <option value="alta">Altas</option>
+            <option value="actualizacion">Actualizaciones</option>
+          </select>
+        </div>
+
+        <div class="tabla-contenedor">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Material</th>
+                <th>Movimiento</th>
+                <th>Precio anterior</th>
+                <th>Precio nuevo</th>
+                <th>Variación</th>
+                <th>Administrador</th>
+              </tr>
+            </thead>
+
+            <tbody id="tablaHistorial">
+              <tr>
+                <td colspan="7">Cargando historial...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="nota">
+          Los importes corresponden al precio de compra de
+          la presentación registrada, no necesariamente
+          al precio por kilogramo o por pieza.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      getDoc
+    } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain: "sarita-cotizador.firebaseapp.com",
+      projectId: "sarita-cotizador",
+      storageBucket: "sarita-cotizador.firebasestorage.app",
+      messagingSenderId: "798881105496",
+      appId: "1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const $ = id => document.getElementById(id);
+
+    const moneda = valor =>
+      Number(valor).toLocaleString("es-MX", {
+        style: "currency",
+        currency: "MXN"
+      });
+
+    let movimientos = [];
+
+    function crearCelda(fila, contenido) {
+      const td = document.createElement("td");
+      td.textContent = contenido;
+      fila.appendChild(td);
+      return td;
+    }
+
+    function formatearFecha(timestamp) {
+      if (!timestamp?.toDate) return "Sin fecha";
+
+      return timestamp.toDate().toLocaleString("es-MX", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+    }
+
+    function variacion(item) {
+      if (item.precioAnterior === null ||
+          item.precioAnterior === undefined) {
+        return { texto: "—", clase: "" };
+      }
+
+      const diferencia =
+        Number(item.precioNuevo) -
+        Number(item.precioAnterior);
+
+      if (diferencia === 0) {
+        return { texto: "Sin cambio", clase: "" };
+      }
+
+      return {
+        texto: `${diferencia > 0 ? "+" : ""}${moneda(diferencia)}`,
+        clase: diferencia > 0 ? "positivo" : "negativo"
+      };
+    }
+
+    function renderizar() {
+      const texto = $("buscar").value.toLowerCase().trim();
+      const tipo = $("tipoMovimiento").value;
+
+      const filtrados = movimientos.filter(item => {
+        const coincideNombre =
+          (item.nombre || "").toLowerCase().includes(texto);
+
+        const coincideTipo = !tipo || item.motivo === tipo;
+
+        return coincideNombre && coincideTipo;
+      });
+
+      const tbody = $("tablaHistorial");
+      tbody.replaceChildren();
+
+      if (!filtrados.length) {
+        const fila = document.createElement("tr");
+        crearCelda(fila, "No hay movimientos para mostrar.")
+          .colSpan = 7;
+        tbody.appendChild(fila);
+        return;
+      }
+
+      for (const item of filtrados) {
+        const fila = document.createElement("tr");
+        const cambio = variacion(item);
+
+        crearCelda(fila, formatearFecha(item.fecha));
+        crearCelda(fila, item.nombre || "Sin nombre");
+        crearCelda(fila,
+          item.motivo === "alta" ? "Alta" : "Actualización"
+        );
+
+        crearCelda(fila,
+          item.precioAnterior == null
+            ? "—"
+            : moneda(item.precioAnterior)
+        );
+
+        crearCelda(fila, moneda(item.precioNuevo));
+
+        const tdCambio = crearCelda(fila, cambio.texto);
+        tdCambio.className = cambio.clase;
+
+        crearCelda(fila, item.modificadoPor || "Sin identificar");
+
+        tbody.appendChild(fila);
+      }
+    }
+
+    async function cargarHistorial() {
+      const snapshot = await getDocs(
+        collection(db, "historial_costos")
+      );
+
+      movimientos = snapshot.docs.map(documento => ({
+        id: documento.id,
+        ...documento.data()
+      }));
+
+      movimientos.sort((a, b) => {
+        const fechaA = a.fecha?.toMillis?.() || 0;
+        const fechaB = b.fecha?.toMillis?.() || 0;
+        return fechaB - fechaA;
+      });
+
+      $("totalMovimientos").textContent = movimientos.length;
+
+      $("totalAltas").textContent = movimientos.filter(
+        item => item.motivo === "alta"
+      ).length;
+
+      $("totalCambios").textContent = movimientos.filter(
+        item => item.motivo === "actualizacion"
+      ).length;
+
+      renderizar();
+    }
+
+    $("buscar").addEventListener("input", renderizar);
+    $("tipoMovimiento").addEventListener("change", renderizar);
+
+    onAuthStateChanged(auth, async user => {
+      $("aplicacion").hidden = true;
+      $("cargando").hidden = false;
+
+      if (!user) {
+        window.location.replace("./index.html");
+        return;
+      }
+
+      try {
+        await getDoc(doc(db, "configuracion", "acceso"));
+
+        await cargarHistorial();
+
+        $("aplicacion").hidden = false;
+        $("cargando").hidden = true;
+
+      } catch (error) {
+        console.error("Error al cargar historial:", error);
+
+        if (error.code === "permission-denied") {
+          await signOut(auth);
+          window.location.replace("./index.html");
+        } else {
+          $("cargando").textContent =
+            "No fue posible cargar el historial. Actualiza la página.";
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
