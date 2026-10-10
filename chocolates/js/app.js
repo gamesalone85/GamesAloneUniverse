@@ -2285,72 +2285,95 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       WHATSAPP
-    ===================================================== */
+   /* =====================================================
+   WHATSAPP
+===================================================== */
 
-    const whatsappBot =
-        document.getElementById(
-            "whatsappBot"
-        );
+const whatsappBot =
+    document.getElementById("whatsappBot");
 
-   const whatsappToggle =
-    document.getElementById(
-        "toggleWhatsapp"
-    );
+const whatsappToggle =
+    document.getElementById("toggleWhatsapp");
 
-    const whatsappClose =
-        document.getElementById(
-            "whatsappClose"
-        );
+const whatsappClose =
+    document.getElementById("whatsappClose");
 
 
-    function openWhatsAppBot() {
+function closeWhatsAppBot() {
 
-        if (!whatsappBot) {
-            return;
-        }
-
-
-        whatsappBot.classList.add(
-            "active"
-        );
-
+    if (!whatsappBot) {
+        return;
     }
 
-
-    function closeWhatsAppBot() {
-
-        if (!whatsappBot) {
-            return;
-        }
-
-
-        whatsappBot.classList.remove(
-            "active"
-        );
-
-    }
-
+    whatsappBot.classList.remove("active");
 
     if (whatsappToggle) {
-
-        whatsappToggle.addEventListener(
-            "click",
-            openWhatsAppBot
+        whatsappToggle.setAttribute(
+            "aria-expanded",
+            "false"
         );
+    }
+}
 
+
+function toggleWhatsAppBot() {
+
+    if (!whatsappBot) {
+        return;
     }
 
+    const isOpen =
+        whatsappBot.classList.toggle("active");
 
-    if (whatsappClose) {
-
-        whatsappClose.addEventListener(
-            "click",
-            closeWhatsAppBot
+    if (whatsappToggle) {
+        whatsappToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
         );
+    }
+}
+
+
+/* ABRIR Y CERRAR CON EL MISMO BOTÓN */
+
+if (whatsappToggle) {
+
+    whatsappToggle.addEventListener(
+        "click",
+        toggleWhatsAppBot
+    );
+
+}
+
+
+/* CERRAR DESDE EL BOTÓN X */
+
+if (whatsappClose) {
+
+    whatsappClose.addEventListener(
+        "click",
+        closeWhatsAppBot
+    );
+
+}
+
+
+/* CERRAR CON LA TECLA ESCAPE */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            whatsappBot &&
+            whatsappBot.classList.contains("active")
+        ) {
+            closeWhatsAppBot();
+        }
 
     }
+);
 
 
     /* =====================================================
