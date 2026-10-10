@@ -1,0 +1,6 @@
+/* Solo para futuros reportes administrativos imprimibles.
+   cotizacion-pdf.html mantiene sus propias reglas de impresion comerciales. */
+@media print {
+  .sarita-no-print { display: none !important; }
+  .sarita-print-page { break-inside: avoid; }
+}
