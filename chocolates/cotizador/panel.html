@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Panel administrativo | Chocolate Artístico Sarita</title>
-    <link rel="stylesheet" href="./css/sarita-global.css">
+  <link rel="stylesheet" href="./css/sarita-global.css">
   <link rel="stylesheet" href="./css/sarita-componentes.css">
   <link rel="stylesheet" href="./css/modulos/panel.css">
 </head>
@@ -18,7 +18,7 @@
       <div class="cabecera-interior">
         <div>
           <p class="marca">Chocolate Artístico Sarita</p>
-          <p class="submarca">Sistema privado de cotizaciones</p>
+          <p class="submarca">Sistema privado de cotizaciones, inventario y producción</p>
         </div>
         <button class="salir" id="cerrarSesion" type="button">Cerrar sesión</button>
       </div>
@@ -27,7 +27,7 @@
     <main class="contenido">
       <section class="bienvenida" aria-labelledby="tituloPanel">
         <h1 id="tituloPanel">Panel administrativo</h1>
-        <p>Centro de gestión de materiales, productos y cotizaciones comerciales de Chocolate Artístico Sarita.</p>
+        <p>Centro de gestión de materiales, productos, inventario, producción y cotizaciones comerciales de Chocolate Artístico Sarita.</p>
         <p class="usuario">Sesión iniciada como: <strong id="correoUsuario"></strong></p>
       </section>
 
@@ -56,7 +56,25 @@
 
       <section aria-labelledby="tituloInventario">
         <h2 class="seccion-titulo" id="tituloInventario">Inventario y operaciones</h2>
-        <div class="tarjetas"><article class="tarjeta"><h3>Inventario de materiales</h3><p>Registra compras nuevas, salidas reales y consulta existencias de materias primas y empaques.</p><a href="./inventario.html" class="enlace-modulo">Abrir inventario →</a></article><article class="tarjeta"><h3>Órdenes de producción</h3><p>Planea pedidos y consulta el consumo estimado según las recetas. Sin descontar inventario todavía.</p><a href="./produccion.html" class="enlace-modulo">Abrir producción →</a></article></div>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <h3>Inventario de materiales</h3>
+            <p>Registra compras nuevas, salidas reales y consulta existencias de materias primas y empaques.</p>
+            <a href="./inventario.html" class="enlace-modulo">Abrir inventario →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Órdenes de producción</h3>
+            <p>Planea pedidos, calcula insumos estimados y registra la fabricación con sus consumos reales.</p>
+            <a href="./produccion.html" class="enlace-modulo">Abrir producción →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Productos terminados</h3>
+            <p>Consulta lotes de chocolates fabricados y sus existencias, embolsadas o conservadas en recipientes.</p>
+            <a href="./terminados.html" class="enlace-modulo">Ver productos terminados →</a>
+          </article>
+        </div>
       </section>
 
       <section aria-labelledby="tituloComercial">
