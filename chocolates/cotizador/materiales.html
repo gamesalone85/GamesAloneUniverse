@@ -1,0 +1,722 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Materiales y costos | Chocolate Artístico Sarita</title>
+
+  <style>
+    :root {
+      --vino: #642c3d;
+      --oscuro: #47202d;
+      --fondo: #faf6f2;
+      --borde: #e8deda;
+      --texto: #30282b;
+      --gris: #71676b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    [hidden] { display: none !important; }
+
+    button, input, select { font: inherit; }
+
+    button { cursor: pointer; }
+
+    .cargando {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      color: var(--vino);
+    }
+
+    .cabecera {
+      background: var(--oscuro);
+      color: white;
+      padding: 20px 24px;
+    }
+
+    .cabecera-interior {
+      max-width: 1180px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .marca {
+      margin: 0;
+      font: bold 23px Georgia, serif;
+    }
+
+    .submarca {
+      margin: 6px 0 0;
+      font-size: 12px;
+      opacity: .8;
+    }
+
+    .volver {
+      color: white;
+      text-decoration: none;
+      padding: 10px 14px;
+      border: 1px solid #ffffff70;
+      border-radius: 9px;
+    }
+
+    .contenido {
+      max-width: 1180px;
+      margin: auto;
+      padding: 32px 22px 60px;
+    }
+
+    .encabezado {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(25px, 4vw, 32px);
+      color: var(--oscuro);
+    }
+
+    .descripcion {
+      margin: 0;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 17px;
+      background: var(--vino);
+      color: white;
+      font-weight: 700;
+    }
+
+    .btn:hover { background: var(--oscuro); }
+
+    .btn:disabled { opacity: .55; cursor: wait; }
+
+    .btn-secundario {
+      background: #f3eae7;
+      color: var(--oscuro);
+    }
+
+    .btn-secundario:hover { background: #e9dbd6; }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--borde);
+      border-radius: 17px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .panel h2 {
+      margin: 0 0 20px;
+      font-size: 20px;
+      color: var(--vino);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .campo label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .campo input,
+    .campo select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d8cccf;
+      border-radius: 9px;
+      background: white;
+      color: var(--texto);
+    }
+
+    .campo input:focus,
+    .campo select:focus {
+      outline: 2px solid #d8b7c0;
+      border-color: var(--vino);
+    }
+
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .filtros {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .filtros input,
+    .filtros select {
+      padding: 11px 13px;
+      border: 1px solid var(--borde);
+      border-radius: 9px;
+      background: white;
+    }
+
+    .filtros input { flex: 1; min-width: 200px; }
+
+    .tabla-contenedor { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eee7e3;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      background: #faf5f2;
+      color: var(--oscuro);
+    }
+
+    .editar {
+      border: 1px solid #dbcbd0;
+      background: white;
+      color: var(--vino);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 700;
+    }
+
+    .mensaje {
+      margin-top: 14px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .nota {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 650px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .panel { padding: 18px; }
+      .contenido { padding: 24px 14px; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="cargando" class="cargando">
+    Verificando acceso al catálogo...
+  </div>
+
+  <div id="aplicacion" hidden>
+
+    <header class="cabecera">
+      <div class="cabecera-interior">
+        <div>
+          <p class="marca">Chocolate Artístico Sarita</p>
+          <p class="submarca">Administración de materiales y costos</p>
+        </div>
+
+        <a href="./panel.html" class="volver">← Volver al panel</a>
+      </div>
+    </header>
+
+    <main class="contenido">
+
+      <div class="encabezado">
+        <div>
+          <h1>Materiales y costos</h1>
+          <p class="descripcion">
+            Administra materias primas, empaques y precios de compra.
+          </p>
+        </div>
+
+        <button class="btn" id="nuevoMaterial" type="button">
+          + Nuevo material
+        </button>
+      </div>
+
+      <section class="panel" id="formularioPanel" hidden>
+        <h2 id="tituloFormulario">Agregar material</h2>
+
+        <form id="formMaterial">
+          <div class="form-grid">
+
+            <div class="campo">
+              <label for="nombre">Nombre del material *</label>
+              <input id="nombre" maxlength="120" required>
+            </div>
+
+            <div class="campo">
+              <label for="categoria">Categoría *</label>
+              <select id="categoria" required>
+                <option value="materias_primas">Materia prima</option>
+                <option value="empaques">Empaque</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="cantidad">Cantidad de la presentación *</label>
+              <input id="cantidad" type="number" min="0.001" step="any" required>
+            </div>
+
+            <div class="campo">
+              <label for="unidad">Unidad *</label>
+              <select id="unidad">
+                <option value="g">Gramos</option>
+                <option value="kg">Kilogramos</option>
+                <option value="pieza">Piezas</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="precio">Precio de compra (MXN) *</label>
+              <input id="precio" type="number" min="0" step="0.01" required>
+            </div>
+
+            <div class="campo">
+              <label for="certeza">Tipo de precio</label>
+              <select id="certeza">
+                <option value="confirmado">Confirmado</option>
+                <option value="estimado">Estimado</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="proveedor">Proveedor (opcional)</label>
+              <input id="proveedor" maxlength="120">
+            </div>
+
+            <div class="campo">
+              <label for="observaciones">Observaciones (opcional)</label>
+              <input id="observaciones" maxlength="250">
+            </div>
+
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="guardar" type="submit">
+              Guardar material
+            </button>
+
+            <button class="btn btn-secundario"
+                    id="cancelar" type="button">
+              Cancelar
+            </button>
+          </div>
+
+          <p class="mensaje" id="mensaje" role="status"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Catálogo registrado</h2>
+
+        <div class="filtros">
+          <input id="buscar" type="search"
+                 placeholder="Buscar material o proveedor...">
+
+          <select id="filtrarCategoria">
+            <option value="">Todas las categorías</option>
+            <option value="materias_primas">Materias primas</option>
+            <option value="empaques">Empaques</option>
+          </select>
+        </div>
+
+        <div class="tabla-contenedor">
+          <table>
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Categoría</th>
+                <th>Presentación</th>
+                <th>Precio</th>
+                <th>Costo unitario</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaMateriales">
+              <tr>
+                <td colspan="7">Cargando materiales...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="nota">
+          Los costos unitarios se calculan por gramo o por pieza.
+          Los precios anteriores se registran en el historial
+          cuando se modifica el costo de compra.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      runTransaction,
+      serverTimestamp
+    } from
+      "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain: "sarita-cotizador.firebaseapp.com",
+      projectId: "sarita-cotizador",
+      storageBucket: "sarita-cotizador.firebasestorage.app",
+      messagingSenderId: "798881105496",
+      appId: "1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const $ = id => document.getElementById(id);
+    const moneda = n => Number(n).toLocaleString("es-MX", {
+      style: "currency",
+      currency: "MXN"
+    });
+
+    let registros = [];
+    let editando = null;
+    let usuarioActual = null;
+
+    const coleccionesPermitidas = [
+      "materias_primas",
+      "empaques"
+    ];
+
+    function limpiarFormulario() {
+      $("formMaterial").reset();
+      $("mensaje").textContent = "";
+      editando = null;
+      $("tituloFormulario").textContent = "Agregar material";
+      $("guardar").textContent = "Guardar material";
+    }
+
+    function mostrarFormulario() {
+      $("formularioPanel").hidden = false;
+      $("nombre").focus();
+    }
+
+    function costoUnitario(item) {
+      const cantidad = item.unidad === "kg"
+        ? item.cantidad * 1000
+        : item.cantidad;
+
+      if (!(cantidad > 0)) return "—";
+
+      const unidad = item.unidad === "pieza" ? "pieza" : "g";
+      return `${moneda(item.precio / cantidad)} / ${unidad}`;
+    }
+
+    function celda(fila, valor) {
+      const td = document.createElement("td");
+      td.textContent = String(valor ?? "");
+      fila.appendChild(td);
+      return td;
+    }
+
+    function renderizar() {
+      const texto = $("buscar").value.toLowerCase().trim();
+      const categoria = $("filtrarCategoria").value;
+
+      const filtrados = registros.filter(item => {
+        const coincideTexto =
+          `${item.nombre} ${item.proveedor || ""}`
+            .toLowerCase().includes(texto);
+
+        return coincideTexto &&
+          (!categoria || item.coleccion === categoria);
+      });
+
+      const tbody = $("tablaMateriales");
+      tbody.replaceChildren();
+
+      if (!filtrados.length) {
+        const fila = document.createElement("tr");
+        celda(fila, "No hay materiales para mostrar.")
+          .colSpan = 7;
+        tbody.appendChild(fila);
+        return;
+      }
+
+      filtrados.sort((a, b) =>
+        a.nombre.localeCompare(b.nombre, "es")
+      );
+
+      for (const item of filtrados) {
+        const fila = document.createElement("tr");
+
+        celda(fila, item.nombre);
+        celda(fila, item.coleccion === "empaques"
+          ? "Empaque" : "Materia prima");
+        celda(fila, `${item.cantidad} ${item.unidad}`);
+        celda(fila, moneda(item.precio));
+        celda(fila, costoUnitario(item));
+        celda(fila, item.certeza === "estimado"
+          ? "Estimado" : "Confirmado");
+
+        const acciones = document.createElement("td");
+        const boton = document.createElement("button");
+
+        boton.type = "button";
+        boton.className = "editar";
+        boton.textContent = "Editar";
+
+        boton.addEventListener("click", () => editar(item));
+
+        acciones.appendChild(boton);
+        fila.appendChild(acciones);
+        tbody.appendChild(fila);
+      }
+    }
+
+    async function cargarMateriales() {
+      const resultados = await Promise.all(
+        coleccionesPermitidas.map(async nombre => {
+          const snapshot = await getDocs(collection(db, nombre));
+
+          return snapshot.docs.map(documento => ({
+            ...documento.data(),
+            id: documento.id,
+            coleccion: nombre
+          }));
+        })
+      );
+
+      registros = resultados.flat();
+      renderizar();
+    }
+
+    function editar(item) {
+      editando = {
+        id: item.id,
+        coleccion: item.coleccion
+      };
+
+      $("nombre").value = item.nombre || "";
+      $("categoria").value = item.coleccion;
+      $("cantidad").value = item.cantidad;
+      $("unidad").value = item.unidad;
+      $("precio").value = item.precio;
+      $("certeza").value = item.certeza || "confirmado";
+      $("proveedor").value = item.proveedor || "";
+      $("observaciones").value = item.observaciones || "";
+
+      // Evita cambiar de colección al editar.
+      $("categoria").disabled = true;
+
+      $("tituloFormulario").textContent = "Editar material";
+      $("guardar").textContent = "Guardar cambios";
+      mostrarFormulario();
+    }
+
+    $("nuevoMaterial").addEventListener("click", () => {
+      limpiarFormulario();
+      $("categoria").disabled = false;
+      mostrarFormulario();
+    });
+
+    $("cancelar").addEventListener("click", () => {
+      limpiarFormulario();
+      $("categoria").disabled = false;
+      $("formularioPanel").hidden = true;
+    });
+
+    $("buscar").addEventListener("input", renderizar);
+    $("filtrarCategoria").addEventListener("change", renderizar);
+
+    $("formMaterial").addEventListener("submit", async evento => {
+      evento.preventDefault();
+
+      if (!usuarioActual) return;
+
+      const categoria = editando
+        ? editando.coleccion
+        : $("categoria").value;
+
+      const cantidad = Number($("cantidad").value);
+      const precio = Number($("precio").value);
+
+      if (!coleccionesPermitidas.includes(categoria) ||
+          !Number.isFinite(cantidad) || cantidad <= 0 ||
+          !Number.isFinite(precio) || precio < 0) {
+        $("mensaje").textContent = "Revisa los valores ingresados.";
+        return;
+      }
+
+      const datos = {
+        nombre: $("nombre").value.trim(),
+        cantidad,
+        unidad: $("unidad").value,
+        precio,
+        certeza: $("certeza").value,
+        proveedor: $("proveedor").value.trim(),
+        observaciones: $("observaciones").value.trim(),
+        actualizadoPor: usuarioActual.uid,
+        actualizadoEn: serverTimestamp()
+      };
+
+      if (!datos.nombre ||
+          !["g", "kg", "pieza"].includes(datos.unidad)) {
+        $("mensaje").textContent = "Completa los campos obligatorios.";
+        return;
+      }
+
+      $("guardar").disabled = true;
+      $("mensaje").style.color = "#71676b";
+      $("mensaje").textContent = "Guardando información...";
+
+      try {
+        const referencia = editando
+          ? doc(db, categoria, editando.id)
+          : doc(collection(db, categoria));
+
+        const historialRef = doc(collection(db, "historial_costos"));
+
+        await runTransaction(db, async transaction => {
+          const anterior = editando
+            ? await transaction.get(referencia)
+            : null;
+
+          if (editando && !anterior.exists()) {
+            throw new Error("El material ya no existe.");
+          }
+
+          const precioAnterior = anterior?.data()?.precio ?? null;
+
+          transaction.set(referencia, {
+            ...datos,
+            ...(editando ? {} : {
+              creadoPor: usuarioActual.uid,
+              creadoEn: serverTimestamp()
+            })
+          }, { merge: true });
+
+          if (precioAnterior !== precio || !editando) {
+            transaction.set(historialRef, {
+              materialId: referencia.id,
+              coleccion: categoria,
+              nombre: datos.nombre,
+              precioAnterior,
+              precioNuevo: precio,
+              cantidadPresentacion: cantidad,
+              unidad: datos.unidad,
+              modificadoPor: usuarioActual.uid,
+              fecha: serverTimestamp(),
+              motivo: editando ? "actualizacion" : "alta"
+            });
+          }
+        });
+
+        limpiarFormulario();
+        $("categoria").disabled = false;
+        $("formularioPanel").hidden = true;
+        await cargarMateriales();
+
+      } catch (error) {
+        console.error("Error al guardar material:", error);
+
+        $("mensaje").style.color = "#a42d42";
+        $("mensaje").textContent =
+          "No se pudo guardar. Revisa la conexión o los permisos.";
+
+      } finally {
+        $("guardar").disabled = false;
+      }
+    });
+
+    onAuthStateChanged(auth, async user => {
+      $("aplicacion").hidden = true;
+      $("cargando").hidden = false;
+
+      if (!user) {
+        window.location.replace("./index.html");
+        return;
+      }
+
+      try {
+        await getDoc(doc(db, "configuracion", "acceso"));
+
+        usuarioActual = user;
+        await cargarMateriales();
+
+        $("aplicacion").hidden = false;
+        $("cargando").hidden = true;
+
+      } catch (error) {
+        console.error("Error de acceso:", error);
+
+        // Si falla la carga por conectividad, no cerramos
+        // automáticamente la sesión.
+        if (error.code === "permission-denied") {
+          await signOut(auth);
+          window.location.replace("./index.html");
+        } else {
+          $("cargando").textContent =
+            "No se pudo cargar el catálogo. Revisa tu conexión y actualiza.";
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
