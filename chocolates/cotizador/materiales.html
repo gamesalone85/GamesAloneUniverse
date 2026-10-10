@@ -46,7 +46,8 @@
       <section class="panel">
         <h2>Catálogo registrado</h2>
         <div class="filtros"><input id="buscar" type="search" placeholder="Buscar material o proveedor..." aria-label="Buscar material o proveedor"><select id="filtrarCategoria" aria-label="Filtrar categoría"><option value="">Todas las categorías</option><option value="materias_primas">Materias primas</option><option value="empaques">Empaques</option></select></div>
-        <div class="tabla-contenedor"><table><thead><tr><th>Material</th><th>Categoría</th><th>Presentación</th><th>Precio</th><th>Costo unitario</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="tablaMateriales"><tr><td colspan="7">Cargando materiales...</td></tr></tbody></table></div>
+        <div class="tabla-contenedor"><table><thead><tr><th>Material</th><th>Categoría</th><th>Presentación</th><th>Precio</th><th>Costo unitario</th><th>Existencia controlada</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="tablaMateriales"><tr><td colspan="8">Cargando materiales...</td></tr></tbody></table></div>
+        <p class="nota">Las existencias corresponden al inventario controlado, no a las cantidades de presentación del catálogo. Para registrar compras o salidas, abre <a href="./inventario.html">Inventario</a>. Actualiza esta página para consultar los movimientos más recientes.</p>
         <p class="nota">El costo unitario se calcula por gramo o pieza. El historial registra las altas y cualquier cambio de precio, cantidad o unidad de presentación. Las cotizaciones futuras conservarán sus propios importes al emitirse.</p>
       </section>
     </main>
@@ -73,6 +74,8 @@
     const moneda = valor => Number(valor).toLocaleString("es-MX", {style:"currency",currency:"MXN"});
     const cantidadTexto = valor => Number(valor).toLocaleString("es-MX", {maximumFractionDigits:6});
     let registros = [];
+    let inventarioSaldos = new Map();
+    let inventarioError = false;
     let editando = null;
     let usuarioActual = null;
     let guardando = false;
@@ -112,6 +115,16 @@
       $("nombre").focus();
       $("formularioPanel").scrollIntoView({behavior:"smooth",block:"start"});
     }
+    function existenciaTexto(item) {
+      const unidad = item.unidad === "pieza" ? "pieza" : "g";
+      if (!["g", "kg", "pieza"].includes(item.unidad)) return "Unidad no compatible";
+      if (inventarioError) return "No disponible";
+      const clave = `${item.coleccion}_${item.id}`;
+      const saldo = inventarioSaldos.get(clave);
+      const cantidad = Number(saldo?.cantidad ?? 0);
+      if (!Number.isFinite(cantidad)) return "Revisar saldo";
+      return `${cantidadTexto(cantidad)} ${unidad}${unidad === "pieza" && cantidad !== 1 ? "s" : ""}`;
+    }
     function renderizar() {
       const texto = $("buscar").value.toLocaleLowerCase("es").trim();
       const categoria = $("filtrarCategoria").value;
@@ -123,7 +136,7 @@
       tbody.replaceChildren();
       if (!filtrados.length) {
         const fila = document.createElement("tr");
-        celda(fila, "No hay materiales para mostrar.").colSpan = 7;
+        celda(fila, "No hay materiales para mostrar.").colSpan = 8;
         tbody.appendChild(fila);
         return;
       }
@@ -134,6 +147,11 @@
         celda(fila, `${cantidadTexto(item.cantidad)} ${item.unidad}`);
         celda(fila, moneda(item.precio));
         celda(fila, costoUnitario(item));
+        const existencia = celda(fila, existenciaTexto(item));
+        existencia.className = "existencia-celda";
+        if (!inventarioError && Number(inventarioSaldos.get(`${item.coleccion}_${item.id}`)?.cantidad ?? 0) <= 0) {
+          existencia.classList.add("sin-existencia");
+        }
         const estado = celda(fila, item.certeza === "estimado" ? "Estimado" : "Confirmado");
         estado.className = "etiqueta" + (item.certeza === "estimado" ? " estimado" : "");
         const acciones = document.createElement("td");
@@ -153,6 +171,14 @@
         return snapshot.docs.map(documento => ({...documento.data(),id:documento.id,coleccion:nombre}));
       }));
       registros = resultados.flat();
+      try {
+        const snapshot = await getDocs(collection(db, "inventario_saldos"));
+        inventarioSaldos = new Map(snapshot.docs.map(documento => [documento.id, documento.data()]));
+        inventarioError = false;
+      } catch (error) {
+        console.error("No se pudieron consultar las existencias:", error);
+        inventarioError = true;
+      }
       renderizar();
     }
     function editar(item) {
