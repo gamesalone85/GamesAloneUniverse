@@ -1,1 +1,4 @@
-/* Productos terminados: estilos compartidos con produccion.css */
+/* Productos terminados: estilos compartidos c/* Etapa 4C: terminados */
+#mensaje:not(:empty){padding:12px 15px;margin:12px 0;border-radius:8px;font-weight:600}.mensaje-ok{background:#e8f4eb;color:#205b38}.mensaje-error{background:#fff0ee;color:#8b2929}
+#operaciones{border:2px solid #d6b5bf}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:16px 0}.form-grid label{display:flex;flex-direction:column;gap:7px;font-weight:600}.form-grid input,.form-grid select{width:100%;padding:11px;border:1px solid #d9cdd1;border-radius:8px;background:white;color:#30282b}.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.acciones button,.tabla button{background:#642c3d;color:#fff;border:0;border-radius:8px;padding:10px 15px;cursor:pointer}.acciones button:disabled,.tabla button:disabled{opacity:.45;cursor:not-allowed}.acciones .secundario{background:#eee4e6;color:#47202d}.tabla{overflow-x:auto}.tabla table{min-width:900px}#historial td{max-width:300px;overflow-wrap:anywhere}
+on produccion.css */
