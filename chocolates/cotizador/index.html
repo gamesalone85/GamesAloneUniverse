@@ -270,7 +270,8 @@
         await verificarAdministrador(user);
 
         // Activaremos esta redirección cuando exista panel.html.
-        // window.location.replace("./panel.html");
+       window.location.replace("./panel.html");
+        
       } catch (error) {
         await signOut(auth);
         mensaje.textContent = "Esta cuenta no tiene acceso al cotizador.";
