@@ -32,13 +32,13 @@
             <div class="campo"><label for="manoObra">Mano de obra (MXN)</label><input id="manoObra" type="number" min="0" step="0.01" value="0" required></div>
             <div class="campo"><label for="otrosCostos">Otros costos (MXN)</label><input id="otrosCostos" type="number" min="0" step="0.01" value="0" required><small>Decoración, etiquetas, transporte u otros costos por unidad.</small></div>
           </div>
-          <h3>Precio de venta</h3>
+          <h3>Presentación comercial</h3><div class="form-grid"><div class="campo"><label for="piezasContenido">Chocolates por presentación (piezas)</label><input id="piezasContenido" type="number" min="1" step="1" value="1" required><small>Informativo: los materiales indicados arriba ya corresponden a toda la presentación. No se multiplican nuevamente.</small></div></div><h3>Precio de venta</h3>
           <div class="form-grid">
-            <div class="campo"><label for="metodo">Método de precio *</label><select id="metodo"><option value="fijo">Precio fijo</option><option value="calculado">Calculado por margen de utilidad (anterior)</option><option value="niveles">Lista y público (nuevo)</option></select></div>
+            <div class="campo"><label for="metodo">Método de precio *</label><select id="metodo"><option value="fijo">Precio fijo</option><option value="calculado">Calculado por margen de utilidad (anterior)</option><option value="niveles">Lista manual y público automático</option></select></div>
             <div class="campo" id="campoPrecioFijo"><label for="precioFijo">Precio de venta fijo (MXN)</label><input id="precioFijo" type="number" min="0" step="0.01" value="0"></div>
             <div class="campo" id="campoMargen" hidden><label for="margen">Margen de utilidad deseado (%)</label><input id="margen" type="number" min="0" max="99.99" step="0.01" value="30"><small>Margen sobre precio de venta, no recargo sobre costo.</small></div>
           </div>
-          <div class="form-grid" id="campoNiveles" hidden><div class="campo"><label for="modoMultiplicadores">Multiplicadores</label><select id="modoMultiplicadores"><option value="global">Usar configuración general</option><option value="personalizado">Personalizados para este producto</option></select></div><div class="campo" id="campoFactorLista" hidden><label for="factorLista">Factor de lista</label><input id="factorLista" type="number" min="1" step="0.01" value="1.70"></div><div class="campo" id="campoFactorPublico" hidden><label for="factorPublico">Factor público</label><input id="factorPublico" type="number" min="1" step="0.01" value="2.00"></div></div><div class="resumen" aria-live="polite">
+          <div class="form-grid" id="campoNiveles" hidden><div class="campo"><label for="precioListaManual">Precio de lista manual (MXN)</label><input id="precioListaManual" type="number" min="0" step="0.01" value="0"><small>Se redondea hacia arriba según la política comercial.</small></div><div class="campo"><label for="modoMultiplicadores">Multiplicador público</label><select id="modoMultiplicadores"><option value="global">Usar configuración general</option><option value="personalizado">Personalizado para este producto</option></select></div><div class="campo" id="campoFactorPublico" hidden><label for="factorPublico">Multiplicador sobre lista</label><input id="factorPublico" type="number" min="1" step="0.01" value="1.20"></div></div><div class="resumen" aria-live="polite">
             <div class="metrica"><span>Materiales y empaques</span><strong id="resMateriales">$0.00</strong></div>
             <div class="metrica"><span>Costo total unitario</span><strong id="resCosto">$0.00</strong></div>
             <div class="metrica"><span>Precio de venta</span><strong id="resVenta">$0.00</strong></div>
@@ -116,11 +116,11 @@
       }
       return resultado;
     }
-    let politica={factorLista:1.70,factorPublico:2.00};
-    const factores=p=>p.modoMultiplicadores==="personalizado"?{lista:Number(p.factorLista),publico:Number(p.factorPublico)}:{lista:Number(politica.factorLista),publico:Number(politica.factorPublico)};
-    function niveles(costo,p){const f=factores(p);if(!Number.isFinite(f.lista)||!Number.isFinite(f.publico)||f.lista<1||f.publico<f.lista)throw new Error("Los factores deben ser válidos y público no menor que lista.");return {lista:redondear(costo*f.lista),publico:redondear(costo*f.publico)};}
-    function camposNiveles(){const activo=$("metodo").value==="niveles",custom=$("modoMultiplicadores").value==="personalizado";$("campoNiveles").hidden=!activo;$("campoFactorLista").hidden=!activo||!custom;$("campoFactorPublico").hidden=!activo||!custom;$("metricaLista").hidden=!activo;$("metricaPublico").hidden=!activo;}
-    function datosNivelFormulario(){return {modoMultiplicadores:$("modoMultiplicadores").value,factorLista:$("factorLista").value,factorPublico:$("factorPublico").value};}
+    let politica={factorLista:1.70,factorPublico:2.00,multiplicadorSobreLista:1.20,redondeoComercial:5};
+    const cerrar=n=>Math.ceil((n-1e-9)/Number(politica.redondeoComercial||5))*Number(politica.redondeoComercial||5);
+    function niveles(costo,p){const lista=Number(p.precioListaManual);const factor=p.modoMultiplicadores==='personalizado'?Number(p.factorPublico):Number(politica.multiplicadorSobreLista??1.20);if(!Number.isFinite(lista)||lista<=0||!Number.isFinite(factor)||factor<1)throw new Error('Indica un precio de lista mayor que cero y revisa el multiplicador público.');const listaCerrada=cerrar(lista);return {lista:listaCerrada,publico:cerrar(listaCerrada*factor)};}
+    function camposNiveles(){const activo=$('metodo').value==='niveles',custom=$('modoMultiplicadores').value==='personalizado';$('campoNiveles').hidden=!activo;$('campoFactorPublico').hidden=!activo||!custom;$('metricaLista').hidden=!activo;$('metricaPublico').hidden=!activo;}
+    function datosNivelFormulario(){return {precioListaManual:$('precioListaManual').value,modoMultiplicadores:$('modoMultiplicadores').value,factorPublico:$('factorPublico').value};}
     function calcularPrecio(costo,metodo,fijo,margen){return metodo==="fijo"?fijo:costo/(1-margen/100);}
     function calcularProducto(ingredientes,manoObra,otrosCostos,metodo,fijo,margen){
       const materialesTotal=ingredientes.reduce((s,i)=>s+i.costoTotal,0);
@@ -156,7 +156,7 @@
       $("resUtilidad").className=r.utilidad<0?"alerta":"ok";
     }
     function limpiar(){
-      $("formProducto").reset();$("ingredientes").replaceChildren();$("manoObra").value="0";$("otrosCostos").value="0";$("precioFijo").value="0";$("margen").value="30";$("modoMultiplicadores").value="global";$("factorLista").value="1.70";$("factorPublico").value="2.00";
+      $("formProducto").reset();$("piezasContenido").value="1";$("ingredientes").replaceChildren();$("manoObra").value="0";$("otrosCostos").value="0";$("precioFijo").value="0";$("margen").value="30";$("modoMultiplicadores").value="global";$("precioListaManual").value="0";$("factorPublico").value="1.20";
       editando=null;$("tituloFormulario").textContent="Nuevo producto";$("guardar").textContent="Guardar producto";mensaje("");actualizarMetodo();
     }
     function abrir(){$("panelFormulario").hidden=false;$("nombre").focus();$("panelFormulario").scrollIntoView({behavior:"smooth",block:"start"});}
@@ -186,7 +186,7 @@
     function editar(p){
       if(guardando)return;
       limpiar();editando=p.id;$("nombre").value=p.nombre||"";$("sku").value=p.sku||"";$("descripcion").value=p.descripcion||"";
-      $("manoObra").value=p.manoObra??0;$("otrosCostos").value=p.otrosCostos??0;$("metodo").value=p.metodo||"fijo";$("precioFijo").value=p.precioFijo??0;$("margen").value=p.margen??30;$("modoMultiplicadores").value=p.modoMultiplicadores||"global";$("factorLista").value=p.factorLista??1.70;$("factorPublico").value=p.factorPublico??2.00;
+      $("piezasContenido").value=p.piezasContenido??1;$("manoObra").value=p.manoObra??0;$("otrosCostos").value=p.otrosCostos??0;$("metodo").value=p.metodo||"fijo";$("precioFijo").value=p.precioFijo??0;$("margen").value=p.margen??30;$("modoMultiplicadores").value=p.modoMultiplicadores||"global";$("precioListaManual").value=p.precioListaManual??p.referenciaCostos?.precioVenta??0;$("factorPublico").value=p.factorPublico??1.20;
       for(const i of p.ingredientes||[])agregarFila(`${i.coleccion}/${i.materialId}`,i.cantidad);
       $("tituloFormulario").textContent="Editar producto";$("guardar").textContent="Guardar cambios";actualizarMetodo();abrir();
     }
@@ -198,7 +198,7 @@
     $("nuevo").addEventListener("click",()=>{if(guardando)return;limpiar();abrir();});
     $("cancelar").addEventListener("click",()=>{if(guardando)return;limpiar();$("panelFormulario").hidden=true;});
     $("agregarIngrediente").addEventListener("click",()=>{if(!guardando)agregarFila();});
-    $("metodo").addEventListener("change",actualizarMetodo);for(const id of ["modoMultiplicadores","factorLista","factorPublico"])$(id).addEventListener("input",()=>{camposNiveles();actualizarResumen();});
+    $("metodo").addEventListener("change",actualizarMetodo);for(const id of ["modoMultiplicadores","precioListaManual","factorPublico"])$(id).addEventListener("input",()=>{camposNiveles();actualizarResumen();});
     for(const id of ["manoObra","otrosCostos","precioFijo","margen"])$(id).addEventListener("input",actualizarResumen);
     $("buscar").addEventListener("input",renderizar);$("filtrarMetodo").addEventListener("change",renderizar);
     $("formProducto").addEventListener("submit",async e=>{
@@ -212,7 +212,7 @@
         if(!["fijo","calculado","niveles"].includes(metodo))throw new Error("Selecciona el método de precio.");
         if(metodo==="fijo"&&!Number.isFinite(precioFijo))throw new Error("Indica un precio fijo válido.");
         if(metodo==="calculado"&&(!Number.isFinite(margen)||margen>=100))throw new Error("El margen debe estar entre 0 y menos de 100%.");
-        const configuracionNivel=datosNivelFormulario();const r=calcularProducto(ingredientes,manoObra,otrosCostos,metodo==="niveles"?"fijo":metodo,Number.isFinite(precioFijo)?precioFijo:0,Number.isFinite(margen)?margen:0);if(metodo==="niveles"){const n=niveles(r.costo,configuracionNivel);r.precio=n.publico;r.utilidad=r.precio-r.costo;}
+        const piezasContenido=Number($("piezasContenido").value);if(!Number.isSafeInteger(piezasContenido)||piezasContenido<1)throw new Error("Indica cuántos chocolates contiene la presentación.");const configuracionNivel=datosNivelFormulario();const r=calcularProducto(ingredientes,manoObra,otrosCostos,metodo==="niveles"?"fijo":metodo,Number.isFinite(precioFijo)?precioFijo:0,Number.isFinite(margen)?margen:0);if(metodo==="niveles"){const n=niveles(r.costo,configuracionNivel);r.precio=n.publico;r.utilidad=r.precio-r.costo;}
         if(!Number.isFinite(r.precio)||r.precio<0)throw new Error("No se pudo calcular el precio.");
         const referencia=editando?doc(db,"productos",editando):doc(collection(db,"productos"));
         guardando=true;$("guardar").disabled=true;$("cancelar").disabled=true;$("nuevo").disabled=true;mensaje("Guardando producto...");
@@ -231,8 +231,8 @@
           if(editando){const existente=await tx.get(referencia);if(!existente.exists())throw new Error("El producto ya no existe.");}
           const actual=calcularProducto(lecturas,manoObra,otrosCostos,metodo==="niveles"?"fijo":metodo,Number.isFinite(precioFijo)?precioFijo:0,Number.isFinite(margen)?margen:0);if(metodo==="niveles"){const n=niveles(actual.costo,configuracionNivel);actual.precio=n.publico;actual.utilidad=actual.precio-actual.costo;}
           tx.set(referencia,{
-            nombre,sku,descripcion,ingredientes:lecturas.map(({materialId,coleccion,nombre,cantidad,unidad})=>({materialId,coleccion,nombre,cantidad,unidad})),
-            manoObra,otrosCostos,metodo,...(metodo==="niveles"?{modoMultiplicadores:configuracionNivel.modoMultiplicadores,factorLista:configuracionNivel.modoMultiplicadores==="personalizado"?Number(configuracionNivel.factorLista):null,factorPublico:configuracionNivel.modoMultiplicadores==="personalizado"?Number(configuracionNivel.factorPublico):null}:{}),precioFijo:metodo==="fijo"?precioFijo:null,margen:metodo==="calculado"?margen:null,
+            nombre,sku,descripcion,piezasContenido,ingredientes:lecturas.map(({materialId,coleccion,nombre,cantidad,unidad})=>({materialId,coleccion,nombre,cantidad,unidad})),
+            manoObra,otrosCostos,metodo,...(metodo==="niveles"?{modoMultiplicadores:configuracionNivel.modoMultiplicadores,precioListaManual:Number(configuracionNivel.precioListaManual),factorPublico:configuracionNivel.modoMultiplicadores==="personalizado"?Number(configuracionNivel.factorPublico):null}:{}),precioFijo:metodo==="fijo"?precioFijo:null,margen:metodo==="calculado"?margen:null,
             referenciaCostos:{ingredientes:lecturas,costoMateriales:redondear(actual.materialesTotal),costoTotal:redondear(actual.costo),precioVenta:redondear(actual.precio),utilidad:redondear(actual.utilidad)},
             actualizadoPor:usuarioActual.uid,actualizadoEn:serverTimestamp(),...(!editando?{creadoPor:usuarioActual.uid,creadoEn:serverTimestamp()}:{})
           },{merge:true});
@@ -250,4 +250,3 @@
   </script>
 </body>
 </html>
-
