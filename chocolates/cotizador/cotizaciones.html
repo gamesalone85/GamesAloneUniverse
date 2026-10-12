@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Cotizaciones emitidas | Chocolate Artístico Sarita</title>
+    <link rel="stylesheet" href="./css/sarita-global.css">
+  <link rel="stylesheet" href="./css/sarita-componentes.css">
+  <link rel="stylesheet" href="./css/modulos/cotizaciones.css">
+</head>
+<body>
+  <div id="cargando" class="cargando">Verificando acceso a las cotizaciones...</div>
+  <div id="aplicacion" hidden>
+    <header class="cabecera"><div class="cabecera-interior"><div><p class="marca">Chocolate Artístico Sarita</p><p class="submarca">Sistema privado de cotizaciones</p></div><a class="volver" href="./panel.html">← Volver al panel</a></div></header>
+    <main class="contenido">
+      <h1>Cotizaciones emitidas</h1>
+      <p class="descripcion">Consulta los documentos comerciales emitidos por los administradores. Los importes se muestran tal como quedaron registrados al emitir cada cotización.</p>
+      <section class="resumen" aria-label="Resumen de cotizaciones">
+        <div class="indicador"><span>Cotizaciones encontradas</span><strong id="totalCotizaciones">0</strong></div>
+        <div class="indicador"><span>Importe total encontrado</span><strong id="totalImporte">$0.00</strong></div>
+        <div class="indicador"><span>Última cotización</span><strong id="ultimoFolio" style="font-size:19px">—</strong></div>
+      </section>
+      <section class="panel">
+        <div class="acciones"><h2 style="margin:0">Historial</h2><div class="acciones-celda"><a class="boton boton-pdf" href="./cotizador.html">+ Nueva cotización</a><button type="button" class="boton boton-secundario" id="recargar">Actualizar lista</button></div></div>
+        <div class="filtros">
+          <div class="campo"><label for="buscar">Folio o cliente</label><input id="buscar" type="search" placeholder="Ej. SAR-2026-0001"></div>
+          <div class="campo"><label for="estado">Estado</label><select id="estado"><option value="">Todos</option><option value="emitida">Emitida</option><option value="cancelada">Cancelada</option><option value="borrador">Borrador</option></select></div>
+          <div class="campo"><label for="desde">Desde</label><input id="desde" type="date"></div>
+          <div class="campo"><label for="hasta">Hasta</label><input id="hasta" type="date"></div>
+        </div>
+        <div class="tabla-contenedor"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Estado</th><th>Administrador</th><th class="importe">Total</th><th>Acción</th></tr></thead><tbody id="tablaCotizaciones"><tr><td colspan="7">Cargando...</td></tr></tbody></table></div>
+        <p class="ayuda" id="resultadoConteo" role="status"></p><p class="error" id="errorLista" role="alert"></p>
+      </section>
+      <section class="panel" id="detallePanel" hidden>
+        <div class="detalle-cabecera"><div><h2>Detalle de <span id="detalleFolio"></span></h2><p class="ayuda" style="margin:0">Copia de los datos almacenados al momento de emisión.</p></div><div class="acciones-celda"><a class="boton boton-pdf" id="pdfDetalle" href="./cotizacion-pdf.html" target="_blank" rel="noopener noreferrer">Ver / guardar PDF ↗</a><button type="button" class="boton boton-secundario" id="cerrarDetalle">Cerrar detalle</button></div></div>
+        <div class="detalle-grid" id="detalleDatos"></div>
+        <h2>Productos cotizados</h2>
+        <div class="tabla-contenedor"><table><thead><tr><th>Producto</th><th>Descripción / SKU</th><th class="importe">Cantidad</th><th class="importe">Precio unitario</th><th class="importe">Importe</th></tr></thead><tbody id="detalleItems"></tbody></table></div>
+        <div class="totales" id="detalleTotales"></div>
+        <p class="nota">Los importes provienen del documento emitido. El PDF se abre en otra pestaña para imprimirlo o guardarlo. La cancelación y modificación de documentos no están habilitadas.</p>
+      </section>
+    </main>
+  </div>
+  <script type="module">
+    import "./sesion-segura.js";
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import {getFirestore,collection,getDocs,doc,getDoc} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig={
+      apiKey:"AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain:"sarita-cotizador.firebaseapp.com",
+      projectId:"sarita-cotizador",
+      storageBucket:"sarita-cotizador.firebasestorage.app",
+      messagingSenderId:"798881105496",
+      appId:"1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+    const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+    const $=id=>document.getElementById(id);
+    const dinero=n=>Number(n??0).toLocaleString("es-MX",{style:"currency",currency:"MXN"});
+    const texto=v=>v==null||v===""?"—":String(v);
+    const enlacePDF=c=>"./cotizacion-pdf.html?id="+encodeURIComponent(c.id);
+    const fechaDe=v=>v&&typeof v.toDate==="function"?v.toDate():null;
+    const fechaTexto=v=>{const f=fechaDe(v);return f?f.toLocaleString("es-MX",{dateStyle:"medium",timeStyle:"short"}):"Sin fecha"};
+    const fechaISO=v=>{const f=fechaDe(v);if(!f)return "";const partes=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Mexico_City",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(f);const p=Object.fromEntries(partes.map(x=>[x.type,x.value]));return `${p.year}-${p.month}-${p.day}`};
+    let cotizaciones=[];
+    function celda(fila,valor,clase=""){const td=document.createElement("td");td.textContent=texto(valor);if(clase)td.className=clase;fila.appendChild(td);return td}
+    function dato(contenedor,etiqueta,valor){const div=document.createElement("div");div.className="dato";const a=document.createElement("span");a.textContent=etiqueta;const b=document.createElement("strong");b.textContent=texto(valor);div.append(a,b);contenedor.appendChild(div)}
+    function linea(contenedor,etiqueta,valor,final=false){const d=document.createElement("div");d.className="linea"+(final?" final":"");const a=document.createElement("span"),b=document.createElement("span");a.textContent=etiqueta;b.textContent=valor;d.append(a,b);contenedor.appendChild(d)}
+    function filtradas(){const q=$("buscar").value.trim().toLocaleLowerCase("es-MX"),estado=$("estado").value,desde=$("desde").value,hasta=$("hasta").value;return cotizaciones.filter(c=>{const nombre=c.cliente?.nombre||"";const coincide=`${c.folio||""} ${nombre}`.toLocaleLowerCase("es-MX").includes(q);const f=fechaISO(c.emitidoEn);return coincide&&(!estado||c.estado===estado)&&(!desde||(f&&f>=desde))&&(!hasta||(f&&f<=hasta))})}
+    function renderizar(){const datos=filtradas(),tbody=$("tablaCotizaciones");tbody.replaceChildren();$("totalCotizaciones").textContent=datos.length;$("totalImporte").textContent=dinero(datos.reduce((s,c)=>s+Number(c.totales?.total||0),0));$("ultimoFolio").textContent=datos[0]?.folio||"—";$("resultadoConteo").textContent=`${datos.length} cotización(es) encontrada(s).`;
+      if(!datos.length){const tr=document.createElement("tr");celda(tr,"No hay cotizaciones que coincidan con los filtros.").colSpan=7;tbody.appendChild(tr);return}
+      for(const c of datos){const tr=document.createElement("tr");celda(tr,c.folio||c.id,"folio");celda(tr,fechaTexto(c.emitidoEn));celda(tr,c.cliente?.nombre);const estado=celda(tr,c.estado||"Sin estado");estado.className="etiqueta";celda(tr,c.emitidoPorCorreo||c.emitidoPor||"—");celda(tr,dinero(c.totales?.total),"importe");const td=document.createElement("td"),acciones=document.createElement("div"),btn=document.createElement("button"),pdf=document.createElement("a");acciones.className="acciones-celda";btn.type="button";btn.className="boton boton-secundario";btn.textContent="Ver detalle";btn.addEventListener("click",()=>mostrarDetalle(c));pdf.className="boton boton-pdf";pdf.href=enlacePDF(c);pdf.target="_blank";pdf.rel="noopener noreferrer";pdf.textContent="PDF ↗";pdf.setAttribute("aria-label","Abrir PDF de "+(c.folio||c.id));acciones.append(btn,pdf);td.appendChild(acciones);tr.appendChild(td);tbody.appendChild(tr)}
+    }
+    function mostrarDetalle(c){$("detallePanel").hidden=false;$("detalleFolio").textContent=c.folio||c.id;$("pdfDetalle").href=enlacePDF(c);const datos=$("detalleDatos");datos.replaceChildren();dato(datos,"Cliente",c.cliente?.nombre);dato(datos,"Contacto",c.cliente?.contacto);dato(datos,"Fecha de emisión",fechaTexto(c.emitidoEn));dato(datos,"Estado",c.estado);dato(datos,"Administrador",c.emitidoPorCorreo||c.emitidoPor);dato(datos,"Referencia",c.referencia);dato(datos,"Vigencia hasta",c.vigenciaHasta?fechaTexto(c.vigenciaHasta):"No especificada");dato(datos,"Moneda",c.moneda||"MXN");dato(datos,"Notas",c.notas);
+      const tbody=$("detalleItems");tbody.replaceChildren();const items=Array.isArray(c.items)?c.items:[];if(!items.length){const tr=document.createElement("tr");celda(tr,"Sin productos registrados.").colSpan=5;tbody.appendChild(tr)}else for(const i of items){const tr=document.createElement("tr");celda(tr,i.nombre);celda(tr,[i.descripcion,i.sku?`SKU: ${i.sku}`:""].filter(Boolean).join(" · ")||"—");celda(tr,i.cantidad,"importe");celda(tr,dinero(i.precioUnitario),"importe");celda(tr,dinero(i.importe),"importe");tbody.appendChild(tr)}
+      const t=$("detalleTotales");t.replaceChildren();linea(t,"Base",dinero(c.totales?.base));linea(t,`Descuento (${Number(c.descuentoPorcentaje||0)}%)`,"− "+dinero(c.totales?.descuentoMonto));const modo=c.impuestos?.modo;const etiquetas={sin_desglose:"Sin IVA desglosado",incluido:"IVA incluido",adicional:"IVA adicional"};linea(t,"Modalidad de IVA",etiquetas[modo]||texto(modo));if(modo!=="sin_desglose")linea(t,`IVA (${c.impuestos?.tasaPorcentaje??"—"}%)`,dinero(c.totales?.iva));linea(t,"Total",dinero(c.totales?.total),true);$("detallePanel").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    async function cargar(){ $("errorLista").textContent="";$("recargar").disabled=true;try{const snapshot=await getDocs(collection(db,"cotizaciones"));cotizaciones=snapshot.docs.map(d=>({id:d.id,...d.data()}));cotizaciones.sort((a,b)=>(fechaDe(b.emitidoEn)?.getTime()||0)-(fechaDe(a.emitidoEn)?.getTime()||0)||(Number(b.consecutivo||0)-Number(a.consecutivo||0)));renderizar()}catch(e){console.error("Error al consultar cotizaciones",e);$("errorLista").textContent="No fue posible consultar las cotizaciones. Revisa tu conexión y permisos.";cotizaciones=[];renderizar()}finally{$("recargar").disabled=false}}
+    for(const id of ["buscar","estado","desde","hasta"])$(id).addEventListener(id==="buscar"?"input":"change",renderizar);
+    $("recargar").addEventListener("click",cargar);$("cerrarDetalle").addEventListener("click",()=>{$("detallePanel").hidden=true});
+    onAuthStateChanged(auth,async user=>{$("aplicacion").hidden=true;$("cargando").hidden=false;if(!user){location.replace("./index.html");return}try{await getDoc(doc(db,"configuracion","acceso"));$("aplicacion").hidden=false;$("cargando").hidden=true;await cargar()}catch(e){console.error("Error de acceso",e);if(e.code==="permission-denied"){await signOut(auth);location.replace("./index.html")}else{$("cargando").textContent="No fue posible verificar el acceso. Revisa tu conexión y actualiza."}}});
+  </script>
+</body>
+</html>

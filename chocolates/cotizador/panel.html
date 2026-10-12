@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Panel administrativo | Chocolate Artístico Sarita</title>
+  <link rel="stylesheet" href="./css/sarita-global.css">
+  <link rel="stylesheet" href="./css/sarita-componentes.css">
+  <link rel="stylesheet" href="./css/modulos/panel.css">
+</head>
+<body>
+  <div class="cargando" id="cargando" role="status">Verificando acceso administrativo...</div>
+
+  <div id="panel" hidden>
+    <header class="cabecera">
+      <div class="cabecera-interior">
+        <div>
+          <p class="marca">Chocolate Artístico Sarita</p>
+          <p class="submarca">Sistema privado de cotizaciones, inventario y producción</p>
+        </div>
+        <button class="salir" id="cerrarSesion" type="button">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <section class="bienvenida" aria-labelledby="tituloPanel">
+        <h1 id="tituloPanel">Panel administrativo</h1>
+        <p>Centro de gestión de materiales, productos, inventario, producción y cotizaciones comerciales de Chocolate Artístico Sarita.</p>
+        <p class="usuario">Sesión iniciada como: <strong id="correoUsuario"></strong></p>
+      </section>
+
+      <section aria-labelledby="tituloModulos">
+        <h2 class="seccion-titulo" id="tituloModulos">Módulos disponibles</h2>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <h3>Materiales y costos</h3>
+            <p>Administra chocolates, ingredientes, empaques, proveedores y precios de compra.</p>
+            <a href="./materiales.html" class="enlace-modulo">Administrar materiales →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Historial de costos</h3>
+            <p>Consulta movimientos de precios, cantidades, presentaciones y costos unitarios anteriores.</p>
+            <a href="./historial-costos.html" class="enlace-modulo">Consultar historial →</a>
+          </article>
+
+          <article class="tarjeta"><h3>Configuración de precios</h3><p>Multiplicadores generales para precio de lista y precio público.</p><a href="./precios.html" class="enlace-modulo">Configurar precios →</a></article><article class="tarjeta">
+            <h3>Catálogo de productos</h3>
+            <p>Crea productos con sus materiales, empaques y gastos. Define precios fijos o calculados por margen.</p>
+            <a href="./productos.html" class="enlace-modulo">Administrar productos →</a>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="tituloInventario">
+        <h2 class="seccion-titulo" id="tituloInventario">Inventario y operaciones</h2>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <h3>Inventario de materiales</h3>
+            <p>Registra compras nuevas, salidas reales y consulta existencias de materias primas y empaques.</p>
+            <a href="./inventario.html" class="enlace-modulo">Abrir inventario →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Órdenes de producción</h3>
+            <p>Planea pedidos, calcula insumos estimados y registra la fabricación con sus consumos reales.</p>
+            <a href="./produccion.html" class="enlace-modulo">Abrir producción →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Productos terminados</h3>
+            <p>Consulta lotes de chocolates fabricados y sus existencias, embolsadas o conservadas en recipientes.</p>
+            <a href="./terminados.html" class="enlace-modulo">Ver productos terminados →</a>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="tituloComercial">
+        <h2 class="seccion-titulo" id="tituloComercial">Cotizaciones comerciales</h2>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <h3>Cotizador comercial</h3>
+            <p>Prepara cotizaciones con productos, cantidades, descuentos, IVA configurable y folios consecutivos.</p>
+            <a href="./cotizador.html" class="enlace-modulo">Crear cotización →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Cotizaciones emitidas</h3>
+            <p>Consulta las cotizaciones de ambos administradores, revisa sus importes históricos y abre su PDF.</p>
+            <a href="./cotizaciones.html" class="enlace-modulo">Ver cotizaciones →</a>
+          </article>
+
+          <article class="tarjeta">
+            <h3>Documentos PDF</h3>
+            <p>Selecciona una cotización emitida para imprimirla o guardarla en tamaño carta con el logotipo oficial.</p>
+            <a href="./cotizacion-pdf.html" class="enlace-modulo">Abrir generador PDF →</a>
+          </article>
+        </div>
+      </section>
+
+      <footer class="pie">Acceso exclusivo para administradores — Chocolate Artístico Sarita</footer>
+    </main>
+  </div>
+
+  <script type="module">
+    import "./sesion-segura.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain: "sarita-cotizador.firebaseapp.com",
+      projectId: "sarita-cotizador",
+      storageBucket: "sarita-cotizador.firebasestorage.app",
+      messagingSenderId: "798881105496",
+      appId: "1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const cargando = document.getElementById("cargando");
+    const panel = document.getElementById("panel");
+    const correoUsuario = document.getElementById("correoUsuario");
+    const cerrarSesion = document.getElementById("cerrarSesion");
+
+    onAuthStateChanged(auth, async user => {
+      panel.hidden = true;
+      cargando.hidden = false;
+
+      if (!user) {
+        window.location.replace("./index.html");
+        return;
+      }
+
+      try {
+        // Las reglas de Firestore autorizan esta lectura solo para los UID permitidos.
+        await getDoc(doc(db, "configuracion", "acceso"));
+        correoUsuario.textContent = user.email || "Administrador";
+        panel.hidden = false;
+        cargando.hidden = true;
+      } catch (error) {
+        console.error("No fue posible validar el acceso:", error.code || error);
+        if (error.code === "permission-denied") {
+          try { await signOut(auth); } catch (_) {}
+          window.location.replace("./index.html");
+          return;
+        }
+        cargando.textContent = "No se pudo verificar el acceso. Revisa tu conexión y actualiza la página.";
+      }
+    });
+
+    cerrarSesion.addEventListener("click", async () => {
+      cerrarSesion.disabled = true;
+      try {
+        await signOut(auth);
+        window.location.replace("./index.html");
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error.code || error);
+        cerrarSesion.disabled = false;
+        alert("No fue posible cerrar sesión. Inténtalo nuevamente.");
+      }
+    });
+  </script>
+</body>
+</html>

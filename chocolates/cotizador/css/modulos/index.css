@@ -1,0 +1,144 @@
+:root {
+      --vino: #642c3d;
+      --vino-oscuro: #47202d;
+      --crema: #faf5ee;
+      --texto: #30282b;
+      --borde: #e8ded8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, #ead7cb, transparent 45%),
+        linear-gradient(135deg, #fffaf4, #eee0d9);
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--texto);
+    }
+
+    .login {
+      width: 100%;
+      max-width: 430px;
+      padding: 40px 34px;
+      background: #fff;
+      border: 1px solid var(--borde);
+      border-radius: 22px;
+      box-shadow: 0 20px 65px rgba(60, 30, 35, .12);
+    }
+
+    .marca {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .marca-icono {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: var(--crema);
+      color: var(--vino);
+      font-family: Georgia, serif;
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-family: Georgia, serif;
+      font-size: 27px;
+      color: var(--vino-oscuro);
+    }
+
+    .subtitulo {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #75676d;
+    }
+
+    .campo {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid #d9cdd0;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--texto);
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--vino);
+      box-shadow: 0 0 0 3px rgba(100, 44, 61, .12);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--vino);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--vino-oscuro);
+    }
+
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .mensaje {
+      min-height: 22px;
+      margin: 16px 0 0;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #a42d42;
+    }
+
+    .pie {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--borde);
+      text-align: center;
+      color: #85777d;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+      .login {
+        padding: 32px 22px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }

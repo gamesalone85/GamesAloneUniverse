@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Materiales y costos | Chocolate Artístico Sarita</title>
+    <link rel="stylesheet" href="./css/sarita-global.css">
+  <link rel="stylesheet" href="./css/sarita-componentes.css">
+  <link rel="stylesheet" href="./css/modulos/materiales.css">
+</head>
+<body>
+  <div id="cargando" class="cargando">Verificando acceso al catálogo...</div>
+  <div id="aplicacion" hidden>
+    <header class="cabecera">
+      <div class="cabecera-interior">
+        <div><p class="marca">Chocolate Artístico Sarita</p><p class="submarca">Administración de materiales y costos</p></div>
+        <a href="./panel.html" class="volver">← Volver al panel</a>
+      </div>
+    </header>
+    <main class="contenido">
+      <div class="encabezado">
+        <div><h1>Materiales y costos</h1><p class="descripcion">Administra materias primas, empaques y precios de compra.</p></div>
+        <div class="acciones-encabezado">
+          <a href="./historial-costos.html" class="btn btn-historial">Ver historial de costos</a>
+          <button class="btn" id="nuevoMaterial" type="button">+ Nuevo material</button>
+        </div>
+      </div>
+      <section class="panel" id="formularioPanel" hidden>
+        <h2 id="tituloFormulario">Agregar material</h2>
+        <form id="formMaterial">
+          <div class="form-grid">
+            <div class="campo"><label for="nombre">Nombre del material *</label><input id="nombre" maxlength="120" required></div>
+            <div class="campo"><label for="categoria">Categoría *</label><select id="categoria" required><option value="materias_primas">Materia prima</option><option value="empaques">Empaque</option></select></div>
+            <div class="campo"><label for="cantidad">Cantidad de la presentación *</label><input id="cantidad" type="number" min="0.001" step="any" required></div>
+            <div class="campo"><label for="unidad">Unidad *</label><select id="unidad" required><option value="g">Gramos</option><option value="kg">Kilogramos</option><option value="pieza">Piezas</option></select></div>
+            <div class="campo"><label for="precio">Precio de compra (MXN) *</label><input id="precio" type="number" min="0" step="0.01" required></div>
+            <div class="campo"><label for="certeza">Tipo de precio</label><select id="certeza"><option value="confirmado">Confirmado</option><option value="estimado">Estimado</option></select></div>
+            <div class="campo"><label for="proveedor">Proveedor (opcional)</label><input id="proveedor" maxlength="120"></div>
+            <div class="campo"><label for="observaciones">Observaciones (opcional)</label><input id="observaciones" maxlength="250"></div>
+          </div>
+          <div class="acciones"><button class="btn" id="guardar" type="submit">Guardar material</button><button class="btn btn-secundario" id="cancelar" type="button">Cancelar</button></div>
+          <p class="mensaje" id="mensaje" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="panel">
+        <h2>Catálogo registrado</h2>
+        <div class="filtros"><input id="buscar" type="search" placeholder="Buscar material o proveedor..." aria-label="Buscar material o proveedor"><select id="filtrarCategoria" aria-label="Filtrar categoría"><option value="">Todas las categorías</option><option value="materias_primas">Materias primas</option><option value="empaques">Empaques</option></select></div>
+        <div class="tabla-contenedor"><table><thead><tr><th>Material</th><th>Categoría</th><th>Presentación</th><th>Precio</th><th>Costo unitario</th><th>Existencia controlada</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="tablaMateriales"><tr><td colspan="8">Cargando materiales...</td></tr></tbody></table></div>
+        <p class="nota">Las existencias corresponden al inventario controlado, no a las cantidades de presentación del catálogo. Para registrar compras o salidas, abre <a href="./inventario.html">Inventario</a>. Actualiza esta página para consultar los movimientos más recientes.</p>
+        <p class="nota">El costo unitario se calcula por gramo o pieza. El historial registra las altas y cualquier cambio de precio, cantidad o unidad de presentación. Las cotizaciones futuras conservarán sus propios importes al emitirse.</p>
+      </section>
+    </main>
+  </div>
+  <script type="module">
+    import "./sesion-segura.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",
+      authDomain: "sarita-cotizador.firebaseapp.com",
+      projectId: "sarita-cotizador",
+      storageBucket: "sarita-cotizador.firebasestorage.app",
+      messagingSenderId: "798881105496",
+      appId: "1:798881105496:web:c42f8cd5655e9585d02c2d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const $ = id => document.getElementById(id);
+    const coleccionesPermitidas = ["materias_primas", "empaques"];
+    const moneda = valor => Number(valor).toLocaleString("es-MX", {style:"currency",currency:"MXN"});
+    const cantidadTexto = valor => Number(valor).toLocaleString("es-MX", {maximumFractionDigits:6});
+    let registros = [];
+    let inventarioSaldos = new Map();
+    let inventarioError = false;
+    let editando = null;
+    let usuarioActual = null;
+    let guardando = false;
+
+    function costoBase(precio, cantidad, unidad) {
+      if (precio == null || cantidad == null || !["g","kg","pieza"].includes(unidad)) return null;
+      const base = unidad === "kg" ? Number(cantidad) * 1000 : Number(cantidad);
+      return Number.isFinite(base) && base > 0 ? Number(precio) / base : null;
+    }
+    function costoUnitario(item) {
+      const costo = costoBase(item.precio, item.cantidad, item.unidad);
+      if (costo === null) return "—";
+      const denominacion = item.unidad === "pieza" ? "pieza" : "g";
+      // Cuatro decimales permiten visualizar costos pequeños, como bolsas por pieza.
+      return `${Number(costo).toLocaleString("es-MX", {minimumFractionDigits:2,maximumFractionDigits:4})} MXN / ${denominacion}`;
+    }
+    function celda(fila, contenido) {
+      const td = document.createElement("td");
+      td.textContent = String(contenido ?? "");
+      fila.appendChild(td);
+      return td;
+    }
+    function mostrarMensaje(mensaje, error=false) {
+      $("mensaje").style.color = error ? "var(--error)" : "var(--gris)";
+      $("mensaje").textContent = mensaje;
+    }
+    function limpiarFormulario() {
+      $("categoria").disabled = false;
+      $("formMaterial").reset();
+      editando = null;
+      $("tituloFormulario").textContent = "Agregar material";
+      $("guardar").textContent = "Guardar material";
+      mostrarMensaje("");
+    }
+    function mostrarFormulario() {
+      $("formularioPanel").hidden = false;
+      $("nombre").focus();
+      $("formularioPanel").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+    function existenciaTexto(item) {
+      const unidad = item.unidad === "pieza" ? "pieza" : "g";
+      if (!["g", "kg", "pieza"].includes(item.unidad)) return "Unidad no compatible";
+      if (inventarioError) return "No disponible";
+      const clave = `${item.coleccion}_${item.id}`;
+      const saldo = inventarioSaldos.get(clave);
+      const cantidad = Number(saldo?.cantidad ?? 0);
+      if (!Number.isFinite(cantidad)) return "Revisar saldo";
+      return `${cantidadTexto(cantidad)} ${unidad}${unidad === "pieza" && cantidad !== 1 ? "s" : ""}`;
+    }
+    function renderizar() {
+      const texto = $("buscar").value.toLocaleLowerCase("es").trim();
+      const categoria = $("filtrarCategoria").value;
+      const filtrados = registros.filter(item => {
+        const busqueda = `${item.nombre || ""} ${item.proveedor || ""}`.toLocaleLowerCase("es");
+        return busqueda.includes(texto) && (!categoria || item.coleccion === categoria);
+      }).sort((a,b) => (a.nombre || "").localeCompare(b.nombre || "", "es"));
+      const tbody = $("tablaMateriales");
+      tbody.replaceChildren();
+      if (!filtrados.length) {
+        const fila = document.createElement("tr");
+        celda(fila, "No hay materiales para mostrar.").colSpan = 8;
+        tbody.appendChild(fila);
+        return;
+      }
+      for (const item of filtrados) {
+        const fila = document.createElement("tr");
+        celda(fila, item.nombre);
+        celda(fila, item.coleccion === "empaques" ? "Empaque" : "Materia prima");
+        celda(fila, `${cantidadTexto(item.cantidad)} ${item.unidad}`);
+        celda(fila, moneda(item.precio));
+        celda(fila, costoUnitario(item));
+        const existencia = celda(fila, existenciaTexto(item));
+        existencia.className = "existencia-celda";
+        if (!inventarioError && Number(inventarioSaldos.get(`${item.coleccion}_${item.id}`)?.cantidad ?? 0) <= 0) {
+          existencia.classList.add("sin-existencia");
+        }
+        const estado = celda(fila, item.certeza === "estimado" ? "Estimado" : "Confirmado");
+        estado.className = "etiqueta" + (item.certeza === "estimado" ? " estimado" : "");
+        const acciones = document.createElement("td");
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.className = "editar";
+        boton.textContent = "Editar";
+        boton.addEventListener("click", () => editar(item));
+        acciones.appendChild(boton);
+        fila.appendChild(acciones);
+        tbody.appendChild(fila);
+      }
+    }
+    async function cargarMateriales() {
+      const resultados = await Promise.all(coleccionesPermitidas.map(async nombre => {
+        const snapshot = await getDocs(collection(db,nombre));
+        return snapshot.docs.map(documento => ({...documento.data(),id:documento.id,coleccion:nombre}));
+      }));
+      registros = resultados.flat();
+      try {
+        const snapshot = await getDocs(collection(db, "inventario_saldos"));
+        inventarioSaldos = new Map(snapshot.docs.map(documento => [documento.id, documento.data()]));
+        inventarioError = false;
+      } catch (error) {
+        console.error("No se pudieron consultar las existencias:", error);
+        inventarioError = true;
+      }
+      renderizar();
+    }
+    function editar(item) {
+      if (guardando) return;
+      limpiarFormulario();
+      editando = {id:item.id,coleccion:item.coleccion};
+      $("nombre").value = item.nombre || "";
+      $("categoria").value = item.coleccion;
+      $("categoria").disabled = true;
+      $("cantidad").value = item.cantidad;
+      $("unidad").value = item.unidad;
+      $("precio").value = item.precio;
+      $("certeza").value = item.certeza || "confirmado";
+      $("proveedor").value = item.proveedor || "";
+      $("observaciones").value = item.observaciones || "";
+      $("tituloFormulario").textContent = "Editar material";
+      $("guardar").textContent = "Guardar cambios";
+      mostrarFormulario();
+    }
+    $("nuevoMaterial").addEventListener("click", () => {if(guardando)return;limpiarFormulario();mostrarFormulario();});
+    $("cancelar").addEventListener("click", () => {if(guardando)return;limpiarFormulario();$("formularioPanel").hidden=true;});
+    $("buscar").addEventListener("input",renderizar);
+    $("filtrarCategoria").addEventListener("change",renderizar);
+
+    $("formMaterial").addEventListener("submit", async evento => {
+      evento.preventDefault();
+      if (!usuarioActual || guardando) return;
+      const categoria = editando ? editando.coleccion : $("categoria").value;
+      const cantidad = Number($("cantidad").value);
+      const precio = Number($("precio").value);
+      const unidad = $("unidad").value;
+      const nombre = $("nombre").value.trim();
+      if (!coleccionesPermitidas.includes(categoria) || !nombre || !["g","kg","pieza"].includes(unidad) || !Number.isFinite(cantidad) || cantidad <= 0 || !Number.isFinite(precio) || precio < 0 || !["confirmado","estimado"].includes($("certeza").value)) {
+        mostrarMensaje("Revisa los campos obligatorios y los valores ingresados.",true);
+        return;
+      }
+      const datos = {
+        nombre,cantidad,unidad,precio,
+        certeza:$("certeza").value,
+        proveedor:$("proveedor").value.trim(),
+        observaciones:$("observaciones").value.trim(),
+        actualizadoPor:usuarioActual.uid,
+        actualizadoEn:serverTimestamp()
+      };
+      guardando=true;
+      $("guardar").disabled=true;
+      $("cancelar").disabled=true;
+      $("nuevoMaterial").disabled=true;
+      mostrarMensaje("Guardando información...");
+      try {
+        const referencia = editando ? doc(db,categoria,editando.id) : doc(collection(db,categoria));
+        const historialRef = doc(collection(db,"historial_costos"));
+        const esEdicion = Boolean(editando);
+        await runTransaction(db, async transaction => {
+          const snapshot = esEdicion ? await transaction.get(referencia) : null;
+          if (esEdicion && !snapshot.exists()) throw new Error("El material ya no existe.");
+          const anterior = snapshot?.data() ?? null;
+          const precioAnterior = anterior?.precio ?? null;
+          const cantidadAnterior = anterior?.cantidad ?? null;
+          const unidadAnterior = anterior?.unidad ?? null;
+          const costoUnitarioAnterior = costoBase(precioAnterior,cantidadAnterior,unidadAnterior);
+          const costoUnitarioNuevo = costoBase(precio,cantidad,unidad);
+          const cambioCosto = !esEdicion || Number(precioAnterior) !== precio || Number(cantidadAnterior) !== cantidad || unidadAnterior !== unidad;
+          transaction.set(referencia,{
+            ...datos,
+            ...(!esEdicion ? {creadoPor:usuarioActual.uid,creadoEn:serverTimestamp()} : {})
+          },{merge:true});
+          if (cambioCosto) {
+            transaction.set(historialRef,{
+              materialId:referencia.id,
+              coleccion:categoria,
+              nombre,
+              precioAnterior,
+              precioNuevo:precio,
+              cantidadAnterior,
+              cantidadPresentacion:cantidad,
+              unidadAnterior,
+              unidad,
+              costoUnitarioAnterior,
+              costoUnitarioNuevo,
+              modificadoPor:usuarioActual.uid,
+              fecha:serverTimestamp(),
+              motivo:esEdicion ? "actualizacion" : "alta"
+            });
+          }
+        });
+        limpiarFormulario();
+        $("formularioPanel").hidden=true;
+        await cargarMateriales();
+      } catch (error) {
+        console.error("Error al guardar material:",error);
+        mostrarMensaje(error.message === "El material ya no existe." ? error.message : "No se pudo completar la operación. Comprueba la conexión y los permisos.",true);
+      } finally {
+        guardando=false;
+        $("guardar").disabled=false;
+        $("cancelar").disabled=false;
+        $("nuevoMaterial").disabled=false;
+      }
+    });
+
+    onAuthStateChanged(auth,async user => {
+      $("aplicacion").hidden=true;
+      $("cargando").hidden=false;
+      if (!user) {window.location.replace("./index.html");return;}
+      try {
+        await getDoc(doc(db,"configuracion","acceso"));
+        usuarioActual=user;
+        await cargarMateriales();
+        $("aplicacion").hidden=false;
+        $("cargando").hidden=true;
+      } catch(error) {
+        console.error("Error al cargar catálogo:",error);
+        if (error.code === "permission-denied") {
+          await signOut(auth);
+          window.location.replace("./index.html");
+        } else {
+          $("cargando").textContent="No se pudo cargar el catálogo. Revisa tu conexión y actualiza.";
+        }
+      }
+    });
+  </script>
+</body>
+</html>

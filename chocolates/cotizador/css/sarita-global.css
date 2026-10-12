@@ -1,0 +1,25 @@
+/* Chocolate Artístico Sarita | Base compartida v1.0
+   Mantener estilos específicos en css/modulos/ para evitar regresiones. */
+:root {
+  --sarita-vino: #642c3d;
+  --sarita-chocolate: #47202d;
+  --sarita-dorado: #c6a17b;
+  --sarita-crema: #faf6f2;
+  --sarita-borde: #e8deda;
+  --sarita-texto: #30282b;
+  --sarita-muted: #756b6d;
+  --sarita-exito: #25734d;
+  --sarita-error: #aa3048;
+  --sarita-radio: 12px;
+  --sarita-sombra: 0 8px 28px rgba(60,30,35,.06);
+}
+:where(html) { color-scheme: light; }
+:where(button, input, select, textarea) { font-family: inherit; }
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid #c99cab;
+  outline-offset: 2px;
+}
+:where(img) { max-width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  :where(*, *::before, *::after) { scroll-behavior: auto !important; }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Cotización imprimible | Chocolate Artístico Sarita</title>
+  <link rel="stylesheet" href="./css/sarita-global.css">
+  <link rel="stylesheet" href="./css/sarita-componentes.css">
+  <link rel="stylesheet" href="./css/modulos/cotizacion-pdf.css">
+</head>
+<body>
+<div id="loading" class="no-data">Verificando acceso al documento…</div>
+<div id="app" hidden>
+  <header class="toolbar">
+    <strong>Chocolate Artístico Sarita · Documento comercial</strong>
+    <div class="controls">
+      <select id="selector" aria-label="Seleccionar cotización"><option value="">Seleccionar cotización…</option></select>
+      <a href="./cotizaciones.html">← Cotizaciones</a>
+      <button id="imprimir" class="primary" type="button" disabled>Imprimir / Guardar PDF</button>
+    </div>
+  </header>
+  <div class="status" id="status" role="status">Selecciona una cotización emitida.</div>
+  <article class="sheet" id="documento" hidden>
+    <div class="sheet-inner">
+      <div class="top">
+        <div class="heading"><div class="eyebrow">Propuesta comercial</div><h1>Cotización chocolate</h1><div class="tag">Chocolates artesanales para momentos especiales</div></div>
+        <div class="brand"><img id="logo" src="/img/chocolates/logo.png" alt="Logotipo de Chocolate Artístico Sarita"><div class="fallback" id="logoFallback">Sarita</div><div class="subtitle">Chocolate Artístico Sarita</div></div>
+      </div>
+      <div class="rule"></div>
+      <div class="meta">
+        <div><small>Preparado para</small><strong id="cliente"></strong><p id="contacto"></p><p id="referencia"></p></div>
+        <div class="right"><small>Folio</small><strong id="folio"></strong><p id="fecha"></p><p id="vigencia"></p></div>
+      </div>
+      <p class="intro">A quien corresponda: Presentamos nuestra selección de chocolates artesanales para su evento. Los productos pueden empacarse de manera individual o combinada, de acuerdo con la presentación solicitada y la disponibilidad.</p>
+      <div class="section-title">Productos cotizados</div>
+      <table class="items"><thead><tr><th style="width:8%">No.</th><th style="width:14%">Código</th><th style="width:38%">Descripción</th><th class="right" style="width:10%">Cant.</th><th class="right" style="width:15%">P. unitario</th><th class="right" style="width:15%">Importe</th></tr></thead><tbody id="items"></tbody></table>
+      <div class="totals" id="totales"></div>
+      <div class="conditions"><div class="section-title">Condiciones comerciales</div><ul>
+        <li>Precios expresados en pesos mexicanos (MXN).</li>
+        <li id="condicionVigencia">Vigencia: consultar fecha indicada en la cotización.</li>
+        <li>Para confirmar el pedido se requiere un anticipo del 50%; el 50% restante se liquida a la entrega.</li>
+        <li>Los pedidos se realizan con al menos una semana de anticipación, sujetos a volumen y disponibilidad de agenda.</li>
+        <li>Los importes e impuestos corresponden a las condiciones indicadas en esta cotización.</li>
+      </ul></div>
+      <div class="notes" id="notas" hidden></div>
+      <div class="closing">Todos nuestros productos son elaborados artesanalmente</div>
+      <footer class="footer"><div class="collab">En colaboración con GamesAlone18 Universe</div><div class="contacts"><div>WhatsApp: 55 2992 4478</div><div>Instagram: @chocolateartisticosarita</div><div>gamesalone85@gmail.com</div><div>www.gamesalone.com/chocolates</div></div></footer>
+    </div>
+  </article>
+</div>
+<script type="module">
+    import "./sesion-segura.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+import {getFirestore,doc,getDoc,collection,getDocs} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyD1yzWoD_emq-P5Ux47U6G0TCkhUqYOgJ4",authDomain:"sarita-cotizador.firebaseapp.com",projectId:"sarita-cotizador",storageBucket:"sarita-cotizador.firebasestorage.app",messagingSenderId:"798881105496",appId:"1:798881105496:web:c42f8cd5655e9585d02c2d"};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const $=id=>document.getElementById(id);
+const money=n=>Number(n??0).toLocaleString("es-MX",{style:"currency",currency:"MXN"});
+const date=t=>{if(!t)return null;const d=typeof t.toDate==="function"?t.toDate():new Date(t);return Number.isNaN(d.getTime())?null:d};
+const dateText=t=>{const d=date(t);return d?d.toLocaleDateString("es-MX",{timeZone:"America/Mexico_City",day:"numeric",month:"long",year:"numeric"}):"No especificada"};
+let quotes=[];let selected=null;
+function cell(tr,value,className=""){const td=document.createElement("td");td.textContent=String(value??"");if(className)td.className=className;tr.appendChild(td);return td}
+function line(parent,label,value,final=false){const div=document.createElement("div");div.className="line"+(final?" final":"");const a=document.createElement("span"),b=document.createElement("span");a.textContent=label;b.textContent=value;div.append(a,b);parent.appendChild(div)}
+function show(q){selected=q;$("documento").hidden=false;$("imprimir").disabled=false;$("folio").textContent=q.folio||q.id;$("cliente").textContent=q.cliente?.nombre||"A quien corresponda";$("contacto").textContent=q.cliente?.contacto?"Contacto: "+q.cliente.contacto:"";$("referencia").textContent=q.referencia?"Referencia: "+q.referencia:"";$("fecha").textContent="CDMX, a "+dateText(q.emitidoEn);$("vigencia").textContent=q.vigenciaHasta?"Vigente hasta: "+dateText(q.vigenciaHasta):"";$("condicionVigencia").textContent=q.vigenciaHasta?"Vigencia hasta el "+dateText(q.vigenciaHasta)+".":"Vigencia no especificada; confirmar disponibilidad y precios antes de aceptar.";
+const body=$("items");body.replaceChildren();(Array.isArray(q.items)?q.items:[]).forEach((i,k)=>{const tr=document.createElement("tr");cell(tr,k+1);cell(tr,i.sku||"—");const d=cell(tr,i.nombre||"Producto");d.className="name";if(i.descripcion){const desc=document.createElement("div");desc.className="detail";desc.textContent=i.descripcion;d.appendChild(desc)}cell(tr,i.cantidad,"right");cell(tr,money(i.precioUnitario),"right");cell(tr,money(i.importe),"right");body.appendChild(tr)});
+if(!body.children.length){const tr=document.createElement("tr");cell(tr,"Sin productos registrados").colSpan=6;body.appendChild(tr)}
+const t=$("totales");t.replaceChildren();line(t,"Subtotal",money(q.totales?.base??q.totales?.importe));if(Number(q.totales?.descuentoMonto||0)>0)line(t,`Descuento (${Number(q.descuentoPorcentaje||0)}%)`,"− "+money(q.totales.descuentoMonto));const mode=q.impuestos?.modo;if(mode==="incluido")line(t,`IVA incluido (${q.impuestos?.tasaPorcentaje??16}%)`,money(q.totales?.iva));else if(mode==="adicional")line(t,`IVA adicional (${q.impuestos?.tasaPorcentaje??16}%)`,money(q.totales?.iva));line(t,"TOTAL MXN",money(q.totales?.total),true);const tax=document.createElement("p");tax.className="tax-note";tax.textContent=mode==="sin_desglose"?"Sin IVA desglosado":mode==="incluido"?"IVA incluido en el total":"IVA adicional al subtotal";t.appendChild(tax);
+$("notas").hidden=!q.notas;$("notas").textContent=q.notas?"Observaciones: "+q.notas:"";$("status").textContent=`Documento listo: ${q.folio||q.id}. Usa “Imprimir / Guardar PDF” y elige “Guardar como PDF” en el navegador.`;document.title=`${q.folio||"Cotizacion"} | Chocolate Artístico Sarita`;
+}
+function loadSelect(){const s=$("selector");s.replaceChildren();const first=document.createElement("option");first.value="";first.textContent="Seleccionar cotización…";s.appendChild(first);quotes.forEach(q=>{const o=document.createElement("option");o.value=q.id;o.textContent=`${q.folio||q.id} · ${q.cliente?.nombre||"Cliente"}`;s.appendChild(o)});const p=new URLSearchParams(location.search);const target=quotes.find(q=>q.id===p.get("id")||q.folio===p.get("folio"));if(target){s.value=target.id;show(target)}else if(p.has("id")||p.has("folio")){$("status").textContent="No se encontró esa cotización. Selecciona otra del listado."}else if(quotes.length===1){s.value=quotes[0].id;show(quotes[0])}}
+$("selector").addEventListener("change",e=>{const q=quotes.find(x=>x.id===e.target.value);if(q){show(q);history.replaceState(null,"",`?id=${encodeURIComponent(q.id)}`)}else{$("documento").hidden=true;$("imprimir").disabled=true;selected=null}});
+$("imprimir").addEventListener("click",()=>{if(selected)window.print()});
+$("logo").addEventListener("error",()=>{$("logo").hidden=true;$("logoFallback").style.display="block"});
+onAuthStateChanged(auth,async user=>{if(!user){location.replace("./index.html");return}try{await getDoc(doc(db,"configuracion","acceso"));const snapshot=await getDocs(collection(db,"cotizaciones"));quotes=snapshot.docs.map(d=>({id:d.id,...d.data()}));quotes.sort((a,b)=>(date(b.emitidoEn)?.getTime()||0)-(date(a.emitidoEn)?.getTime()||0));$("loading").hidden=true;$("app").hidden=false;loadSelect();if(!quotes.length)$("status").textContent="Todavía no hay cotizaciones emitidas."}catch(e){console.error("Error de acceso o consulta",e);if(e.code==="permission-denied"){await signOut(auth);location.replace("./index.html")}else{$("loading").textContent="No fue posible cargar las cotizaciones. Revisa tu conexión y actualiza la página."}}});
+</script>
+</body>
+</html>
