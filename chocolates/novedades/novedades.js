@@ -1,7 +1,11 @@
 (() => {
-
     "use strict";
 
+    /* =====================================================
+       CHOCOLATE ARTÍSTICO SARITA
+       NOVEDADES Y DINÁMICAS
+       VERSIÓN CON ENLACES Y COMPARTIR
+    ===================================================== */
 
     /* =====================================================
        CONFIGURACIÓN
@@ -10,104 +14,59 @@
     const API_URL =
         "https://script.google.com/macros/s/AKfycbzKiV8v95MkVD9Pk9RQa6ThfcqEEzTssYWeuEkdxpc88K-SJZFObPHRfmHE5WWaBkU/exec";
 
-
     const INITIAL_VISIBLE = 6;
-
     const LOAD_MORE_AMOUNT = 6;
 
+    const BASE_URL =
+        "https://www.gamesalone.com/chocolates/novedades/";
 
     /* =====================================================
        ESTADO
     ===================================================== */
 
     let novedades = [];
-
     let filtroActual = "TODAS";
-
     let visibles = INITIAL_VISIBLE;
-
     let detalleAbierto = null;
-
 
     /* =====================================================
        ELEMENTOS
     ===================================================== */
 
-    const grid =
-        document.getElementById("campaignGrid");
-
-    const detail =
-        document.getElementById("campaignDetail");
-
-    const loading =
-        document.getElementById("loadingState");
-
-    const errorState =
-        document.getElementById("errorState");
-
-    const emptyState =
-        document.getElementById("emptyState");
-
-    const retryButton =
-        document.getElementById("retryButton");
-
-    const loadMoreWrap =
-        document.getElementById("loadMoreWrap");
-
-    const loadMoreButton =
-        document.getElementById("loadMoreButton");
-
-    const counter =
-        document.getElementById("hubCounter");
-
-    const filters =
-        document.getElementById("filters");
-
-    const menuToggle =
-        document.getElementById("menuToggle");
-
-    const mainNav =
-        document.getElementById("mainNav");
-
+    const grid = document.getElementById("campaignGrid");
+    const detail = document.getElementById("campaignDetail");
+    const loading = document.getElementById("loadingState");
+    const errorState = document.getElementById("errorState");
+    const emptyState = document.getElementById("emptyState");
+    const retryButton = document.getElementById("retryButton");
+    const loadMoreWrap = document.getElementById("loadMoreWrap");
+    const loadMoreButton = document.getElementById("loadMoreButton");
+    const counter = document.getElementById("hubCounter");
+    const filters = document.getElementById("filters");
+    const menuToggle = document.getElementById("menuToggle");
+    const mainNav = document.getElementById("mainNav");
 
     /* =====================================================
        UTILIDADES
     ===================================================== */
 
     function text(value) {
-
         return String(value ?? "").trim();
-
     }
-
 
     function normalize(value) {
-
         return text(value)
             .normalize("NFD")
-            .replace(
-                /[\u0300-\u036f]/g,
-                ""
-            )
+            .replace(/[\u0300-\u036f]/g, "")
             .toUpperCase();
-
     }
 
-
-    /*
-     * Valores provisionales que NO deben
-     * aparecer públicamente.
-     */
     function isPending(value) {
+        const normalized = normalize(value);
 
-        const valueNormalized =
-            normalize(value);
-
-
-        if (!valueNormalized) {
+        if (!normalized) {
             return true;
         }
-
 
         return [
             "(POR DEFINIR)",
@@ -116,45 +75,25 @@
             "LO DEFINIREMOS",
             "PENDIENTE",
             "(PENDIENTE)"
-        ].includes(
-            valueNormalized
-        );
-
+        ].includes(normalized);
     }
 
-
-    /*
-     * Escape HTML.
-     *
-     * Todo el contenido procedente de Sheets
-     * se trata como texto, nunca como HTML.
-     */
     function escapeHTML(value) {
-
         return text(value)
             .replaceAll("&", "&amp;")
             .replaceAll("<", "&lt;")
             .replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#039;");
-
     }
 
-
     function validImage(value) {
-
-        const image =
-            text(value);
-
+        const image = text(value);
 
         if (!image) {
             return "";
         }
 
-
-        /*
-         * Rutas internas del sitio.
-         */
         if (
             image.startsWith("/") &&
             !image.startsWith("//")
@@ -162,40 +101,53 @@
             return image;
         }
 
-
-        /*
-         * Imágenes HTTPS externas.
-         */
         try {
+            const url = new URL(image);
 
-            const url =
-                new URL(image);
+            if (url.protocol === "https:") {
+                return url.href;
+            }
+        } catch (_) {
+            return "";
+        }
 
+        return "";
+    }
+
+    function validLink(value) {
+        const raw = text(value);
+
+        if (!raw || isPending(raw)) {
+            return "";
+        }
+
+        let candidate = raw;
+
+        if (
+            !/^https?:\/\//i.test(candidate) &&
+            /^[a-z0-9.-]+\.[a-z]{2,}(?:[/?#]|$)/i.test(candidate)
+        ) {
+            candidate = "https://" + candidate;
+        }
+
+        try {
+            const url = new URL(candidate);
 
             if (
-                url.protocol === "https:"
+                url.protocol === "https:" ||
+                url.protocol === "http:"
             ) {
                 return url.href;
             }
-
         } catch (_) {
-
             return "";
-
         }
 
-
         return "";
-
     }
 
-
     function formatStatus(status) {
-
-        switch (
-            normalize(status)
-        ) {
-
+        switch (normalize(status)) {
             case "ACTIVA":
                 return "Activa";
 
@@ -207,18 +159,11 @@
 
             default:
                 return text(status);
-
         }
-
     }
 
-
     function statusClass(status) {
-
-        switch (
-            normalize(status)
-        ) {
-
+        switch (normalize(status)) {
             case "ACTIVA":
                 return "status-active";
 
@@ -230,80 +175,34 @@
 
             default:
                 return "";
-
         }
-
     }
-
 
     function formatType(type) {
-
-        const typeNormalized =
-            normalize(type);
-
-
         const names = {
-
-            DINAMICA:
-                "Dinámica",
-
-            COLABORACION:
-                "Colaboración",
-
-            TEMPORADA:
-                "Temporada",
-
-            LANZAMIENTO:
-                "Lanzamiento",
-
-            EVENTO:
-                "Evento"
-
+            DINAMICA: "Dinámica",
+            COLABORACION: "Colaboración",
+            TEMPORADA: "Temporada",
+            LANZAMIENTO: "Lanzamiento",
+            EVENTO: "Evento"
         };
 
-
-        return names[typeNormalized] ||
-            text(type);
-
+        return names[normalize(type)] || text(type);
     }
 
-
-    /*
-     * Convierte:
-     *
-     * 01/11/2026
-     *
-     * en:
-     *
-     * NOV 2026
-     */
     function shortDate(value) {
+        const raw = text(value);
 
-        const raw =
-            text(value);
-
-
-        const match =
-            raw.match(
-                /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
-            );
-
+        const match = raw.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
+        );
 
         if (!match) {
-
-            return isPending(raw)
-                ? ""
-                : raw;
-
+            return isPending(raw) ? "" : raw;
         }
 
-
-        const month =
-            Number(match[2]);
-
-        const year =
-            match[3];
-
+        const month = Number(match[2]);
+        const year = match[3];
 
         const months = [
             "",
@@ -321,344 +220,306 @@
             "DIC"
         ];
 
-
-        if (
-            month < 1 ||
-            month > 12
-        ) {
+        if (month < 1 || month > 12) {
             return raw;
         }
 
-
         return `${months[month]} ${year}`;
-
     }
 
+    /* =====================================================
+       NORMALIZAR LISTAS DE GOOGLE SHEETS
+    ===================================================== */
+
+    function normalizeList(value) {
+        if (Array.isArray(value)) {
+            return value
+                .flatMap(item => normalizeList(item))
+                .filter(Boolean);
+        }
+
+        if (isPending(value)) {
+            return [];
+        }
+
+        return text(value)
+            .replace(/<br\s*\/?>/gi, "\n")
+            .replace(/<\/p>/gi, "\n")
+            .replace(/<\/li>/gi, "\n")
+            .replace(/<[^>]*>/g, "")
+            .split(/\r?\n/)
+            .map(item => item.trim())
+            .filter(item => !isPending(item));
+    }
+
+    /* =====================================================
+       IDENTIFICADORES Y ENLACES
+    ===================================================== */
+
+    function getSlug(item) {
+        return text(item.slug || item.id);
+    }
+
+    function getCampaignURL(item) {
+        const url = new URL(BASE_URL);
+
+        url.searchParams.set(
+            "dinamica",
+            getSlug(item)
+        );
+
+        return url.href;
+    }
+
+    function getRequestedCampaign() {
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        return text(params.get("dinamica"));
+    }
+
+    function findCampaign(identifier) {
+        return novedades.find(item =>
+            text(item.slug) === identifier ||
+            text(item.id) === identifier
+        );
+    }
+
+    function updateURL(item = null) {
+        const url = new URL(window.location.href);
+
+        if (item) {
+            url.searchParams.set(
+                "dinamica",
+                getSlug(item)
+            );
+        } else {
+            url.searchParams.delete("dinamica");
+        }
+
+        window.history.replaceState(
+            {},
+            "",
+            url.href
+        );
+    }
+
+    /* =====================================================
+       FILTROS
+    ===================================================== */
 
     function getFiltered() {
-
-        if (
-            filtroActual === "TODAS"
-        ) {
+        if (filtroActual === "TODAS") {
             return novedades;
         }
 
-
         return novedades.filter(
             item =>
-                normalize(item.estado) ===
-                filtroActual
+                normalize(item.estado) === filtroActual
         );
-
     }
-
 
     /* =====================================================
        CARGAR API
     ===================================================== */
 
     async function loadNovedades() {
-
         setLoading();
 
-
         try {
-
-            const response =
-                await fetch(
-                    API_URL,
-                    {
-                        method: "GET",
-                        cache: "no-store"
-                    }
-                );
-
+            const response = await fetch(
+                API_URL,
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
 
             if (!response.ok) {
-
                 throw new Error(
                     `HTTP ${response.status}`
                 );
-
             }
 
-
-            const data =
-                await response.json();
-
+            const data = await response.json();
 
             if (
                 !data ||
                 data.ok !== true ||
-                !Array.isArray(
-                    data.novedades
-                )
+                !Array.isArray(data.novedades)
             ) {
-
                 throw new Error(
                     "Respuesta inválida"
                 );
-
             }
 
+            novedades = data.novedades.map(item => ({
+                ...item,
 
-            novedades =
-                data.novedades;
+                id: text(item.id),
 
+                slug: text(item.slug),
 
-            filtroActual =
-                "TODAS";
+                condiciones: normalizeList(
+                    item.condiciones
+                ),
 
-            visibles =
-                INITIAL_VISIBLE;
+                como_participar: normalizeList(
+                    item.como_participar
+                ),
 
-            detalleAbierto =
-                null;
+                enlace: validLink(
+                    item.enlace
+                )
+            }));
 
+            filtroActual = "TODAS";
+            visibles = INITIAL_VISIBLE;
+            detalleAbierto = null;
 
             updateFilterButtons();
-
             render();
 
-        } catch (error) {
+            const requested = getRequestedCampaign();
 
+            if (requested) {
+                const campaign = findCampaign(requested);
+
+                if (campaign) {
+                    openDetail(campaign.id, false);
+                }
+            }
+
+        } catch (error) {
             console.error(
                 "Novedades Sarita:",
                 error
             );
 
-
             showError();
-
         }
-
     }
-
 
     function setLoading() {
+        loading.hidden = false;
+        errorState.hidden = true;
+        emptyState.hidden = true;
 
-        loading.hidden =
-            false;
+        grid.innerHTML = "";
 
-        errorState.hidden =
-            true;
+        detail.hidden = true;
+        detail.innerHTML = "";
 
-        emptyState.hidden =
-            true;
-
-        grid.innerHTML =
-            "";
-
-        detail.hidden =
-            true;
-
-        detail.innerHTML =
-            "";
-
-        loadMoreWrap.hidden =
-            true;
-
-        counter.textContent =
-            "";
-
+        loadMoreWrap.hidden = true;
+        counter.textContent = "";
     }
-
 
     function showError() {
+        loading.hidden = true;
+        errorState.hidden = false;
+        emptyState.hidden = true;
 
-        loading.hidden =
-            true;
+        grid.innerHTML = "";
 
-        errorState.hidden =
-            false;
+        detail.hidden = true;
+        detail.innerHTML = "";
 
-        emptyState.hidden =
-            true;
-
-        grid.innerHTML =
-            "";
-
-        detail.hidden =
-            true;
-
-        loadMoreWrap.hidden =
-            true;
-
-        counter.textContent =
-            "";
-
+        loadMoreWrap.hidden = true;
+        counter.textContent = "";
     }
-
 
     /* =====================================================
        RENDER PRINCIPAL
     ===================================================== */
 
     function render() {
+        loading.hidden = true;
+        errorState.hidden = true;
 
-        loading.hidden =
-            true;
+        const filtered = getFiltered();
 
-        errorState.hidden =
-            true;
+        updateCounter(filtered.length);
 
-
-        const filtered =
-            getFiltered();
-
-
-        updateCounter(
-            filtered.length
-        );
-
-
-        if (
-            filtered.length === 0
-        ) {
-
-            grid.innerHTML =
-                "";
-
-            emptyState.hidden =
-                false;
-
-            loadMoreWrap.hidden =
-                true;
+        if (filtered.length === 0) {
+            grid.innerHTML = "";
+            emptyState.hidden = false;
+            loadMoreWrap.hidden = true;
 
             closeDetail(false);
 
             return;
-
         }
 
+        emptyState.hidden = true;
 
-        emptyState.hidden =
-            true;
+        const visibleItems = filtered.slice(
+            0,
+            visibles
+        );
 
-
-        const visibleItems =
-            filtered.slice(
-                0,
-                visibles
-            );
-
-
-        grid.innerHTML =
-            visibleItems
-                .map(
-                    createCard
-                )
-                .join("");
-
+        grid.innerHTML = visibleItems
+            .map(createCard)
+            .join("");
 
         loadMoreWrap.hidden =
             filtered.length <= visibles;
 
-
-        /*
-         * Si el detalle abierto ya no pertenece
-         * al filtro actual, se cierra.
-         */
         if (
             detalleAbierto &&
             !filtered.some(
-                item =>
-                    item.id ===
-                    detalleAbierto
+                item => item.id === detalleAbierto
             )
         ) {
-
             closeDetail(false);
-
         }
-
     }
-
 
     function updateCounter(total) {
-
-        if (total === 1) {
-
-            counter.textContent =
-                "1 novedad";
-
-            return;
-
-        }
-
-
         counter.textContent =
-            `${total} novedades`;
-
+            total === 1
+                ? "1 novedad"
+                : `${total} novedades`;
     }
 
-
     /* =====================================================
-       TARJETA
+       TARJETAS
     ===================================================== */
 
     function createCard(item) {
-
-        const image =
-            validImage(
-                item.imagen
-            );
-
-
-        const status =
-            formatStatus(
-                item.estado
-            );
-
-
-        const date =
-            shortDate(
-                item.fecha_inicio
-            );
-
+        const image = validImage(item.imagen);
+        const status = formatStatus(item.estado);
+        const date = shortDate(item.fecha_inicio);
 
         const meta = [];
 
-
         if (date) {
-
             meta.push(
                 `<span>${escapeHTML(date)}</span>`
             );
-
         }
 
-
-        if (
-            !isPending(
-                item.ubicacion
-            )
-        ) {
-
+        if (!isPending(item.ubicacion)) {
             meta.push(
                 `<span>${escapeHTML(item.ubicacion)}</span>`
             );
-
         }
 
-
-        const imageHTML =
-            image
-                ? `
-                    <img
-                        src="${escapeHTML(image)}"
-                        alt="${escapeHTML(item.titulo)}"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                `
-                : `
-                    <div
-                        class="image-placeholder"
-                        aria-hidden="true"
-                    ></div>
-                `;
-
+        const imageHTML = image
+            ? `
+                <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(item.titulo)}"
+                    loading="lazy"
+                    decoding="async"
+                >
+            `
+            : `
+                <div
+                    class="image-placeholder"
+                    aria-hidden="true"
+                ></div>
+            `;
 
         return `
             <article
@@ -684,27 +545,18 @@
 
                 </div>
 
-
                 <div class="card-content">
 
                     <p class="card-type">
-                        ${escapeHTML(
-                            formatType(
-                                item.tipo
-                            )
-                        )}
+                        ${escapeHTML(formatType(item.tipo))}
                     </p>
-
 
                     <h3>
                         ${escapeHTML(item.titulo)}
                     </h3>
 
-
                     ${
-                        !isPending(
-                            item.resumen
-                        )
+                        !isPending(item.resumen)
                             ? `
                                 <p class="card-summary">
                                     ${escapeHTML(item.resumen)}
@@ -712,7 +564,6 @@
                             `
                             : ""
                     }
-
 
                     ${
                         meta.length
@@ -723,7 +574,6 @@
                             `
                             : ""
                     }
-
 
                     <button
                         type="button"
@@ -754,142 +604,86 @@
 
             </article>
         `;
-
     }
 
-
     /* =====================================================
-       DETALLE
+       ABRIR DETALLE
     ===================================================== */
 
-    function openDetail(id) {
-
-        const item =
-            novedades.find(
-                novelty =>
-                    novelty.id === id
-            );
-
+    function openDetail(id, updateHistory = true) {
+        const item = novedades.find(
+            novelty => novelty.id === id
+        );
 
         if (!item) {
             return;
         }
 
-
-        detalleAbierto =
-            id;
-
+        detalleAbierto = id;
 
         renderDetail(item);
 
+        if (updateHistory) {
+            updateURL(item);
+        }
 
-        /*
-         * Actualizamos aria-expanded.
-         */
         document
-            .querySelectorAll(
-                ".card-action"
-            )
-            .forEach(
-                button => {
+            .querySelectorAll(".card-action")
+            .forEach(button => {
+                button.setAttribute(
+                    "aria-expanded",
+                    button.dataset.id === id
+                        ? "true"
+                        : "false"
+                );
+            });
 
-                    button.setAttribute(
-                        "aria-expanded",
-                        button.dataset.id === id
-                            ? "true"
-                            : "false"
-                    );
+        requestAnimationFrame(() => {
+            detail.scrollIntoView({
+                behavior:
+                    window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                    ).matches
+                        ? "auto"
+                        : "smooth",
 
-                }
-            );
-
-
-        requestAnimationFrame(
-            () => {
-
-                detail.scrollIntoView({
-                    behavior:
-                        window.matchMedia(
-                            "(prefers-reduced-motion: reduce)"
-                        ).matches
-                            ? "auto"
-                            : "smooth",
-
-                    block:"start"
-                });
-
-            }
-        );
-
+                block: "start"
+            });
+        });
     }
 
+    /* =====================================================
+       RENDER DETALLE
+    ===================================================== */
 
     function renderDetail(item) {
+        const image = validImage(item.imagen);
+        const status = formatStatus(item.estado);
+        const date = shortDate(item.fecha_inicio);
 
-        const image =
-            validImage(
-                item.imagen
-            );
-
-
-        const status =
-            formatStatus(
-                item.estado
-            );
-
-
-        const date =
-            shortDate(
-                item.fecha_inicio
-            );
-
-
-        const pistas =
-            Array.isArray(
-                item.pistas
+        const pistas = Array.isArray(item.pistas)
+            ? item.pistas.filter(
+                pista =>
+                    !isPending(pista.titulo) ||
+                    !isPending(pista.recompensa)
             )
-                ? item.pistas.filter(
-                    pista =>
-                        !isPending(
-                            pista.titulo
-                        ) ||
-                        !isPending(
-                            pista.recompensa
-                        )
-                )
-                : [];
+            : [];
 
+        const participation = normalizeList(
+            item.como_participar
+        );
 
-        const participation =
-            Array.isArray(
-                item.como_participar
-            )
-                ? item.como_participar.filter(
-                    value =>
-                        !isPending(value)
-                )
-                : [];
-
-
-        const conditions =
-            Array.isArray(
-                item.condiciones
-            )
-                ? item.condiciones.filter(
-                    value =>
-                        !isPending(value)
-                )
-                : [];
-
+        const conditions = normalizeList(
+            item.condiciones
+        );
 
         const hasPrize =
-            !isPending(
-                item.premio
-            ) ||
-            !isPending(
-                item.disponibilidad
-            );
+            !isPending(item.premio) ||
+            !isPending(item.disponibilidad);
 
+        const externalLink = validLink(
+            item.enlace
+        );
 
         detail.innerHTML = `
 
@@ -899,18 +693,15 @@
                     image
                         ? `
                             <div class="detail-image">
-
                                 <img
                                     src="${escapeHTML(image)}"
                                     alt="${escapeHTML(item.titulo)}"
                                     decoding="async"
                                 >
-
                             </div>
                         `
                         : ""
                 }
-
 
                 <div class="detail-copy">
 
@@ -918,12 +709,9 @@
 
                         <span class="detail-type">
                             ${escapeHTML(
-                                formatType(
-                                    item.tipo
-                                )
+                                formatType(item.tipo)
                             )}
                         </span>
-
 
                         <button
                             type="button"
@@ -935,16 +723,12 @@
 
                     </div>
 
-
                     <h2>
                         ${escapeHTML(item.titulo)}
                     </h2>
 
-
                     ${
-                        !isPending(
-                            item.resumen
-                        )
+                        !isPending(item.resumen)
                             ? `
                                 <p class="detail-summary">
                                     ${escapeHTML(item.resumen)}
@@ -953,11 +737,8 @@
                             : ""
                     }
 
-
                     ${
-                        !isPending(
-                            item.descripcion
-                        )
+                        !isPending(item.descripcion)
                             ? `
                                 <p class="detail-description">
                                     ${escapeHTML(item.descripcion)}
@@ -965,7 +746,6 @@
                             `
                             : ""
                     }
-
 
                     <div class="detail-meta">
 
@@ -990,9 +770,7 @@
                         }
 
                         ${
-                            !isPending(
-                                item.ubicacion
-                            )
+                            !isPending(item.ubicacion)
                                 ? `
                                     <span>
                                         ${escapeHTML(item.ubicacion)}
@@ -1007,18 +785,13 @@
 
             </div>
 
-
             <div class="detail-body">
-
 
                 ${
                     pistas.length
-                        ? createRewards(
-                            pistas
-                        )
+                        ? createRewards(pistas)
                         : ""
                 }
-
 
                 ${
                     participation.length
@@ -1030,15 +803,11 @@
                         : ""
                 }
 
-
                 ${
                     hasPrize
-                        ? createPrize(
-                            item
-                        )
+                        ? createPrize(item)
                         : ""
                 }
-
 
                 ${
                     conditions.length
@@ -1050,21 +819,26 @@
                         : ""
                 }
 
+                ${
+                    externalLink
+                        ? createExternalLink(externalLink)
+                        : ""
+                }
+
+                ${createShareSection(item)}
 
             </div>
         `;
 
-
-        detail.hidden =
-            false;
-
+        detail.hidden = false;
     }
 
+    /* =====================================================
+       PISTAS Y RECOMPENSAS
+    ===================================================== */
 
     function createRewards(pistas) {
-
         return `
-
             <section class="detail-section">
 
                 <p class="detail-section-label">
@@ -1075,77 +849,56 @@
                     Encuentra las pistas.
                 </h3>
 
-
                 <div class="reward-grid">
 
                     ${
-                        pistas
-                            .map(
-                                pista => `
+                        pistas.map(pista => `
+                            <article class="reward-item">
 
-                                    <article class="reward-item">
+                                <span class="reward-number">
+                                    ${escapeHTML(pista.cantidad)}
+                                </span>
 
-                                        <span class="reward-number">
-                                            ${escapeHTML(
-                                                pista.cantidad
-                                            )}
-                                        </span>
+                                <div>
 
-                                        <div>
+                                    ${
+                                        !isPending(pista.titulo)
+                                            ? `
+                                                <h4>
+                                                    ${escapeHTML(pista.titulo)}
+                                                </h4>
+                                            `
+                                            : ""
+                                    }
 
-                                            ${
-                                                !isPending(
-                                                    pista.titulo
-                                                )
-                                                    ? `
-                                                        <h4>
-                                                            ${escapeHTML(
-                                                                pista.titulo
-                                                            )}
-                                                        </h4>
-                                                    `
-                                                    : ""
-                                            }
+                                    ${
+                                        !isPending(pista.recompensa)
+                                            ? `
+                                                <p>
+                                                    ${escapeHTML(pista.recompensa)}
+                                                </p>
+                                            `
+                                            : ""
+                                    }
 
-                                            ${
-                                                !isPending(
-                                                    pista.recompensa
-                                                )
-                                                    ? `
-                                                        <p>
-                                                            ${escapeHTML(
-                                                                pista.recompensa
-                                                            )}
-                                                        </p>
-                                                    `
-                                                    : ""
-                                            }
+                                </div>
 
-                                        </div>
-
-                                    </article>
-
-                                `
-                            )
-                            .join("")
+                            </article>
+                        `).join("")
                     }
 
                 </div>
 
             </section>
         `;
-
     }
 
+    /* =====================================================
+       LISTAS
+    ===================================================== */
 
-    function createListSection(
-        label,
-        title,
-        items
-    ) {
-
+    function createListSection(label, title, items) {
         return `
-
             <section class="detail-section">
 
                 <p class="detail-section-label">
@@ -1156,48 +909,36 @@
                     ${escapeHTML(title)}
                 </h3>
 
-
                 <ol class="detail-list">
 
                     ${
-                        items
-                            .map(
-                                (item, index) => `
+                        items.map((item, index) => `
+                            <li>
 
-                                    <li>
+                                <span class="detail-list-number">
+                                    ${String(index + 1).padStart(2, "0")}
+                                </span>
 
-                                        <span class="detail-list-number">
-                                            ${String(
-                                                index + 1
-                                            ).padStart(
-                                                2,
-                                                "0"
-                                            )}
-                                        </span>
+                                <span>
+                                    ${escapeHTML(item)}
+                                </span>
 
-                                        <span>
-                                            ${escapeHTML(item)}
-                                        </span>
-
-                                    </li>
-
-                                `
-                            )
-                            .join("")
+                            </li>
+                        `).join("")
                     }
 
                 </ol>
 
             </section>
         `;
-
     }
 
+    /* =====================================================
+       PREMIOS
+    ===================================================== */
 
     function createPrize(item) {
-
         return `
-
             <section class="detail-section">
 
                 <p class="detail-section-label">
@@ -1208,47 +949,31 @@
                     Recompensa especial.
                 </h3>
 
-
                 <div class="prize-box">
 
                     ${
-                        !isPending(
-                            item.premio
-                        )
+                        !isPending(item.premio)
                             ? `
                                 <div>
-
-                                    <span>
-                                        PREMIO
-                                    </span>
+                                    <span>PREMIO</span>
 
                                     <strong>
                                         ${escapeHTML(item.premio)}
                                     </strong>
-
                                 </div>
                             `
                             : ""
                     }
 
-
                     ${
-                        !isPending(
-                            item.disponibilidad
-                        )
+                        !isPending(item.disponibilidad)
                             ? `
                                 <div>
-
-                                    <span>
-                                        DISPONIBILIDAD
-                                    </span>
+                                    <span>DISPONIBILIDAD</span>
 
                                     <strong>
-                                        ${escapeHTML(
-                                            item.disponibilidad
-                                        )}
+                                        ${escapeHTML(item.disponibilidad)}
                                     </strong>
-
                                 </div>
                             `
                             : ""
@@ -1258,56 +983,241 @@
 
             </section>
         `;
-
     }
 
+    /* =====================================================
+       ENLACE EXTERNO
+    ===================================================== */
 
-    function closeDetail(scroll = true) {
+    function createExternalLink(url) {
+        return `
+            <section class="detail-section">
 
-        if (
-            detail.hidden
-        ) {
+                <p class="detail-section-label">
+                    ENLACE OFICIAL
+                </p>
+
+                <h3>
+                    Sigue nuestras novedades.
+                </h3>
+
+                <p class="detail-description">
+                    Visita nuestras redes sociales para
+                    conocer las pistas y actualizaciones.
+                </p>
+
+                <div class="share-actions">
+
+                    <a
+                        class="share-button share-primary"
+                        href="${escapeHTML(url)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Visitar enlace oficial ↗
+                    </a>
+
+                </div>
+
+            </section>
+        `;
+    }
+
+    /* =====================================================
+       COMPARTIR DINÁMICA
+    ===================================================== */
+
+    function createShareSection(item) {
+        const url = getCampaignURL(item);
+
+        return `
+            <section class="detail-section share-section">
+
+                <p class="detail-section-label">
+                    COMPARTE ESTA EXPERIENCIA
+                </p>
+
+                <h3>
+                    Invita a alguien a participar.
+                </h3>
+
+                <p class="detail-description">
+                    Comparte esta dinámica con tus amigos
+                    y ayúdanos a llevar la experiencia
+                    de Chocolate Artístico Sarita
+                    a más personas.
+                </p>
+
+                <div class="share-actions">
+
+                    <button
+                        type="button"
+                        class="share-button share-primary"
+                        data-action="share"
+                        data-id="${escapeHTML(item.id)}"
+                    >
+                        ↗ Compartir dinámica
+                    </button>
+
+                    <button
+                        type="button"
+                        class="share-button share-secondary"
+                        data-action="copy"
+                        data-id="${escapeHTML(item.id)}"
+                    >
+                        🔗 Copiar enlace
+                    </button>
+
+                </div>
+
+                <div class="share-link-box">
+
+                    <input
+                        type="text"
+                        value="${escapeHTML(url)}"
+                        readonly
+                        aria-label="Enlace de esta dinámica"
+                    >
+
+                </div>
+
+                <p
+                    class="share-feedback"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+            </section>
+        `;
+    }
+
+    /* =====================================================
+       COMPARTIR
+    ===================================================== */
+
+    async function shareCampaign(id) {
+        const item = novedades.find(
+            campaign => campaign.id === id
+        );
+
+        if (!item) {
             return;
         }
 
+        const url = getCampaignURL(item);
 
-        detalleAbierto =
-            null;
+        const shareData = {
+            title: item.titulo,
+            text:
+                `Descubre "${item.titulo}" de ` +
+                `Chocolate Artístico Sarita.`,
+            url
+        };
 
-
-        detail.hidden =
-            true;
-
-        detail.innerHTML =
-            "";
-
-
-        document
-            .querySelectorAll(
-                ".card-action"
-            )
-            .forEach(
-                button => {
-
-                    button.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+                return;
+            } catch (error) {
+                if (error.name === "AbortError") {
+                    return;
                 }
+            }
+        }
+
+        const message =
+            `${shareData.text}\n${url}`;
+
+        const whatsappURL =
+            "https://wa.me/?text=" +
+            encodeURIComponent(message);
+
+        window.open(
+            whatsappURL,
+            "_blank",
+            "noopener,noreferrer"
+        );
+    }
+
+    /* =====================================================
+       COPIAR ENLACE
+    ===================================================== */
+
+    async function copyCampaign(id) {
+        const item = novedades.find(
+            campaign => campaign.id === id
+        );
+
+        if (!item) {
+            return;
+        }
+
+        const url = getCampaignURL(item);
+
+        let copied = false;
+
+        try {
+            await navigator.clipboard.writeText(url);
+            copied = true;
+        } catch (_) {
+            const input = detail.querySelector(
+                ".share-link-box input"
             );
 
+            if (input) {
+                input.focus();
+                input.select();
+
+                try {
+                    copied = document.execCommand("copy");
+                } catch (_) {
+                    copied = false;
+                }
+            }
+        }
+
+        const feedback = detail.querySelector(
+            ".share-feedback"
+        );
+
+        if (feedback) {
+            feedback.textContent = copied
+                ? "¡Enlace copiado correctamente!"
+                : "Selecciona y copia el enlace mostrado.";
+        }
+    }
+
+    /* =====================================================
+       CERRAR DETALLE
+    ===================================================== */
+
+    function closeDetail(scroll = true) {
+        if (detail.hidden) {
+            return;
+        }
+
+        detalleAbierto = null;
+
+        detail.hidden = true;
+        detail.innerHTML = "";
+
+        updateURL();
+
+        document
+            .querySelectorAll(".card-action")
+            .forEach(button => {
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            });
 
         if (scroll) {
-
-            const hub =
-                document.querySelector(
-                    ".news-hub"
-                );
-
+            const hub = document.querySelector(
+                ".news-hub"
+            );
 
             if (hub) {
-
                 hub.scrollIntoView({
                     behavior:
                         window.matchMedia(
@@ -1316,230 +1226,163 @@
                             ? "auto"
                             : "smooth",
 
-                    block:"start"
+                    block: "start"
                 });
-
             }
-
         }
-
     }
 
-
     /* =====================================================
-       FILTROS
+       CAMBIAR FILTRO
     ===================================================== */
 
     function changeFilter(filter) {
-
-        filtroActual =
-            normalize(filter);
-
-        visibles =
-            INITIAL_VISIBLE;
-
+        filtroActual = normalize(filter);
+        visibles = INITIAL_VISIBLE;
 
         closeDetail(false);
 
         updateFilterButtons();
-
         render();
-
     }
-
 
     function updateFilterButtons() {
-
         document
-            .querySelectorAll(
-                ".filter-button"
-            )
-            .forEach(
-                button => {
+            .querySelectorAll(".filter-button")
+            .forEach(button => {
+                const active =
+                    normalize(button.dataset.filter) ===
+                    filtroActual;
 
-                    const active =
-                        normalize(
-                            button.dataset.filter
-                        ) === filtroActual;
+                button.classList.toggle(
+                    "is-active",
+                    active
+                );
 
-
-                    button.classList.toggle(
-                        "is-active",
-                        active
-                    );
-
-
-                    button.setAttribute(
-                        "aria-pressed",
-                        String(active)
-                    );
-
-                }
-            );
-
+                button.setAttribute(
+                    "aria-pressed",
+                    String(active)
+                );
+            });
     }
-
 
     /* =====================================================
        EVENTOS
     ===================================================== */
 
-    filters.addEventListener(
-        "click",
-        event => {
+    filters.addEventListener("click", event => {
+        const button = event.target.closest(
+            ".filter-button"
+        );
 
-            const button =
-                event.target.closest(
-                    ".filter-button"
-                );
-
-
-            if (!button) {
-                return;
-            }
-
-
-            changeFilter(
-                button.dataset.filter
-            );
-
+        if (!button) {
+            return;
         }
-    );
 
+        changeFilter(button.dataset.filter);
+    });
 
-    grid.addEventListener(
-        "click",
-        event => {
+    grid.addEventListener("click", event => {
+        const button = event.target.closest(
+            '[data-action="open"]'
+        );
 
-            const button =
-                event.target.closest(
-                    '[data-action="open"]'
-                );
-
-
-            if (!button) {
-                return;
-            }
-
-
-            openDetail(
-                button.dataset.id
-            );
-
+        if (!button) {
+            return;
         }
-    );
 
+        openDetail(button.dataset.id);
+    });
 
-    detail.addEventListener(
-        "click",
-        event => {
+    detail.addEventListener("click", async event => {
+        const button = event.target.closest(
+            "[data-action]"
+        );
 
-            const close =
-                event.target.closest(
-                    '[data-action="close"]'
-                );
+        if (!button) {
+            return;
+        }
 
+        const action = button.dataset.action;
+        const id = button.dataset.id;
 
-            if (!close) {
-                return;
-            }
-
-
+        if (action === "close") {
             closeDetail();
-
+            return;
         }
-    );
 
+        if (action === "share") {
+            await shareCampaign(id);
+            return;
+        }
+
+        if (action === "copy") {
+            await copyCampaign(id);
+        }
+    });
 
     loadMoreButton.addEventListener(
         "click",
         () => {
-
-            visibles +=
-                LOAD_MORE_AMOUNT;
-
+            visibles += LOAD_MORE_AMOUNT;
             render();
-
         }
     );
-
 
     retryButton.addEventListener(
         "click",
         loadNovedades
     );
 
-
     /* =====================================================
        MENÚ MÓVIL
     ===================================================== */
 
-    if (
-        menuToggle &&
-        mainNav
-    ) {
-
+    if (menuToggle && mainNav) {
         menuToggle.addEventListener(
             "click",
             () => {
-
-                const open =
-                    mainNav.classList.toggle(
-                        "is-open"
-                    );
-
+                const open = mainNav.classList.toggle(
+                    "is-open"
+                );
 
                 menuToggle.classList.toggle(
                     "is-open",
                     open
                 );
 
-
                 menuToggle.setAttribute(
                     "aria-expanded",
                     String(open)
                 );
-
             }
         );
-
 
         mainNav.addEventListener(
             "click",
             event => {
-
-                if (
-                    event.target.closest("a")
-                ) {
-
+                if (event.target.closest("a")) {
                     mainNav.classList.remove(
                         "is-open"
                     );
-
 
                     menuToggle.classList.remove(
                         "is-open"
                     );
 
-
                     menuToggle.setAttribute(
                         "aria-expanded",
                         "false"
                     );
-
                 }
-
             }
         );
-
     }
-
 
     /* =====================================================
        INICIO
     ===================================================== */
 
     loadNovedades();
-
 
 })();
