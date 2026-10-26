@@ -1788,3 +1788,18 @@ main{
     }
 
 }
+/* ENLACE EXTERNO DE CAMPAÑA */
+.campaign-external-link{display:inline-flex;align-items:center;min-height:46px;margin-top:18px;padding:12px 20px;border:1px solid var(--gold-border);border-radius:12px;background:var(--gold-soft);color:var(--gold-light);font-size:.86rem;font-weight:600;transition:background .2s ease}
+.campaign-external-link:hover{background:rgba(201,164,92,.2)}
+
+/* Añadir al final de novedades.css o enlazar como hoja adicional */
+.campaign-share{margin-top:2rem;padding:1.5rem;border:1px solid rgba(189,147,101,.35);border-radius:18px;background:linear-gradient(135deg,rgba(189,147,101,.13),rgba(12,7,5,.08));text-align:center}
+.campaign-share h3{margin:0 0 .4rem;font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2.5vw,1.65rem)}
+.campaign-share p{margin:.25rem 0 1.15rem;opacity:.85}
+.campaign-share-actions{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap}
+.campaign-share-actions button{appearance:none;border:1px solid #b58b62;border-radius:999px;padding:.8rem 1.3rem;font:600 .9rem 'Poppins',sans-serif;cursor:pointer;background:#b58b62;color:#160c08;transition:transform .15s ease,filter .15s ease}
+.campaign-share-actions button:last-child{background:transparent;color:inherit}
+.campaign-share-actions button:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.campaign-share-actions button:focus-visible{outline:3px solid #c99c6e;outline-offset:3px}
+@media(max-width:480px){.campaign-share{padding:1.2rem}.campaign-share-actions{flex-direction:column}.campaign-share-actions button{width:100%}}
+@media(prefers-reduced-motion:reduce){.campaign-share-actions button{transition:none}}
