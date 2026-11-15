@@ -1075,7 +1075,7 @@ function validateStep(step) {
   for(const field of fields){ if(!field.checkValidity()){ field.reportValidity(); return false; } }
   return true;
 }
-function labelFor(name){ const el=document.querySelector(`label[for="${CSS.escape(name)}"]`); return el?el.textContent.replace("*","").trim():name; }
+function labelFor(name){ const el=document.querySelector(`label[for="${CSS.escape(name)}"]`); return el?el.textContent.replaceAll("*","").trim():name; }
 function buildSummary(){
   const type=requestTypeField.value; const rows=[["Tipo de solicitud",REQUESTS[type]?.label||type],["Nombre",document.getElementById("nombre").value],["Organización",document.getElementById("organizacion").value],["Correo",document.getElementById("emailContacto").value],["Teléfono",document.getElementById("telefono").value]];
   dynamicFields.querySelectorAll("input,select,textarea").forEach(el=>{if(el.value) rows.push([labelFor(el.name),el.value]);}); rows.push(["Información adicional",messageField.value]);
@@ -1481,3 +1481,4 @@ hideCookieBanner();
 
 </body>
 </html>
+
