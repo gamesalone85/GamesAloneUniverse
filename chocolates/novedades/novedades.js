@@ -1,15 +1,15 @@
+
 (() => {
     "use strict";
 
-    /* =====================================================
+    /* ============================================
        CHOCOLATE ARTÍSTICO SARITA
        NOVEDADES Y DINÁMICAS
-       VERSIÓN CON ENLACES Y COMPARTIR
-    ===================================================== */
+       Versión con enlaces y compartir
+       Corrección de seguridad CodeQL
+    ============================================ */
 
-    /* =====================================================
-       CONFIGURACIÓN
-    ===================================================== */
+    /* CONFIGURACIÓN */
 
     const API_URL =
         "https://script.google.com/macros/s/AKfycbzKiV8v95MkVD9Pk9RQa6ThfcqEEzTssYWeuEkdxpc88K-SJZFObPHRfmHE5WWaBkU/exec";
@@ -20,18 +20,14 @@
     const BASE_URL =
         "https://www.gamesalone.com/chocolates/novedades/";
 
-    /* =====================================================
-       ESTADO
-    ===================================================== */
+    /* ESTADO */
 
     let novedades = [];
     let filtroActual = "TODAS";
     let visibles = INITIAL_VISIBLE;
     let detalleAbierto = null;
 
-    /* =====================================================
-       ELEMENTOS
-    ===================================================== */
+    /* ELEMENTOS */
 
     const grid = document.getElementById("campaignGrid");
     const detail = document.getElementById("campaignDetail");
@@ -46,9 +42,7 @@
     const menuToggle = document.getElementById("menuToggle");
     const mainNav = document.getElementById("mainNav");
 
-    /* =====================================================
-       UTILIDADES
-    ===================================================== */
+    /* UTILIDADES */
 
     function text(value) {
         return String(value ?? "").trim();
@@ -64,9 +58,7 @@
     function isPending(value) {
         const normalized = normalize(value);
 
-        if (!normalized) {
-            return true;
-        }
+        if (!normalized) return true;
 
         return [
             "(POR DEFINIR)",
@@ -90,9 +82,7 @@
     function validImage(value) {
         const image = text(value);
 
-        if (!image) {
-            return "";
-        }
+        if (!image) return "";
 
         if (
             image.startsWith("/") &&
@@ -117,9 +107,7 @@
     function validLink(value) {
         const raw = text(value);
 
-        if (!raw || isPending(raw)) {
-            return "";
-        }
+        if (!raw || isPending(raw)) return "";
 
         let candidate = raw;
 
@@ -150,13 +138,10 @@
         switch (normalize(status)) {
             case "ACTIVA":
                 return "Activa";
-
             case "PROXIMAMENTE":
                 return "Próximamente";
-
             case "FINALIZADA":
                 return "Finalizada";
-
             default:
                 return text(status);
         }
@@ -166,13 +151,10 @@
         switch (normalize(status)) {
             case "ACTIVA":
                 return "status-active";
-
             case "PROXIMAMENTE":
                 return "status-upcoming";
-
             case "FINALIZADA":
                 return "status-finished";
-
             default:
                 return "";
         }
@@ -205,19 +187,9 @@
         const year = match[3];
 
         const months = [
-            "",
-            "ENE",
-            "FEB",
-            "MAR",
-            "ABR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AGO",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DIC"
+            "", "ENE", "FEB", "MAR", "ABR",
+            "MAY", "JUN", "JUL", "AGO",
+            "SEP", "OCT", "NOV", "DIC"
         ];
 
         if (month < 1 || month > 12) {
@@ -227,9 +199,11 @@
         return `${months[month]} ${year}`;
     }
 
-    /* =====================================================
+    /* ============================================
        NORMALIZAR LISTAS DE GOOGLE SHEETS
-    ===================================================== */
+       CORRECCIÓN DE SEGURIDAD
+       Evita sanitización incompleta por regex.
+    ============================================ */
 
     function normalizeList(value) {
         if (Array.isArray(value)) {
@@ -242,19 +216,40 @@
             return [];
         }
 
-        return text(value)
-            .replace(/<br\s*\/?>/gi, "\n")
-            .replace(/<\/p>/gi, "\n")
-            .replace(/<\/li>/gi, "\n")
-            .replace(/<[^>]*>/g, "")
+        // Analizar HTML en un documento aislado.
+        // No insertar HTML de la API en el DOM visible.
+        const doc = new DOMParser().parseFromString(
+            text(value),
+            "text/html"
+        );
+
+        // Eliminar elementos no destinados a texto.
+        doc.querySelectorAll(
+            "script, style, template, noscript, iframe, object, embed, svg, math"
+        ).forEach(element => element.remove());
+
+        // Conservar los saltos de línea.
+        doc.querySelectorAll("br").forEach(element => {
+            element.replaceWith(
+                doc.createTextNode("\n")
+            );
+        });
+
+        // Separar párrafos y elementos de lista.
+        doc.querySelectorAll("p, li").forEach(element => {
+            element.appendChild(
+                doc.createTextNode("\n")
+            );
+        });
+
+        // Obtener solamente texto, nunca HTML.
+        return (doc.body.textContent || "")
             .split(/\r?\n/)
             .map(item => item.trim())
             .filter(item => !isPending(item));
     }
 
-    /* =====================================================
-       IDENTIFICADORES Y ENLACES
-    ===================================================== */
+    /* IDENTIFICADORES Y ENLACES */
 
     function getSlug(item) {
         return text(item.slug || item.id);
@@ -305,9 +300,7 @@
         );
     }
 
-    /* =====================================================
-       FILTROS
-    ===================================================== */
+    /* FILTROS */
 
     function getFiltered() {
         if (filtroActual === "TODAS") {
@@ -320,9 +313,7 @@
         );
     }
 
-    /* =====================================================
-       CARGAR API
-    ===================================================== */
+    /* CARGAR API */
 
     async function loadNovedades() {
         setLoading();
@@ -358,7 +349,6 @@
                 ...item,
 
                 id: text(item.id),
-
                 slug: text(item.slug),
 
                 condiciones: normalizeList(
@@ -429,9 +419,7 @@
         counter.textContent = "";
     }
 
-    /* =====================================================
-       RENDER PRINCIPAL
-    ===================================================== */
+    /* RENDER PRINCIPAL */
 
     function render() {
         loading.hidden = true;
@@ -447,7 +435,6 @@
             loadMoreWrap.hidden = true;
 
             closeDetail(false);
-
             return;
         }
 
@@ -482,9 +469,7 @@
                 : `${total} novedades`;
     }
 
-    /* =====================================================
-       TARJETAS
-    ===================================================== */
+    /* TARJETAS */
 
     function createCard(item) {
         const image = validImage(item.imagen);
@@ -526,9 +511,7 @@
                 class="campaign-card"
                 data-id="${escapeHTML(item.id)}"
             >
-
                 <div class="card-image">
-
                     ${imageHTML}
 
                     ${
@@ -542,11 +525,9 @@
                             `
                             : ""
                     }
-
                 </div>
 
                 <div class="card-content">
-
                     <p class="card-type">
                         ${escapeHTML(formatType(item.tipo))}
                     </p>
@@ -586,7 +567,6 @@
                                 : "false"
                         }"
                     >
-
                         <span>
                             ${escapeHTML(
                                 item.texto_boton ||
@@ -597,27 +577,20 @@
                         <span aria-hidden="true">
                             →
                         </span>
-
                     </button>
-
                 </div>
-
             </article>
         `;
     }
 
-    /* =====================================================
-       ABRIR DETALLE
-    ===================================================== */
+    /* ABRIR DETALLE */
 
     function openDetail(id, updateHistory = true) {
         const item = novedades.find(
             novelty => novelty.id === id
         );
 
-        if (!item) {
-            return;
-        }
+        if (!item) return;
 
         detalleAbierto = id;
 
@@ -646,15 +619,12 @@
                     ).matches
                         ? "auto"
                         : "smooth",
-
                 block: "start"
             });
         });
     }
 
-    /* =====================================================
-       RENDER DETALLE
-    ===================================================== */
+    /* RENDER DETALLE */
 
     function renderDetail(item) {
         const image = validImage(item.imagen);
@@ -686,7 +656,6 @@
         );
 
         detail.innerHTML = `
-
             <div class="detail-top">
 
                 ${
@@ -704,9 +673,7 @@
                 }
 
                 <div class="detail-copy">
-
                     <div class="detail-toolbar">
-
                         <span class="detail-type">
                             ${escapeHTML(
                                 formatType(item.tipo)
@@ -720,7 +687,6 @@
                         >
                             Cerrar ×
                         </button>
-
                     </div>
 
                     <h2>
@@ -748,7 +714,6 @@
                     }
 
                     <div class="detail-meta">
-
                         ${
                             status
                                 ? `
@@ -778,15 +743,11 @@
                                 `
                                 : ""
                         }
-
                     </div>
-
                 </div>
-
             </div>
 
             <div class="detail-body">
-
                 ${
                     pistas.length
                         ? createRewards(pistas)
@@ -826,21 +787,17 @@
                 }
 
                 ${createShareSection(item)}
-
             </div>
         `;
 
         detail.hidden = false;
     }
 
-    /* =====================================================
-       PISTAS Y RECOMPENSAS
-    ===================================================== */
+    /* PISTAS Y RECOMPENSAS */
 
     function createRewards(pistas) {
         return `
             <section class="detail-section">
-
                 <p class="detail-section-label">
                     LA DINÁMICA
                 </p>
@@ -850,17 +807,14 @@
                 </h3>
 
                 <div class="reward-grid">
-
                     ${
                         pistas.map(pista => `
                             <article class="reward-item">
-
                                 <span class="reward-number">
                                     ${escapeHTML(pista.cantidad)}
                                 </span>
 
                                 <div>
-
                                     ${
                                         !isPending(pista.titulo)
                                             ? `
@@ -880,27 +834,20 @@
                                             `
                                             : ""
                                     }
-
                                 </div>
-
                             </article>
                         `).join("")
                     }
-
                 </div>
-
             </section>
         `;
     }
 
-    /* =====================================================
-       LISTAS
-    ===================================================== */
+    /* LISTAS */
 
     function createListSection(label, title, items) {
         return `
             <section class="detail-section">
-
                 <p class="detail-section-label">
                     ${escapeHTML(label)}
                 </p>
@@ -910,11 +857,9 @@
                 </h3>
 
                 <ol class="detail-list">
-
                     ${
                         items.map((item, index) => `
                             <li>
-
                                 <span class="detail-list-number">
                                     ${String(index + 1).padStart(2, "0")}
                                 </span>
@@ -922,25 +867,19 @@
                                 <span>
                                     ${escapeHTML(item)}
                                 </span>
-
                             </li>
                         `).join("")
                     }
-
                 </ol>
-
             </section>
         `;
     }
 
-    /* =====================================================
-       PREMIOS
-    ===================================================== */
+    /* PREMIOS */
 
     function createPrize(item) {
         return `
             <section class="detail-section">
-
                 <p class="detail-section-label">
                     PREMIO
                 </p>
@@ -950,7 +889,6 @@
                 </h3>
 
                 <div class="prize-box">
-
                     ${
                         !isPending(item.premio)
                             ? `
@@ -978,21 +916,16 @@
                             `
                             : ""
                     }
-
                 </div>
-
             </section>
         `;
     }
 
-    /* =====================================================
-       ENLACE EXTERNO
-    ===================================================== */
+    /* ENLACE EXTERNO */
 
     function createExternalLink(url) {
         return `
             <section class="detail-section">
-
                 <p class="detail-section-label">
                     ENLACE OFICIAL
                 </p>
@@ -1007,7 +940,6 @@
                 </p>
 
                 <div class="share-actions">
-
                     <a
                         class="share-button share-primary"
                         href="${escapeHTML(url)}"
@@ -1016,23 +948,18 @@
                     >
                         Visitar enlace oficial ↗
                     </a>
-
                 </div>
-
             </section>
         `;
     }
 
-    /* =====================================================
-       COMPARTIR DINÁMICA
-    ===================================================== */
+    /* COMPARTIR DINÁMICA */
 
     function createShareSection(item) {
         const url = getCampaignURL(item);
 
         return `
             <section class="detail-section share-section">
-
                 <p class="detail-section-label">
                     COMPARTE ESTA EXPERIENCIA
                 </p>
@@ -1049,7 +976,6 @@
                 </p>
 
                 <div class="share-actions">
-
                     <button
                         type="button"
                         class="share-button share-primary"
@@ -1067,18 +993,15 @@
                     >
                         🔗 Copiar enlace
                     </button>
-
                 </div>
 
                 <div class="share-link-box">
-
                     <input
                         type="text"
                         value="${escapeHTML(url)}"
                         readonly
                         aria-label="Enlace de esta dinámica"
                     >
-
                 </div>
 
                 <p
@@ -1086,23 +1009,18 @@
                     role="status"
                     aria-live="polite"
                 ></p>
-
             </section>
         `;
     }
 
-    /* =====================================================
-       COMPARTIR
-    ===================================================== */
+    /* COMPARTIR */
 
     async function shareCampaign(id) {
         const item = novedades.find(
             campaign => campaign.id === id
         );
 
-        if (!item) {
-            return;
-        }
+        if (!item) return;
 
         const url = getCampaignURL(item);
 
@@ -1139,18 +1057,14 @@
         );
     }
 
-    /* =====================================================
-       COPIAR ENLACE
-    ===================================================== */
+    /* COPIAR ENLACE */
 
     async function copyCampaign(id) {
         const item = novedades.find(
             campaign => campaign.id === id
         );
 
-        if (!item) {
-            return;
-        }
+        if (!item) return;
 
         const url = getCampaignURL(item);
 
@@ -1187,14 +1101,10 @@
         }
     }
 
-    /* =====================================================
-       CERRAR DETALLE
-    ===================================================== */
+    /* CERRAR DETALLE */
 
     function closeDetail(scroll = true) {
-        if (detail.hidden) {
-            return;
-        }
+        if (detail.hidden) return;
 
         detalleAbierto = null;
 
@@ -1225,16 +1135,13 @@
                         ).matches
                             ? "auto"
                             : "smooth",
-
                     block: "start"
                 });
             }
         }
     }
 
-    /* =====================================================
-       CAMBIAR FILTRO
-    ===================================================== */
+    /* CAMBIAR FILTRO */
 
     function changeFilter(filter) {
         filtroActual = normalize(filter);
@@ -1266,18 +1173,14 @@
             });
     }
 
-    /* =====================================================
-       EVENTOS
-    ===================================================== */
+    /* EVENTOS */
 
     filters.addEventListener("click", event => {
         const button = event.target.closest(
             ".filter-button"
         );
 
-        if (!button) {
-            return;
-        }
+        if (!button) return;
 
         changeFilter(button.dataset.filter);
     });
@@ -1287,9 +1190,7 @@
             '[data-action="open"]'
         );
 
-        if (!button) {
-            return;
-        }
+        if (!button) return;
 
         openDetail(button.dataset.id);
     });
@@ -1299,9 +1200,7 @@
             "[data-action]"
         );
 
-        if (!button) {
-            return;
-        }
+        if (!button) return;
 
         const action = button.dataset.action;
         const id = button.dataset.id;
@@ -1334,9 +1233,7 @@
         loadNovedades
     );
 
-    /* =====================================================
-       MENÚ MÓVIL
-    ===================================================== */
+    /* MENÚ MÓVIL */
 
     if (menuToggle && mainNav) {
         menuToggle.addEventListener(
@@ -1379,9 +1276,7 @@
         );
     }
 
-    /* =====================================================
-       INICIO
-    ===================================================== */
+    /* INICIO */
 
     loadNovedades();
 
